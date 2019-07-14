@@ -1,31 +1,24 @@
 {
   "name": "ispotify",
-  "version": "0.1.0",
-  "private": true,
-  "dependencies": {
-    "react": "^16.8.6",
-    "react-dom": "^16.8.6",
-    "react-scripts": "3.0.1"
-  },
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js",
+    "dev": "nodemon server.js"
   },
-  "eslintConfig": {
-    "extends": "react-app"
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cookie-parser": "^1.4.4",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "query-string": "^6.8.1",
+    "querystring": "^0.2.0",
+    "request": "^2.88.0"
   },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
+  "devDependencies": {
+    "nodemon": "^1.19.1"
   }
 }
