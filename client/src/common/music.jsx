@@ -1,24 +1,22 @@
 import React from 'react'
-import { millisToMinutesAndSeconds } from '../utils/convertTime';
+import styled from 'styled-components';
+
 
 const Music = (props) => {
-    const { name, duration_ms, artists, album, preview_url } = props.music;
-    console.log(props)
+    const { name, duration_ms, artists, album, preview_url, id } = props.music;
+    const encodedUriID = encodeURI(id);
+    console.log(props.music)
     return ( 
-        <div className='bg-light mb-3 row'>
-            <div className='col-1'>
-                <img src={album.images[0].url} style={{ height:'50px', width: '50px' }} className='rounded-circle'/>
-            </div>
-            <div className='col-11'>
-                <audio controls>
-                    <source src={preview_url} type="audio/ogg"/>
-                </audio>
-                <h5>{name}</h5>
-                {artists.map(artist => <small className='text-muted'>{artist.name} </small>)}
-                <small className='text-right'>Duration: {millisToMinutesAndSeconds(duration_ms)}</small>
-            </div>
-        </div>
-     );
+        <iframe 
+            title={id}
+            src={`https://open.spotify.com/embed/track/${encodedUriID}`} 
+            width='100%' height="100px" 
+            frameBorder="0" 
+            allowtransparency="true" 
+            allow="encrypted-media"
+        />
+    );
 }
  
 export default Music;
+
