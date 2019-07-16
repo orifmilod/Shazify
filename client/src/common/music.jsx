@@ -1,11 +1,9 @@
 import React from 'react'
-import styled from 'styled-components';
 
 
 const Music = (props) => {
-    const { name, duration_ms, artists, album, preview_url, id } = props.music;
+    const { id } = props.music;
     const encodedUriID = encodeURI(id);
-    console.log(props.music)
     return ( 
         <iframe 
             title={id}
