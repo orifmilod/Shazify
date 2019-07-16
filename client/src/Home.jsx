@@ -34,6 +34,7 @@ const Information = styled.p`
     right: 10px;
 `;
 
+
 const Home = () => {
     return ( 
         <div className='vh-100 vw-100 gradDynamic text-center'>
@@ -45,6 +46,7 @@ const Home = () => {
                 <i className="fab fa-spotify"></i> 
             </Information>
         </div>
+
      );
 }
  

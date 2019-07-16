@@ -37,7 +37,8 @@ app.get('/login', (req, res) => {
     scope: scope,
     redirect_uri: redirect_uri,
     state: state
-  })
+  });
+  console.log(redirectURL)
   res.redirect(redirectURL);
 });
 

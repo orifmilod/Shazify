@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components';
-
+import icon from '../person-icon.png'
 const ListItem = styled.ul`
     font-size: 16px;
     margin-bottom: 10px;
@@ -25,10 +25,11 @@ const Icon = styled.i`
     border: 2px solid;
 `;
 const Profile = (props) => {
-    const { display_name, email, country, images } = props.userData;
+    let { display_name, email, country, images } = props.userData;
+    images = undefined;
     return ( 
         <div className='justify-content-center row pt-3'>
-            <ProfileImage large src={images[0].url} alt='user-pic'/>
+            <ProfileImage large src={ images.length > 0 ? images[0].url : icon} alt='user-pic'/>
 
             <ul className='pt-5'>
                 <ListItem> 
