@@ -18,7 +18,6 @@ const generateRandomString = function(length) {
   return text;
 };
 
-console.log(process.env.CLIENT_ID);
 const stateKey = 'spotify_auth_state';
 
 const app = express();
