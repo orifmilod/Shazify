@@ -45,6 +45,6 @@ app.get('/login', (req, res) => {
   res.redirect(redirectURL);
 });
 
+const PORT = process.env.PORT || 8888
 
-console.log('Listening on 8888');
-app.listen(8888);
+app.listen(PORT, () => `Server is running on port ${PORT}`);
