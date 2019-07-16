@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import queryString from 'query-string';
-import Music from './common/music';
+import Music from '../../utils/Music';
 
-class SearchPage extends Component {
+class Search extends Component {
   state = {
     searchList: [],
     searchInput: '',
@@ -83,4 +83,4 @@ class SearchPage extends Component {
     );
   }
 }
-export default SearchPage;
+export default Search;

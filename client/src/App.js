@@ -1,9 +1,9 @@
 import React from 'react';
 import './App.css';
 import queryString from 'query-string';
-import Profile from './common/profile';
-import SearchPage from './SearchPage';
-import Home from './Home';
+import Profile from './components/Profile';
+import Search from './components/Search';
+import Login from './pages/Login';
 
 class App extends React.Component {
   state = {
@@ -42,11 +42,11 @@ class App extends React.Component {
             </div>
 
             <div className="col-6 bg-light scroll-able">
-              <SearchPage handleSearch={this.handleSearch} />
+              <Search />
             </div>
           </div>
         ) : (
-          <Home getUserData={this.getUserData} />
+          <Login getUserData={this.getUserData} />
         )}
       </div>
     );

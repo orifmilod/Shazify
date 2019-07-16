@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import icon from '../person-icon.png';
+import icon from '../../img/person-icon.png';
 
 const ListItem = styled.ul`
   font-size: 16px;
