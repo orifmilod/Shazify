@@ -26,10 +26,9 @@ const Icon = styled.i`
 `;
 const Profile = (props) => {
     let { display_name, email, country, images } = props.userData;
-    images = undefined;
     return ( 
         <div className='justify-content-center row pt-3'>
-            <ProfileImage large src={ images.length > 0 ? images[0].url : icon} alt='user-pic'/>
+            <ProfileImage large src={ images ? images[0].url : icon} alt='user-pic'/>
 
             <ul className='pt-5'>
                 <ListItem> 
