@@ -1,39 +1,53 @@
-const express = require('express'); // Express web server framework
-const request = require('request'); // "Request" library
-const cors = require('cors');
-const querystring = require('querystring');
-const cookieParser = require('cookie-parser');
-const env = require('dotenv');
-const redirect_uri = 'http://localhost:3000'; // Your redirect uri
+let express = require('express'); // Express web server framework
+let cors = require('cors');
+let querystring = require('querystring');
+let cookieParser = require('cookie-parser');
+let redirect_uri = 'http://localhost:3000'; // Your redirect uri
 
-env.config();
 
-const generateRandomString = function(length) {
-  const text = '';
-  const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+let generateRandomString = function(length) {
+  let text = '';
+  let possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
 
-  for (const i = 0; i < length; i++) {
+  for (let i = 0; i < length; i++) {
     text += possible.charAt(Math.floor(Math.random() * possible.length));
   }
   return text;
 };
 
-const stateKey = 'spotify_auth_state';
+let stateKey = 'spotify_auth_state';
 
-const app = express();
+let app = express();
 
 app.use(express.static(__dirname + '/public'))
    .use(cors())
    .use(cookieParser());
 
+//Serve our static asset if in production
+if(process.env.NODE_ENV === 'production') {
+    app.use(express.static('client/build'));
+    
+    app.get('*', (req, res) => {
+        res.sendfile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+    });
+}
+else 
+{
+    app.use(express.static(path.join(__dirname, '/client/public')));
+    app.get("*", function(req, res) {
+        res.sendFile(path.join(__dirname, "./client/public/index.html"));
+    });
+}
+  
+
 app.get('/login', (req, res) => {
 
-  const state = generateRandomString(16);
+  let state = generateRandomString(16);
   res.cookie(stateKey, state);
 
   // your application requests authorization
-  const scope = 'user-read-private user-read-email user-read-playback-state';
-  const redirectURL = 'https://accounts.spotify.com/authorize?' +
+  let scope = 'user-read-private user-read-email user-read-playback-state';
+  let redirectURL = 'https://accounts.spotify.com/authorize?' +
   querystring.stringify({
     response_type: 'token',
     client_id: process.env.CLIENT_ID,
@@ -44,6 +58,6 @@ app.get('/login', (req, res) => {
   res.redirect(redirectURL);
 });
 
-const PORT = process.env.PORT || 8888
+let PORT = process.env.PORT || 8888
 
 app.listen(PORT, () => `Server is running on port ${PORT}`);
