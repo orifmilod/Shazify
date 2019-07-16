@@ -2,8 +2,8 @@ let express = require('express'); // Express web server framework
 let cors = require('cors');
 let querystring = require('querystring');
 let cookieParser = require('cookie-parser');
-let redirect_uri = 'http://localhost:3000'; // Your redirect uri
-
+let redirect_uri = 'https://ispotify.herokuapp.com/'; // Your redirect uri
+let path = require('path');
 
 let generateRandomString = function(length) {
   let text = '';
@@ -23,23 +23,6 @@ app.use(express.static(__dirname + '/public'))
    .use(cors())
    .use(cookieParser());
 
-//Serve our static asset if in production
-if(process.env.NODE_ENV === 'production') {
-    app.use(express.static('client/build'));
-    
-    app.get('*', (req, res) => {
-        res.sendfile(path.resolve(__dirname, 'client', 'build', 'index.html'));
-    });
-}
-else 
-{
-    app.use(express.static(path.join(__dirname, '/client/public')));
-    app.get("*", function(req, res) {
-        res.sendFile(path.join(__dirname, "./client/public/index.html"));
-    });
-}
-  
-
 app.get('/login', (req, res) => {
 
   let state = generateRandomString(16);
@@ -57,6 +40,22 @@ app.get('/login', (req, res) => {
   })
   res.redirect(redirectURL);
 });
+
+
+//Serve our static asset if in production
+if(process.env.NODE_ENV === 'production') {
+    app.use(express.static('client/build'));
+    
+    app.get('*', (req, res) => {
+      res.sendfile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+    });
+  }
+  else {
+      app.use(express.static(path.join(__dirname, '/client/public')));
+      app.get("*", function(req, res) {
+      res.sendFile(path.join(__dirname, "./client/public/index.html"));
+      });
+  }
 
 let PORT = process.env.PORT || 8888
 
