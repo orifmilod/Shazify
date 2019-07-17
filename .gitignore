@@ -3,6 +3,8 @@
 # dependencies
 /node_modules
 /client/node_modules/
+/client/build/
+
 
 package-lock.json
 # production
