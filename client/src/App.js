@@ -1,78 +1,78 @@
-import React from 'react';
-import './App.css';
-import queryString from 'query-string';
-import Profile from './Profile.js';
-import SearchPage from './SearchPage.js';
-import Home from './Home.js';
-import Playlists from './Playlists.js';
-import Player from './common/player.js';
+import React from "react";
+import "./App.css";
+import queryString from "query-string";
+import Profile from "./components/Profile";
+import Search from "./components/Search";
+import Login from "./pages/Login";
+import Player from "./components/Player";
+import Grid from "@material-ui/core/Grid";
 
-class App extends React.Component 
-{
-    state = {
-        userData: { },
-        playlists: []
+class App extends React.Component {
+  state = {
+    userData: {},
+    currentTrackID: ""
+  };
+
+  getAccessToken = () => {
+    const hash = queryString.parse(window.location.hash);
+    return hash.access_token;
+  };
+  componentDidMount() {
+    let access_token = this.getAccessToken();
+    if (access_token) {
+      this.getUserData();
+      this.getUserPlaylist();
     }
+  }
 
-    getAccessToken = () => {
-        let hash = queryString.parse(window.location.hash);
-        return hash.access_token;
-    }
+  getUserData = () => {
+    let access_token = this.getAccessToken();
+    fetch("https://api.spotify.com/v1/me", {
+      headers: { Authorization: `Bearer ${access_token}` }
+    })
+      .then(response => response.json())
+      .then(userData => this.setState({ userData }))
+      .catch(err => console.error(err));
+  };
 
-    componentDidMount()
-    {
-        let access_token = this.getAccessToken();
-        if(access_token)
-        {
-            this.getUserData();
-            this.getUserPlaylist();
-        }
-    }
+  getUserPlaylist = () => {
+    let access_token = this.getAccessToken();
+    fetch("https://api.spotify.com/v1/me/playlists", {
+      headers: { Authorization: `Bearer ${access_token}` }
+    })
+      .then(response => response.json())
+      .then(playlists => this.setState({ playlists: playlists.items }))
+      .catch(err => console.error(err));
+  };
 
-    getUserData = () => {
-        let access_token = this.getAccessToken();
-        fetch('https://api.spotify.com/v1/me', { 
-            headers: { 'Authorization': `Bearer ${access_token}` }
-        })
-        .then(response => response.json())
-        .then(userData => this.setState({ userData }))
-        .catch(err => console.error(err)) 
-    }
+  playTrack = trackID => {
+    this.setState({ currentTrackID: trackID });
+  };
 
-    getUserPlaylist = () => {
-        let access_token = this.getAccessToken();
-        fetch('https://api.spotify.com/v1/me/playlists', {
-            headers: { 'Authorization': `Bearer ${access_token}` }
-        })
-        .then(response => response.json())
-        .then(playlists => this.setState({ playlists: playlists.items }))
-        .catch(err => console.error(err))
-    } 
+  render() {
+    const { userData, playlists, currentTrackID } = this.state;
 
-    render() {
-        const { userData, playlists } = this.state;
-        return (
-            <div className="App">
-            {   
-                Object.keys(userData).length > 0 
-                ? 
-                    <div className='row'>
-                        <div className='col-2 bg-success vh-100 text-left'>
-                            <Profile userData={userData}/>
-                            {/* <Playlists playlists={playlists}/> */}
-                        </div>
-                        <div className='col-10'>
-                            <div className='col-4 bg-light scroll-able'>
-                                <SearchPage handleSearch={this.handleSearch}/>
-                            </div>
-                            <Player />
-                        </div>
-                    </div>
-                :
-                    <Home/> 
-            }
-            </div>
-        )
-    }
-} 
+    return (
+      <div className="App">
+        {Object.keys(userData).length > 0 ? (
+          <Grid container direction="row">
+            <Grid className="bg-success" sm={2}>
+              <Profile userData={userData} />
+              {/* <Playlists playlists={playlists}/> */}
+            </Grid>
+            <Grid sm={4} className="bg-light">
+              <Search
+                playTrack={this.playTrack}
+                handleSearch={this.handleSearch}
+              />
+              <Player trackID={currentTrackID} />
+            </Grid>
+          </Grid>
+        ) : (
+          <Login getUserData={this.getUserData} />
+        )}
+      </div>
+    );
+  }
+}
 export default App;

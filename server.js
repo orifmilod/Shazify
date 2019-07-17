@@ -6,13 +6,12 @@ const redirect_uri = 'http://localhost:3000'; // Your redirect uri
 const path = require('path');
 const app = express();
 
-
 const stateKey = 'spotify_auth_state';
 
-
 let generateRandomString = (length) => {
-    let text = '';
+    let text   = '';
     let possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+
 
     for (let i = 0; i < length; i++) {
         text += possible.charAt(Math.floor(Math.random() * possible.length));
@@ -24,7 +23,6 @@ app.use(cors())
    .use(cookieParser());
 
 app.get('/login', (req, res) => {
-
   let state = generateRandomString(16);
   res.cookie(stateKey, state);
 
@@ -38,9 +36,9 @@ app.get('/login', (req, res) => {
     redirect_uri: redirect_uri,
     state: state
   });
+  console.log(redirectURL);
   res.redirect(redirectURL);
 });
-
 
 //Serve our static asset if in production
 if(process.env.NODE_ENV === 'production')
@@ -59,6 +57,6 @@ else
     });
 }
 
-let PORT = process.env.PORT || 8888
+const PORT = process.env.PORT || 8888;
 
 app.listen(PORT, () => `Server is running on port ${PORT}`);
