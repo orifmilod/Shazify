@@ -40,13 +40,12 @@ const Home = () => {
         <div className='vh-100 vw-100 gradDynamic text-center'>
             <Header>Welcome to iSpotify</Header>
             <Title>Search, Choose, Listen.</Title>
-            <LoginButton href='https://ispotify.herokuapp.com/login'>LOGIN</LoginButton>
+            <LoginButton href='http://localhost:8888/login'>LOGIN</LoginButton>
             <Information>
                 You can only login using Spotify account. 
                 <i className="fab fa-spotify"></i> 
             </Information>
         </div>
-
      );
 }
  

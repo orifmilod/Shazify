@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components';
-import icon from '../person-icon.png'
+import icon from './person-icon.png'
+import Image from './common/Image.js';
 
 const ListItem = styled.ul`
     font-size: 16px;
@@ -8,13 +9,6 @@ const ListItem = styled.ul`
     letter-spacing: 1.3;
 `;
 
-const ProfileImage = styled.img`
-    height: ${props => props.large ? '150px' : '50px'} ;
-    width:  ${props => props.large ? '150px' : '50px'} ;
-    border-radius: 50%;
-    box-shadow: 0px 13px 26px 1px rgba(37,97,0,1);
-    border: solid lightgray;
-`;
 
 const Icon = styled.i`
     color: lightgray;
@@ -28,9 +22,9 @@ const Icon = styled.i`
 const Profile = (props) => {
     let { display_name, email, country, images } = props.userData;
     return ( 
-        <div className='justify-content-center row pt-3'>
-            <ProfileImage large src={images.length > 0 ? images[0].url : icon} alt='user-pic'/>
-
+        <div className='justify-content-center p-3'>
+            <Image lg src={icon} alt='user-pic'/> {/*images[0].url !== undefined ? images[0].url :*/}
+            <br/>
             <ul className='pt-5'>
                 <ListItem> 
                     <Icon className='fas fa-user'/>  {display_name}

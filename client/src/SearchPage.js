@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import queryString from 'query-string';
-import Music from './common/music';
+import Track from './common/track';
 
 class SearchPage extends Component {
 
@@ -52,21 +52,26 @@ class SearchPage extends Component {
         .catch(error => console.error(error))
     }
 
+    playMusic = (trackID) => {
+        console.log(trackID);
+    }
+
     render() {
         const { searchList } = this.state;
         return (
-            <div className='vh-100'>
+            <div className='vh-100 container'>
                 <br/>
-                <div className="input-field col s12">
-                    <input id='serachInput' type="text" onChange={this.handleChange} name='searchInput' className="validate"/>
+                <div className="input-field">
+                    <input id='serachInput' type="text" onChange={this.handleChange} name='searchInput'/>
                     <label htmlFor="serachInput">Search a track...</label>
                 </div>
                 <button className='btn btn-block btn-success' onClick={this.handleSearch}>Search</button>
                 <br/>
-                {
+                <Track playMusic={this.playMusic}/>
+                {/* {
                     searchList.length > 0 &&
-                    searchList.map(music => <Music music={music}/> )
-                }
+                    searchList.map(track => <Track track={track}/> )
+                } */}
             </div>
         )
     }
