@@ -55,16 +55,24 @@ class App extends React.Component {
     return (
       <div className="App">
         {Object.keys(userData).length > 0 ? (
-          <Grid container direction="row">
-            <Grid className="bg-success" sm={2}>
+          <Grid
+            container
+            direction="row"
+            justify="space-between"
+            className="datas "
+          >
+            <Grid item className="bg-success full" sm={2}>
               <Profile userData={userData} />
               {/* <Playlists playlists={playlists}/> */}
             </Grid>
-            <Grid sm={4} className="bg-light">
+            <Grid item sm={7} className="bg-dark"></Grid>
+            <Grid item sm={3} className="bg-light full">
               <Search
                 playTrack={this.playTrack}
                 handleSearch={this.handleSearch}
               />
+            </Grid>
+            <Grid item xs={12}>
               <Player trackID={currentTrackID} />
             </Grid>
           </Grid>

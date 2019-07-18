@@ -3,9 +3,8 @@ import styled from "styled-components";
 
 const IFrame = styled.iframe`
   height: 100px;
-  position: absolute;
   right: 0;
-  width: 100%;
+  width: 100vw;
   bottom: 0;
 `;
 

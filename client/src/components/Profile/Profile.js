@@ -16,14 +16,9 @@ const Icon = styled.i`
 `;
 const Profile = props => {
   const { display_name, email, country, images } = props.userData;
-
   return (
     <div className="justify-content-center row">
-      <Image
-        lg
-        src={icon} //images.length > 0 ? images[0].url :
-        alt="user-pic"
-      />
+      <Image lg src={images.length > 0 ? images[0].url : icon} alt="user-pic" />
       <List>
         <ListItem>
           <ListItemText>

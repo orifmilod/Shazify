@@ -1,6 +1,5 @@
 .App {
     text-align: center;
-    overflow: hidden;
     height: 100vh;
 }
 
@@ -9,9 +8,22 @@
     margin: 0;
 }
 
-
 .scroll-able {
-    overflow-y: auto;
+    overflow-y: scroll;
+    height: 100%;
+}
+
+.datas {
+    position: absolute;
+    top: 0;
+    bottom: 100px;
+    left: 0;
+    right: 0;
+}
+
+.full {
+    width: 100%;
+    height: 100%;
 }
 
 .gradDynamic {

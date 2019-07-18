@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import queryString from "query-string";
 import Track from "../Track";
 import Grid from "@material-ui/core/Grid";
-
+import Container from "@material-ui/core/Container";
 class Search extends Component {
   state = {
     searchList: [],
@@ -60,8 +60,8 @@ class Search extends Component {
     const { playTrack } = this.props;
 
     return (
-      <Grid direction="column">
-        <Grid>
+      <Container className="scroll-able">
+        <Grid className="pt-2">
           <div className="input-field col s12">
             <input
               id="serachInput"
@@ -85,7 +85,7 @@ class Search extends Component {
               <Track key={track.id} track={track} playTrack={playTrack} />
             ))}
         </Grid>
-      </Grid>
+      </Container>
     );
   }
 }
