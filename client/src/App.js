@@ -65,8 +65,8 @@ class App extends React.Component {
               <Profile userData={userData} />
               {/* <Playlists playlists={playlists}/> */}
             </Grid>
-            <Grid item sm={7} className="bg-dark"></Grid>
-            <Grid item sm={3} className="bg-light full">
+            <Grid item sm={6} className="bg-dark"></Grid>
+            <Grid item sm={4} className="bg-light full">
               <Search
                 playTrack={this.playTrack}
                 handleSearch={this.handleSearch}
