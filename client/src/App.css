@@ -1,7 +1,8 @@
 .App {
     text-align: center;
-    overflow: hidden !important;
+    /* overflow: hidden !important; */
     height: 100vh;
+    width: 100vw;
 }
 
 * {
@@ -9,15 +10,24 @@
     margin: 0;
 }
 
+.fade {
+    background: #ff416c;
+    /* fallback for old browsers */
+    background: -webkit-linear-gradient(to bottom, #ff4b2b, #ff416c);
+    /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to bottom, #ff4b2b, #ff416c);
+    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
 .scroll-able {
     overflow-y: scroll;
-    height: 100%;
+    /* height: 100%; */
 }
 
 .datas {
     position: absolute;
     top: 0;
-    bottom: 100px;
+    /* bottom: 100px; */
     left: 0;
     right: 0;
 }

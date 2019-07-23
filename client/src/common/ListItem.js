@@ -1,24 +1,13 @@
-import React from "react";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemText from "@material-ui/core/ListItemText";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import Icon from "@material-ui/core/Icon";
-import Divider from "@material-ui/core/Divider";
+import styled from "styled-components";
 
-const _ListItem = props => {
-  const { classname, text, divider } = props;
-  console.log(divider);
-  return (
-    <>
-      <ListItem>
-        <ListItemIcon>
-          <Icon className={classname} />
-        </ListItemIcon>
-        <ListItemText primary={text} />
-      </ListItem>
-      {divider && <Divider />}
-    </>
-  );
-};
-
-export default _ListItem;
+const ListItem = styled.li`
+  color: white;
+  font-size: ${props => (props.lg ? "24px" : "16px")};
+  margin: 10px;
+  padding: 10px;
+  :hover {
+    text-decoration: none;
+    color: white;
+  }
+`;
+export default ListItem;

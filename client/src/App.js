@@ -1,12 +1,17 @@
 import React from "react";
 import "./App.css";
+import { ThemeProvider } from "styled-components";
 import queryString from "query-string";
-import Profile from "./components/Profile";
-import Search from "./components/Search";
+import Sidebar from "./components/SideBar";
 import Login from "./pages/Login";
 import Player from "./components/Player";
-import Grid from "@material-ui/core/Grid";
+import Grid from "./common/Grid";
+// import Grid from "@material-ui/core/Grid";
+import Playlists from "./components/Playlists";
+import Search from "./components/Search";
+import Recorder from "./Recorder";
 
+import theme from "./Theme";
 class App extends React.Component {
   state = {
     userData: {},
@@ -53,33 +58,33 @@ class App extends React.Component {
     const { userData, playlists, currentTrackID } = this.state;
 
     return (
-      <div className="App">
-        {Object.keys(userData).length > 0 ? (
-          <Grid
-            container
-            direction="row"
-            justify="space-between"
-            className="datas "
-          >
-            <Grid item className="bg-success full" sm={2}>
-              <Profile userData={userData} />
-              {/* <Playlists playlists={playlists}/> */}
+      <ThemeProvider theme={theme}>
+        <div className="App">
+          {Object.keys(userData).length > 0 ? (
+            <Grid direction="column" templateColumn="1fr 6fr">
+              <Sidebar userData={userData} />
+              <Grid direction="row" templateRow="7fr 1fr">
+                <div className="bg-dark">
+                  <Search
+                    playTrack={this.playTrack}
+                    handleSearch={this.handleSearch}
+                  />
+                </div>
+                <Player />
+              </Grid>
+              {/* <Grid item className="bg-success full" sm={2}>
+                <Profile userData={userData} />
+                <Playlists playlists={playlists} />
+              </Grid> */}
+              {/* <Recorder />
+             
+              <Player trackID={currentTrackID} /> */}
             </Grid>
-            <Grid item sm={6} className="bg-dark"></Grid>
-            <Grid item sm={4} className="bg-light full">
-              <Search
-                playTrack={this.playTrack}
-                handleSearch={this.handleSearch}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <Player trackID={currentTrackID} />
-            </Grid>
-          </Grid>
-        ) : (
-          <Login getUserData={this.getUserData} />
-        )}
-      </div>
+          ) : (
+            <Login getUserData={this.getUserData} />
+          )}
+        </div>
+      </ThemeProvider>
     );
   }
 }
