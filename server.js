@@ -1,12 +1,29 @@
-const express = require('express'); // Express web server framework
+const fs = require('fs');
+const url = require('url');
+const path = require('path');
 const cors = require('cors');
+const crypto = require('crypto');
+const express = require('express');             // Express web server framework
+const request = require('request');
+const multer = require('multer');
 const querystring = require('querystring');
 const cookieParser = require('cookie-parser');
-const redirect_uri = 'http://localhost:3000'; // Your redirect uri
-const path = require('path');
+const redirect_uri = 'http://localhost:3000';   // Your redirect uri
 const app = express();
-
 const stateKey = 'spotify_auth_state';
+
+
+const storage = multer.diskStorage({
+    destination: './uploads'
+})
+
+const upload = multer({ storage: storage })
+
+app.use(express.urlencoded({
+    extended: true
+}));
+
+app.use(express.json());
 
 let generateRandomString = (length) => {
     let text   = '';
@@ -30,12 +47,22 @@ app.get('/login', (req, res) => {
   let redirectURL = 'https://accounts.spotify.com/authorize?' +
   querystring.stringify({
     response_type: 'token',
-    client_id:'68247016a306419aab0e68ea6f6ab997' ,//process.env.CLIENT_ID
+    client_id:'process.env.CLIENT_ID' ,//process.env.CLIENT_ID
     scope: scope,
     redirect_uri: redirect_uri,
     state: state
   });
   res.redirect(redirectURL);
+});
+
+app.post('/audioSearch', upload.single('audio'), (req, res) => {
+    console.log(req.file)
+    console.log(req.body)
+    res.sendStatus(201)
+    // identify(new Buffer(bitmap), defaultOptions, function (err, httpResponse, body) {
+    //     if (err) console.log(err);
+    //     console.log(body);
+    // });
 });
 
 //Serve our static asset if in production
@@ -55,6 +82,61 @@ else
     });
 }
 
+// Replace "###...###" below with your project's host, access_key and access_secret.
+const defaultOptions = {
+    host: 'HOST',
+    endpoint: '/v1/identify',
+    signature_version: '1',
+    data_type:'audio',
+    secure: true,
+    access_key: 'ACCESS_KEY',
+    access_secret: 'ACCESS_SECRET'
+ };
+  
+  function buildStringToSign(method, uri, accessKey, dataType, signatureVersion, timestamp) {
+    return [method, uri, accessKey, dataType, signatureVersion, timestamp].join('\n');
+  }
+  
+  function sign(signString, accessSecret) 
+  {
+    return crypto.createHmac('sha1', accessSecret)
+      .update(new Buffer(signString, 'utf-8'))
+      .digest().toString('base64');
+  }
+  
+  /*Identifies a sample of bytes*/
+  function identify(data, options, cb) {
+      let current_data = new Date();
+      let timestamp = current_data.getTime() / 1000;
+  
+      let stringToSign = buildStringToSign('POST',
+          options.endpoint,
+          options.access_key,
+          options.data_type,
+          options.signature_version,
+          timestamp
+      );
+  
+      let signature = sign(stringToSign, options.access_secret);
+  
+      let formData = {
+          sample: data,
+          access_key:options.access_key,
+          data_type:options.data_type,
+          signature_version:options.signature_version,
+          signature:signature,
+          sample_bytes:data.length,
+          timestamp:timestamp,
+      }
+      request.post({
+          url: "http://" + options.host + options.endpoint,
+          method: 'POST',
+          formData: formData
+      }, cb);
+  }
+  
+const bitmap = fs.readFileSync('sample.wav');
 const PORT = process.env.PORT || 8888;
 
+//serve out any static files in our public HTML folder
 app.listen(PORT, () => `Server is running on port ${PORT}`);

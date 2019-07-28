@@ -10,6 +10,16 @@
     margin: 0;
 }
 
+.recorder {
+    background: none !important;
+    width: 100%;
+    margin: auto;
+    height: 80%;
+    border: none;
+    /* border-radius: 100%; */
+    color: orange;
+}
+
 .fade {
     background: #ff416c;
     /* fallback for old browsers */

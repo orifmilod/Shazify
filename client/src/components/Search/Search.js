@@ -1,17 +1,40 @@
 import React, { Component } from "react";
 import queryString from "query-string";
-import Track from "../Track";
-import Button from "../../common/Button";
 import Grid from "../../common/Grid";
-import Flex from "../../common/Flex";
-import FlexItem from "../../common/FlexItem";
-import Input from "../../common/Input";
-import Container from "../../common/Container";
+import P from "../../common/P";
+import styled from "styled-components";
+import { ReactMic } from "react-mic";
 
+const SearchInput = styled.input`
+  width: 100%;
+  height: 100%;
+  border-radius: 50px;
+  padding: 0 20px;
+  border: 0.5px solid gray;
+  :focus {
+    outline-width: 0;
+  }
+`;
+
+const AudioSearch = styled.button`
+  width: 90%;
+  height: 100%;
+  border-radius: 50px;
+  color: white;
+  margin: auto;
+  font-size: ${props => props.theme.font.xxl};
+  background: ${props => props.theme.color.greenGradient};
+  padding: 0 20px;
+  border: none;
+  :focus {
+    outline-width: 0;
+  }
+`;
 class Search extends Component {
   state = {
-    searchList: [],
-    searchInput: ""
+    searchInput: "",
+    recording: false,
+    file: {}
   };
 
   getAccessToken = () => {
@@ -21,30 +44,6 @@ class Search extends Component {
 
   handleChange = e => {
     this.setState({ [e.target.name]: e.target.value });
-  };
-
-  handleSearch = e => {
-    e.preventDefault();
-    const searchLimit = 20;
-    const searchFilter = encodeURI(this.state.searchInput);
-    const access_token = this.getAccessToken();
-    if (searchFilter) {
-      fetch(
-        `https://api.spotify.com/v1/search?q=${searchFilter}&type=track&market=PL&limit=${searchLimit}`,
-        {
-          headers: {
-            Authorization: `Bearer ${access_token}`,
-            Accept: "application/json",
-            "Content-Type": "application/json"
-          }
-        }
-      )
-        .then(data => data.json())
-        .then(result => this.setState({ searchList: result.tracks.items }))
-        .catch(err => console.error(err));
-    } else {
-      console.log("No Input");
-    }
   };
 
   getPlayer = e => {
@@ -63,38 +62,54 @@ class Search extends Component {
       .catch(error => console.error(error));
   };
 
+  toggleRecording = () => {
+    const { recording } = this.state;
+    // console.log("Recording", recording);
+    this.setState({ recording: !recording });
+  };
+
+  onData = recordedBlob => {
+    // console.log("chunk of real-time data is: ", recordedBlob);
+  };
+  onStop = recordedBlob => {
+    // console.log("stopped");
+    this.setState({ file: recordedBlob });
+    console.log("Making req");
+    // this.props.audioSearch(recordedBlob);
+  };
+
   render() {
-    const { searchList } = this.state;
-    const { playTrack } = this.props;
+    const { searchInput, recording } = this.state;
+    const { handleSearch } = this.props;
 
     return (
-      <Container>
-        <Grid direction="row" templateRow="75px">
-          <Grid direction="column" templateColumn="2fr 1fr" bg="light">
-            <Grid direction="column">
-              <Input
-                placeholder="Search track..."
-                type="text"
-                onChange={this.handleChange}
-                name="searchInput"
-              />
-              <Button color="green" onClick={this.handleSearch}>
-                <i class="fas fa-search"></i>
-              </Button>
-            </Grid>
-          </Grid>
-          <div className="bg-light"></div>
+      <Grid direction="row" space={4}>
+        <Grid direction="column" templateColumn="4fr 1fr">
+          <form onSubmit={e => handleSearch(e, searchInput)}>
+            <SearchInput
+              placeholder="Search track..."
+              type="text"
+              value={searchInput}
+              onChange={this.handleChange}
+              name="searchInput"
+            />
+          </form>
 
-          {/* <div>
-            <Button>Shazam</Button>
-          </div> */}
+          <AudioSearch onClick={this.toggleRecording}>
+            {recording ? (
+              <ReactMic
+                className="recorder"
+                record={this.state.recording}
+                onStop={this.onStop}
+                onData={this.onData}
+              />
+            ) : (
+              <P font="xxl">Search Audio</P>
+            )}
+          </AudioSearch>
+          {/* <audio controls src={this.state.file.blobURL}></audio> */}
         </Grid>
-        {/* 
-        {searchList.length > 0 &&
-          searchList.map(track => (
-            <Track key={track.id} track={track} playTrack={playTrack} />
-          ))} */}
-      </Container>
+      </Grid>
     );
   }
 }

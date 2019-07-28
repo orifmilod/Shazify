@@ -1,6 +1,6 @@
 import React from "react";
 import Profile from "../Profile";
-import Playlist from "../Playlists";
+// import Playlist from "../Home";
 import Container from "../../common/Container";
 
 const Sidebar = props => {

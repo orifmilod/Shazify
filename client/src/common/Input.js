@@ -6,10 +6,11 @@ const Input = styled.input`
   color: black;
   font-weight: bold;
   outline-width: 0px;
-  background: ${props => (props ? props.theme.color[props.bg] : "white")};
+  background: ${props => (props.bg ? props.theme.color[props.bg] : "white")};
   padding: ${props =>
-    (props.py ? props.py : "0px ")(props.px ? props.px : "0px")} !important;
-  margin: ${props => (props.margin ? props.margin : "0")}px;
+    props.space ? `${props.space * 4}px` : "0px"} !important;
+  margin: ${props =>
+    props.margin ? `${props.margin * 4}px` : "0px"} !important;
   font-size: ${props => (props.lg ? "24px" : "16px")};
 
   ::placeholder {

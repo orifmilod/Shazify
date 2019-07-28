@@ -3,10 +3,13 @@ import getWidthString from "../utils/GetWidth";
 
 const Grid = styled.div`
   background: ${props => (props.bg ? props.theme.color[props.bg] : "white")};
-  margin: auto;
-  height: ${props => (props.theme.height ? props.theme.height : "100%")};
+  padding: ${props => (props.space ? `${props.space * 4}px` : "0px")};
+  margin: ${props => (props.margin ? `${props.margin * 4}px` : "0px")};
+  height: ${props => (props.height ? props.height : "100%")};
+  overflow: ${props => (props.overflow ? props.overflow : "initial")};
   display: grid;
   grid-auto-flow: ${props => props.direction};
+  position: ${props => (props.position ? props.position : "relative")};
   align-items: ${props => props.alignItems};
   align-self: auto;
   justify-content: ${props => props.justify};
