@@ -1,15 +1,15 @@
 import React from "react";
 import Profile from "../Profile";
-// import Playlist from "../Home";
-import Container from "../../common/Container";
+import Playlist from "../Playlist";
+import Grid from "../../common/Grid";
 
 const Sidebar = props => {
-  const { userData, playlist } = props;
+  const { userData, playlists } = props;
   return (
-    <Container bg="darkGradient">
+    <Grid direction="row" bg="greenGradient" templateRow="225px 1fr">
       <Profile userData={userData} />
-      {/* <Playlist /> */}
-    </Container>
+      <Playlist playlists={playlists} />
+    </Grid>
   );
 };
 

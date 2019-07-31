@@ -21,12 +21,18 @@ const PlayButton = styled(PlayCircle)`
 
 const Track = ({ track, playTrack }) => {
   const { name, artists, album, id, duration_ms } = track;
-  console.log(track);
   return (
-    <Grid direction="column" templateColumn="2fr 10fr 1fr 1fr" space={4}>
+    <Grid
+      direction="column"
+      height="100px"
+      templateColumn="2fr 10fr 1fr 1fr"
+      space={3}
+    >
       <Image size="md" src={album.images[0].url} />
       <Grid direction="row" justify="center" alignItems="center">
-        <P font="lg">{name}</P>
+        <P color="black" font="lg">
+          {name}
+        </P>
         <P font="sm" secondary>
           {artists.map(artists => `${artists.name} `)}
         </P>

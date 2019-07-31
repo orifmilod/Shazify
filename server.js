@@ -47,7 +47,7 @@ app.get('/login', (req, res) => {
   let redirectURL = 'https://accounts.spotify.com/authorize?' +
   querystring.stringify({
     response_type: 'token',
-    client_id:'process.env.CLIENT_ID' ,//process.env.CLIENT_ID
+    client_id:'68247016a306419aab0e68ea6f6ab997' ,//process.env.CLIENT_ID
     scope: scope,
     redirect_uri: redirect_uri,
     state: state
@@ -84,13 +84,13 @@ else
 
 // Replace "###...###" below with your project's host, access_key and access_secret.
 const defaultOptions = {
-    host: 'HOST',
+    host: 'identify-eu-west-1.acrcloud.com',
     endpoint: '/v1/identify',
     signature_version: '1',
     data_type:'audio',
     secure: true,
-    access_key: 'ACCESS_KEY',
-    access_secret: 'ACCESS_SECRET'
+    access_key: '6ab92a05812a341339b37b849c4df24d',
+    access_secret: 'ila8dpuo7zhoGIrnZ5X7e64WH3YMMdUS8hs4wvbm'
  };
   
   function buildStringToSign(method, uri, accessKey, dataType, signatureVersion, timestamp) {

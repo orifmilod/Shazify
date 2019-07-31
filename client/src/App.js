@@ -15,39 +15,45 @@ class App extends React.Component {
   state = {
     userData: {},
     currentTrackID: "",
-    searchList: []
+    searchList: [],
+    featuredPlaylist: []
   };
 
   getAccessToken = () => {
     const hash = queryString.parse(window.location.hash);
     return hash.access_token;
   };
-  componentDidMount() {
+  async componentDidMount() {
     let access_token = this.getAccessToken();
     if (access_token) {
-      this.getUserData();
-      this.getUserPlaylist();
+      await this.getUserData(access_token);
+      this.getUserPlaylist(access_token);
+      this.getFeaturedPlaylists(access_token);
     }
   }
 
-  getUserData = () => {
-    let access_token = this.getAccessToken();
-    fetch("https://api.spotify.com/v1/me", {
-      headers: { Authorization: `Bearer ${access_token}` }
-    })
-      .then(response => response.json())
-      .then(userData => this.setState({ userData }))
-      .catch(err => console.error(err));
+  getUserData = async access_token => {
+    try {
+      const respone = await fetch("https://api.spotify.com/v1/me", {
+        headers: { Authorization: `Bearer ${access_token}` }
+      });
+      const userData = await respone.json();
+      this.setState({ userData });
+    } catch (err) {
+      console.error(err);
+    }
   };
 
-  getUserPlaylist = () => {
-    let access_token = this.getAccessToken();
-    fetch("https://api.spotify.com/v1/me/playlists", {
-      headers: { Authorization: `Bearer ${access_token}` }
-    })
-      .then(response => response.json())
-      .then(playlists => this.setState({ playlists: playlists.items }))
-      .catch(err => console.error(err));
+  getUserPlaylist = async access_token => {
+    try {
+      const response = await fetch("https://api.spotify.com/v1/me/playlists", {
+        headers: { Authorization: `Bearer ${access_token}` }
+      });
+      const playlists = await response.json();
+      this.setState({ playlists: playlists.items });
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   playTrack = trackID => {
@@ -107,18 +113,45 @@ class App extends React.Component {
     // .catch(err => console.log(err))
   };
 
+  getFeaturedPlaylists = async access_token => {
+    try {
+      const limit = 50;
+      const country = this.state.userData.country;
+      const response = await fetch(
+        `https://api.spotify.com/v1/browse/featured-playlists?country=${country}&limit=${limit}`,
+        {
+          headers: {
+            Authorization: `Bearer ${access_token}`,
+            Accept: "application/json",
+            "Content-Type": "application/json"
+          }
+        }
+      );
+      const featuredPlaylist = await response.json();
+      this.setState({ featuredPlaylist: featuredPlaylist.playlists.items });
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   render() {
-    const { userData, currentTrackID, searchList } = this.state;
+    const {
+      userData,
+      currentTrackID,
+      searchList,
+      playlists,
+      featuredPlaylist
+    } = this.state;
 
     return (
       <ThemeProvider theme={theme}>
         <div className="App">
           {Object.keys(userData).length > 0 ? (
             <Grid direction="column" templateColumn="1fr 5fr">
-              <Sidebar userData={userData} />
+              <Sidebar userData={userData} playlists={playlists} />
               <Grid
                 direction="row"
-                templateRow="100px 6fr 100px"
+                templateRow="90px 6fr 100px"
                 bg="light"
                 height="100vh"
               >
@@ -127,7 +160,11 @@ class App extends React.Component {
                   audioSearch={this.audioSearch}
                 />
 
-                <Home searchList={searchList} playTrack={this.playTrack} />
+                <Home
+                  searchList={searchList}
+                  playTrack={this.playTrack}
+                  featuredPlaylist={featuredPlaylist}
+                />
                 <Player trackID={currentTrackID} />
               </Grid>
             </Grid>

@@ -76,6 +76,7 @@ class Search extends Component {
     this.setState({ file: recordedBlob });
     console.log("Making req");
     // this.props.audioSearch(recordedBlob);
+    document.getElementsByClassName("comment-list").getAttribute("data-count");
   };
 
   render() {
@@ -104,7 +105,9 @@ class Search extends Component {
                 onData={this.onData}
               />
             ) : (
-              <P font="xxl">Search Audio</P>
+              <P color="white" font="xxl" my={2}>
+                Search Audio
+              </P>
             )}
           </AudioSearch>
           {/* <audio controls src={this.state.file.blobURL}></audio> */}

@@ -2,7 +2,7 @@ import styled from "styled-components";
 import getWidthString from "../utils/GetWidth";
 
 const Grid = styled.div`
-  background: ${props => (props.bg ? props.theme.color[props.bg] : "white")};
+  background: ${props => (props.bg ? props.theme.color[props.bg] : "")};
   padding: ${props => (props.space ? `${props.space * 4}px` : "0px")};
   margin: ${props => (props.margin ? `${props.margin * 4}px` : "0px")};
   height: ${props => (props.height ? props.height : "100%")};

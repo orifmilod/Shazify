@@ -10,8 +10,10 @@
         "react": "^16.8.6",
         "react-audio-recorder": "^2.2.0",
         "react-dom": "^16.8.6",
+        "react-photo-gallery": "^8.0.0",
         "react-scripts": "3.0.1",
         "request": "^2.88.0",
+        "shufflejs": "^5.2.2",
         "styled-components": "^4.3.2",
         "styled-icons": "^8.3.0",
         "webpack-sources": "^1.3.0"
