@@ -47,7 +47,7 @@ app.get('/login', (req, res) => {
   let redirectURL = 'https://accounts.spotify.com/authorize?' +
   querystring.stringify({
     response_type: 'token',
-    client_id:'process.env.CLIENT_ID',
+    client_id: process.env.CLIENT_ID,
     scope: scope,
     redirect_uri: redirect_uri,
     state: state
@@ -136,7 +136,7 @@ const defaultOptions = {
   }
   
 const bitmap = fs.readFileSync('sample.wav');
-const PORT = process.env.PORT || 8888;
 
+const PORT = process.env.PORT || 8888;
 //serve out any static files in our public HTML folder
 app.listen(PORT, () => `Server is running on port ${PORT}`);
