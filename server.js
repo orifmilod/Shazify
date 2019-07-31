@@ -8,7 +8,7 @@ const request = require('request');
 const multer = require('multer');
 const querystring = require('querystring');
 const cookieParser = require('cookie-parser');
-const redirect_uri = 'http://localhost:3000';   // Your redirect uri
+const redirect_uri = 'https://ispotify.herokuapp.com';   // Your redirect uri
 const app = express();
 const stateKey = 'spotify_auth_state';
 
@@ -47,7 +47,7 @@ app.get('/login', (req, res) => {
   let redirectURL = 'https://accounts.spotify.com/authorize?' +
   querystring.stringify({
     response_type: 'token',
-    client_id:'process.env.CLIENT_ID' ,//
+    client_id:'process.env.CLIENT_ID',
     scope: scope,
     redirect_uri: redirect_uri,
     state: state
