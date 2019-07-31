@@ -84,7 +84,7 @@ class Search extends Component {
     const { handleSearch } = this.props;
 
     return (
-      <Grid direction="row" space={4}>
+      <Grid direction="row" space={5}>
         <Grid direction="column" templateColumn="4fr 1fr">
           <form onSubmit={e => handleSearch(e, searchInput)}>
             <SearchInput

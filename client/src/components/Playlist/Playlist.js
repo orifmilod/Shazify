@@ -8,7 +8,7 @@ const ArrowIcon = styled(KeyboardArrowRight)`
   height: 25px;
   width: 25px;
   position: absolute;
-  right: 25px;
+  right: 10px;
   :hover {
     transform: scale(1.5);
   }
@@ -18,15 +18,15 @@ const Playlist = props => {
   return (
     <>
       <ul>
-        <P mx={11} my={0} font="xxl" color="white">
+        <P mx={11} my={2} font="xxl" color="white">
           PLAYLIST
         </P>
         {playlists &&
           playlists.map(pl => (
             <ListItem
               color="white"
-              mx={6}
-              space={3}
+              mx={3}
+              space={2}
               align="left"
               key={pl.id}
               onClick={() => console.log(pl.id)}

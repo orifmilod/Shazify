@@ -7,7 +7,7 @@ import Grid from "../../common/Grid";
 const Profile = props => {
   const { display_name, images } = props.userData;
   return (
-    <Grid alignItems="row" templateRow="150px 20px">
+    <Grid alignItems="row" templateRow="160px 20px" space={3}>
       <Image
         size="xxl"
         src={images.length > 0 ? images[0].url : icon}

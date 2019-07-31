@@ -47,7 +47,7 @@ app.get('/login', (req, res) => {
   let redirectURL = 'https://accounts.spotify.com/authorize?' +
   querystring.stringify({
     response_type: 'token',
-    client_id:'process.env.CLIENT_ID' ,
+    client_id:'process.env.CLIENT_ID' ,//
     scope: scope,
     redirect_uri: redirect_uri,
     state: state
