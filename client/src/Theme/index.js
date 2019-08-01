@@ -3,7 +3,7 @@ const color = {
   green: "#26C281",
   darkGradient: "linear-gradient(to bottom, #2C5364, #203A43, #0F2027)",
   blueGradient: "linear-gradient(to bottom, #4ca2cd, #67B26F);",
-  greenGradient: "linear-gradient(to top, #F37335, #FDC830);  ",
+  greenGradient: "#FFB61E",
   light: "#f8f9fa",
   white: "white"
 };

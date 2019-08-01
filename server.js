@@ -12,18 +12,25 @@ const redirect_uri = 'https://ispotify.herokuapp.com/';   // Your redirect uri
 const app = express();
 const stateKey = 'spotify_auth_state';
 
-
 const storage = multer.diskStorage({
-    destination: './uploads'
-})
-
-const upload = multer({ storage: storage })
+    destination: function (req, file, cb) {
+      cb(null, './uploads')
+    },
+    filename: function (req, file, cb) {
+      cb(null,  Date.now() + '.webm')
+    }
+  })
+// const upload = multer({ storage: storage })
+let upload = multer({
+    storage
+});
 
 app.use(express.urlencoded({
     extended: true
 }));
 
 app.use(express.json());
+
 
 let generateRandomString = (length) => {
     let text   = '';
@@ -56,14 +63,14 @@ app.get('/login', (req, res) => {
 });
 
 app.post('/audioSearch', upload.single('audio'), (req, res) => {
-    console.log(req.file)
-    console.log(req.body)
-    res.sendStatus(201)
-    // identify(new Buffer(bitmap), defaultOptions, function (err, httpResponse, body) {
-    //     if (err) console.log(err);
-    //     console.log(body);
-    // });
+    console.log(req.file.path)
+    const bitmap = fs.readFileSync(req.file.path);
+    identify(new Buffer(bitmap), defaultOptions, function (err, httpResponse, body) {
+        if (err) res.send(err).status(500)
+        res.send(body).status(200);
+    });
 });
+
 
 //Serve our static asset if in production
 if(process.env.NODE_ENV === 'production')
@@ -82,61 +89,58 @@ else
     });
 }
 
-// Replace "###...###" below with your project's host, access_key and access_secret.
 const defaultOptions = {
     host: 'identify-eu-west-1.acrcloud.com',
     endpoint: '/v1/identify',
     signature_version: '1',
     data_type:'audio',
     secure: true,
-    access_key: 'ACCESS_KEY',
-    access_secret: 'ACCESS_SECRET'
- };
+    access_key: process.env.SHAZAM_ACCESS_KEY,
+    access_secret: process.env.SHAZAM_ACCESS_SECRET
+};
   
-  function buildStringToSign(method, uri, accessKey, dataType, signatureVersion, timestamp) {
+function buildStringToSign(method, uri, accessKey, dataType, signatureVersion, timestamp) {
     return [method, uri, accessKey, dataType, signatureVersion, timestamp].join('\n');
-  }
+}
   
-  function sign(signString, accessSecret) 
-  {
+function sign(signString, accessSecret) 
+{
     return crypto.createHmac('sha1', accessSecret)
-      .update(new Buffer(signString, 'utf-8'))
-      .digest().toString('base64');
-  }
+        .update(new Buffer(signString, 'utf-8'))
+        .digest().toString('base64');
+}
   
   /*Identifies a sample of bytes*/
-  function identify(data, options, cb) {
-      let current_data = new Date();
-      let timestamp = current_data.getTime() / 1000;
-  
-      let stringToSign = buildStringToSign('POST',
-          options.endpoint,
-          options.access_key,
-          options.data_type,
-          options.signature_version,
-          timestamp
-      );
-  
-      let signature = sign(stringToSign, options.access_secret);
-  
-      let formData = {
-          sample: data,
-          access_key:options.access_key,
-          data_type:options.data_type,
-          signature_version:options.signature_version,
-          signature:signature,
-          sample_bytes:data.length,
-          timestamp:timestamp,
-      }
-      request.post({
-          url: "http://" + options.host + options.endpoint,
-          method: 'POST',
-          formData: formData
-      }, cb);
-  }
-  
-const bitmap = fs.readFileSync('sample.wav');
+function identify(data, options, cb) {
+    let current_data = new Date();
+    let timestamp = current_data.getTime() / 1000;
 
+    let stringToSign = buildStringToSign('POST',
+        options.endpoint,
+        options.access_key,
+        options.data_type,
+        options.signature_version,
+        timestamp
+    );
+
+    let signature = sign(stringToSign, options.access_secret);
+
+    let formData = {
+        sample: data,
+        access_key:options.access_key,
+        data_type:options.data_type,
+        signature_version:options.signature_version,
+        signature:signature,
+        sample_bytes:data.length,
+        timestamp:timestamp,
+    }
+    request.post({
+        url: "http://" + options.host + options.endpoint,
+        method: 'POST',
+        formData: formData
+    }, cb);
+}
+  
 const PORT = process.env.PORT || 8888;
 //serve out any static files in our public HTML folder
 app.listen(PORT, () => `Server is running on port ${PORT}`);

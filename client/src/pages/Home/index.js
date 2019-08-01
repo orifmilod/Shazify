@@ -43,7 +43,7 @@ class Home extends Component {
   };
 
   handleSearch = (e, searchFilter) => {
-    e.preventDefault();
+    if (e.preventDefault !== undefined) e.preventDefault();
     const searchLimit = 20;
     const access_token = this.getAccessToken();
     const URIEconded = encodeURI(searchFilter);
@@ -66,33 +66,26 @@ class Home extends Component {
     }
   };
 
-  audioSearch = blob => {
-    console.log(blob);
+  audioSearch = async file => {
     let formatData = new FormData();
-    formatData.append("data", blob);
+    formatData.append("audio", file.blob);
+    try {
+      const response = await fetch("http://localhost:8888/audioSearch", {
+        method: "POST",
+        body: formatData
+      });
+      const data = await response.json();
+      console.log(data);
 
-    fetch("http://localhost:8888/audioSearch", {
-      method: "POST",
-      body: { audio: blob }
-    })
-      .then(res => console.log(res.status))
-      .catch(err => console.error(err));
-    // let formData = new FormData();
-    // formData.append('file', this.state.file.blobURL);
-    // // const file = URL.createObjectURL(this.state.file.blob);
-    // fetch(`https://api.audd.io/?return=timecode%2Citunes%2Cdeezer%2Clyrics&itunes_country=us`, {
-    //     method: 'POST',
-    //     'Access-Control-Allow-Origin' : '*',
-    //     mode: 'cors', // no-cors, cors, *same-origin
-    //     headers:{
-    //         'Accept': 'Application/json, */*',
-    //         'Content-Type': ' application/x-www-form-urlencoded'
-    //     },
-    //     body: formData,
-    // })
-    // .then(data => data.json())
-    // .then(result => console.log(result))
-    // .catch(err => console.log(err))
+      let singersName = "";
+      const music = data.metadata.music[0];
+      const songName = music.title;
+      music.artists.forEach(artist => (singersName += `${artist.name} `));
+      console.log(singersName, songName);
+      this.handleSearch(this, `${singersName} ${songName}`);
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   getFeaturedPlaylists = async access_token => {

@@ -11,12 +11,12 @@
 }
 
 .recorder {
-    background: none !important;
-    width: 100%;
     margin: auto;
-    height: 80%;
+    width: 100%;
+    height: 100%;
     border: none;
-    /* border-radius: 100%; */
+    border-radius: 100%;
+    border: none;
     color: orange;
 }
 

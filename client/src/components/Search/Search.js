@@ -64,21 +64,17 @@ class Search extends Component {
 
   toggleRecording = () => {
     const { recording } = this.state;
-    // console.log("Recording", recording);
     this.setState({ recording: !recording });
   };
 
-  onData = recordedBlob => {
-    // console.log("chunk of real-time data is: ", recordedBlob);
-  };
   onStop = recordedBlob => {
-    // console.log("stopped");
     this.setState({ file: recordedBlob });
     console.log("Making req");
-    // this.props.audioSearch(recordedBlob);
-    document.getElementsByClassName("comment-list").getAttribute("data-count");
+    this.props.audioSearch(recordedBlob);
   };
-
+  onData(recordedBlob) {
+    console.log("chunk of real-time data is: ", recordedBlob);
+  }
   render() {
     const { searchInput, recording } = this.state;
     const { handleSearch } = this.props;
@@ -97,20 +93,18 @@ class Search extends Component {
           </form>
 
           <AudioSearch onClick={this.toggleRecording}>
-            {recording ? (
-              <ReactMic
-                className="recorder"
-                record={this.state.recording}
-                onStop={this.onStop}
-                onData={this.onData}
-              />
-            ) : (
-              <P color="white" font="xxl" my={2}>
-                Search Audio
-              </P>
-            )}
+            <P color="white" font="xs" my={2}>
+              {recording ? "Tap to find the track" : "Tap to search with audio"}
+            </P>
+            <ReactMic
+              className="recorder"
+              backgroundColor="rgb(255,182,30, 0.3)"
+              strokeColor="#003171"
+              onData={this.onData}
+              record={recording}
+              onStop={this.onStop}
+            />
           </AudioSearch>
-          {/* <audio controls src={this.state.file.blobURL}></audio> */}
         </Grid>
       </Grid>
     );
