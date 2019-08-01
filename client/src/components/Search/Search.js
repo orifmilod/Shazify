@@ -100,7 +100,6 @@ class Search extends Component {
               className="recorder"
               backgroundColor="rgb(255,182,30, 0.3)"
               strokeColor="#003171"
-              onData={this.onData}
               record={recording}
               onStop={this.onStop}
             />
