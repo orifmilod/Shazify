@@ -1,9 +1,9 @@
 import React from "react";
 import Track from "../Track";
-import Grid from "../../common/Grid";
+import Grid from "../../styled/Grid";
 import Gallery from "react-photo-gallery";
 
-const Home = props => {
+const Content = props => {
   const { searchList, playTrack, featuredPlaylist } = props;
   const photos = featuredPlaylist.map(pl => {
     return {
@@ -30,4 +30,4 @@ const Home = props => {
   );
 };
 
-export default Home;
+export default Content;

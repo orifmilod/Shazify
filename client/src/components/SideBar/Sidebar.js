@@ -1,7 +1,7 @@
 import React from "react";
 import Profile from "../Profile";
 import Playlist from "../Playlist";
-import Grid from "../../common/Grid";
+import Grid from "../../styled/Grid";
 
 const Sidebar = props => {
   const { userData, playlists } = props;

@@ -1,8 +1,8 @@
 import React from "react";
 
-import Grid from "../../common/Grid";
-import Image from "../../common/Image";
-import P from "../../common/P";
+import Grid from "../../styled/Grid";
+import Image from "../../styled/Image";
+import P from "../../styled/P";
 
 import { PlayCircle } from "styled-icons/boxicons-regular/PlayCircle";
 import styled from "styled-components";

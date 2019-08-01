@@ -1,6 +1,6 @@
 import React from "react";
-import P from "../../common/P";
-import ListItem from "../../common/ListItem";
+import P from "../../styled/P";
+import ListItem from "../../styled/ListItem";
 import { KeyboardArrowRight } from "styled-icons/material";
 import styled from "styled-components";
 

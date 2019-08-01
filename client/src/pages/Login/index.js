@@ -1,20 +1,24 @@
 import React from "react";
 import styled from "styled-components";
+import Grid from "../../styled/Grid";
 
 const Header = styled.h1`
-  padding-top: 15%;
+  padding-top: 250px;
+  padding-bottom: 25px;
+  margin: 0;
   color: white;
   font-size: 60px;
 `;
 
 const Title = styled.p`
   font-size: 25px;
+  margin: 0;
   color: white;
-  margin: 20px;
 `;
 
 const LoginButton = styled.a`
   color: #444444;
+  margin: auto;
   border-radius: 25px;
   padding: 15px 50px;
   background: #a8ff78; /* fallback for old browsers */
@@ -37,21 +41,23 @@ const LoginButton = styled.a`
 
 const Information = styled.p`
   color: white;
-  position: fixed;
+  position: absolute;
   bottom: 0;
   right: 10px;
 `;
 
 const Home = () => (
-  <div className="vh-100 vw-100 gradDynamic text-center">
-    <Header>Welcome to iSpotify</Header>
-    <Title>Search, Choose, Listen.</Title>
-    <LoginButton href="https://ispotify.herokuapp.com/login">LOGIN</LoginButton>
+  <Grid className="gradDynamic" direction="row">
+    <Grid height="450px">
+      <Header>Welcome to iSpotify</Header>
+      <Title>Search, Choose, Listen.</Title>
+      <LoginButton href="http://localhost:8888/login">LOGIN</LoginButton>
+    </Grid>
     <Information>
       You can only login using Spotify account.
       <i className="fab fa-spotify" />
     </Information>
-  </div>
+  </Grid>
 );
 
 export default Home;

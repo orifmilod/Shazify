@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import queryString from "query-string";
-import Grid from "../../common/Grid";
-import P from "../../common/P";
+import Grid from "../../styled/Grid";
+import P from "../../styled/P";
 import styled from "styled-components";
 import { ReactMic } from "react-mic";
 
