@@ -1,10 +1,21 @@
 import React, { Component } from "react";
 import queryString from "query-string";
+
+import styled from "styled-components";
 import Sidebar from "../../components/SideBar";
 import Player from "../../components/Player";
+
 import Grid from "../../styled/Grid";
 import Search from "../../components/Search";
 import Content from "../../components/Content";
+
+const Container = styled(Grid)`
+  grid-auto-flow: column;
+  grid-auto-columns: 1fr 5fr;
+  @media all and (max-width: 768px) {
+    grid-auto-flow: row;
+  }
+`;
 
 class Home extends Component {
   state = {
@@ -13,7 +24,7 @@ class Home extends Component {
     featuredPlaylist: [],
     userData: {}
   };
-
+  //#region Methods
   getUserData = async access_token => {
     try {
       const respone = await fetch("https://api.spotify.com/v1/me", {
@@ -42,8 +53,8 @@ class Home extends Component {
     this.setState({ currentTrackID: trackID });
   };
 
-  handleSearch = (e, searchFilter) => {
-    if (e.preventDefault !== undefined) e.preventDefault();
+  handleSearch = (event, searchFilter) => {
+    if (event.preventDefault !== undefined) event.preventDefault();
     const searchLimit = 20;
     const access_token = this.getAccessToken();
     const URIEconded = encodeURI(searchFilter);
@@ -75,13 +86,11 @@ class Home extends Component {
         body: formatData
       });
       const data = await response.json();
-      console.log(data);
 
       let singersName = "";
       const music = data.metadata.music[0];
       const songName = music.title;
       music.artists.forEach(artist => (singersName += `${artist.name} `));
-      console.log(singersName, songName);
       this.handleSearch(this, `${singersName} ${songName}`);
     } catch (err) {
       console.error(err);
@@ -120,6 +129,8 @@ class Home extends Component {
       this.getFeaturedPlaylists(access_token);
     }
   }
+  //#endregion
+
   render() {
     const {
       userData,
@@ -129,7 +140,7 @@ class Home extends Component {
       featuredPlaylist
     } = this.state;
     return (
-      <Grid direction="column" templateColumn="1fr 5fr">
+      <Container>
         <Sidebar userData={userData} playlists={playlists} />
         <Grid
           direction="row"
@@ -149,7 +160,7 @@ class Home extends Component {
           />
           <Player trackID={currentTrackID} />
         </Grid>
-      </Grid>
+      </Container>
     );
   }
 }

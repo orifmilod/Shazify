@@ -14,7 +14,7 @@ const Content = props => {
     };
   });
   return (
-    <Grid bg="light" space={5} overflow="auto">
+    <Grid bg="light" space={5} overflow="auto" px="lg">
       {searchList.length > 0 ? (
         searchList.map(track => (
           <Track key={track.id} track={track} playTrack={playTrack} />

@@ -16,9 +16,13 @@ const size = {
   xxl: "150px"
 };
 const space = {
-  sm: "4px",
-  md: "8px",
-  lg: "12px"
+  auto: "auto",
+  xxs: "2px",
+  xs: "4px",
+  sm: "8px",
+  md: "12px",
+  lg: "16px",
+  xl: "20px"
 };
 const font = {
   xs: "12px",

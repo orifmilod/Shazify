@@ -3,8 +3,7 @@ import styled from "styled-components";
 import Grid from "../../styled/Grid";
 
 const Header = styled.h1`
-  padding-top: 250px;
-  padding-bottom: 25px;
+  padding-top: 200px;
   margin: 0;
   color: white;
   font-size: 60px;

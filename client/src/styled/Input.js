@@ -1,20 +1,32 @@
 import styled from "styled-components";
 
 const Input = styled.input`
-  width: 100%;
-  height: 100% !important;
   color: black;
-  font-weight: bold;
   outline-width: 0px;
   background: ${props => (props.bg ? props.theme.color[props.bg] : "white")};
-  padding: ${props =>
-    props.space ? `${props.space * 4}px` : "0px"} !important;
-  margin: ${props =>
-    props.margin ? `${props.margin * 4}px` : "0px"} !important;
+
+  /* Padding */
+  padding-top: ${props => (props.py ? `${props.theme.space[props.py]}` : "0")};
+  padding-bottom: ${props =>
+    props.py ? `${props.theme.space[props.py]}` : "0"};
+  padding-left: ${props =>
+    props.px ? ` ${props.theme.space[props.px]}` : "0"};
+  padding-right: ${props =>
+    props.px ? `${props.theme.space[props.px]}` : "0"};
+
+  /* Margin */
+  margin-top: ${props => (props.my ? `${props.theme.size[props.my]}` : "0")};
+  margin-bottom: ${props => (props.my ? `${props.theme.size[props.my]}` : "0")};
+  margin-left: ${props => (props.mx ? `${props.theme.size[props.mx]}` : "0")};
+  margin-right: ${props => (props.mx ? `${props.theme.size[props.mx]}` : "0")};
+
   font-size: ${props => (props.lg ? "24px" : "16px")};
 
   ::placeholder {
     color: #c1c1c1;
+  }
+  :focus {
+    outline-width: 0;
   }
 `;
 
