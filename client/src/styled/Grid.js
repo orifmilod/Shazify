@@ -11,10 +11,10 @@ const Grid = styled.div`
   padding-right: ${props => `${props.theme.space[props.px]}`};
 
   /* Margin */
-  margin-top: ${props => `${props.theme.size[props.my]}`};
-  margin-bottom: ${props => `${props.theme.size[props.my]}`};
-  margin-left: ${props => `${props.theme.size[props.mx]}`};
-  margin-right: ${props => `${props.theme.size[props.mx]}`};
+  margin-top: ${props => `${props.theme.space[props.my]}`};
+  margin-bottom: ${props => `${props.theme.space[props.my]}`};
+  margin-left: ${props => `${props.theme.space[props.mx]}`};
+  margin-right: ${props => `${props.theme.space[props.mx]}`};
 
   /* Display */
   display: grid;

@@ -10,31 +10,60 @@ import styled from "styled-components";
 import ConvertMs from "../../utils/ConvertMs";
 
 const PlayButton = styled(PlayCircle)`
-  color: gray;
+  color: #1c5769;
   margin: auto;
-  height: 45px;
-  width: 45px;
+  height: 50px;
+  width: 55px;
   :hover {
-    color: green;
+    color: black;
   }
 `;
 
+const TrackContainer = styled(Grid)`
+  grid-auto-flow: column;
+  height: 110px;
+  grid-template-columns: 1fr 8fr 1fr 80px;
+  background: linear-gradient(to right, #f2c94c, #f2994a);
+  border-radius: 50px;
+  box-shadow: 5px 5px 7px 0px rgba(0, 0, 0, 0.75);
+
+  transition: 0.2s ease-in-out;
+  transform: translate(0px, 0px);
+  :hover {
+    transform: translate(-5px, -5px);
+  }
+`;
+const ClipBg = styled.span`
+  position: absolute;
+  background: linear-gradient(to right, #ff5e62, #ff9966);
+  width: 100%;
+  height: 100%;
+  border-radius: 50px;
+  clip-path: polygon(0 0, 15% 0, 30% 100%, 0 100%);
+`;
+const TrackInage = styled(Image)`
+  margin: auto 0 auto 10px;
+  z-index: 2;
+`;
 const Track = ({ track, playTrack }) => {
   const { name, artists, album, id, duration_ms } = track;
   return (
-    <Grid direction="column" height="100px" templateColumn="1fr 10fr 1fr 1fr">
-      <Image size="md" src={album.images[0].url} />
+    <TrackContainer onClick={() => playTrack(id)}>
+      <ClipBg />
+      <TrackInage size="md" src={album.images[0].url} />
       <Grid direction="row" justify="center" alignItems="center">
-        <P color="black" font="lg">
+        <P my={2} color="white" font="md">
           {name}
-        </P>
-        <P font="sm" secondary>
-          {artists.map(artists => `${artists.name} `)}
+          <P my={2} font="sm" color="white">
+            {artists.map(artists => `${artists.name} `)}
+          </P>
         </P>
       </Grid>
-      <P>{ConvertMs(duration_ms)}</P>
+      <P my={2} font="md" color="white">
+        {ConvertMs(duration_ms)}
+      </P>
       <PlayButton onClick={() => playTrack(id)} />
-    </Grid>
+    </TrackContainer>
   );
 };
 

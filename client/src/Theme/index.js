@@ -4,7 +4,8 @@ const color = {
   darkGradient: "linear-gradient(to bottom, #2C5364, #203A43, #0F2027)",
   blueGradient: "linear-gradient(to bottom, #4ca2cd, #67B26F);",
   greenGradient: "#FFB61E",
-  light: "#f8f9fa",
+  light: "#fafafa",
+  gray: "gray",
   white: "white"
 };
 const size = {

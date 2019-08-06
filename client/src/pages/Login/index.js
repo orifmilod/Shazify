@@ -46,11 +46,13 @@ const Information = styled.p`
 `;
 
 const Home = () => (
-  <Grid className="gradDynamic" direction="row">
+  <Grid className="gradDynamic" direction="row" height="100vh">
     <Grid height="450px">
       <Header>Welcome to iSpotify</Header>
       <Title>Search, Choose, Listen.</Title>
-      <LoginButton href="http://localhost:8888/login">LOGIN</LoginButton>
+      <LoginButton href="https://ispotify.herokuapp.com//login">
+        LOGIN
+      </LoginButton>
     </Grid>
     <Information>
       You can only login using Spotify account.

@@ -11,24 +11,20 @@ import { Search as SearchIcon } from "styled-icons/boxicons-regular";
 const SearchIcn = styled(SearchIcon)`
   color: gray;
   right: 150px;
-  height: 40px;
-  width: 40px;
-  position: relative;
+  height: 25px;
+  width: 25px;
+  position: absolute;
   z-index: 3;
-  left: 45%;
-  bottom: 50%;
+  left: 30px;
+  top: 33px;
 `;
 const SearchInput = styled(Input)`
   border-radius: 50px;
   height: 80%;
-  margin: auto;
+  margin: 7px;
   width: 98%;
-  border: 1px solid black;
-  padding: 30px;
+  padding: 25px 50px;
   border: none;
-  :focus {
-    border: 1px solid orange;
-  }
 `;
 
 const SearchContainer = styled(Grid)`
@@ -45,7 +41,6 @@ const AudioSearch = styled.button`
   border-radius: 50px;
   color: white;
   background: ${props => props.theme.color.greenGradient};
-  /* padding: 20px; */
   border: none;
   :focus {
     outline-width: 0;
@@ -100,16 +95,16 @@ class Search extends Component {
 
     return (
       <SearchContainer>
-        {/* <form onSubmit={e => handleSearch(e, searchInput)}> */}
-        <SearchInput
-          placeholder="Search track..."
-          type="text"
-          value={searchInput}
-          onChange={this.handleChange}
-          name="searchInput"
-        />
-        {/* <SearchIcn /> */}
-        {/* </form> */}
+        <form onSubmit={e => handleSearch(e, searchInput)}>
+          <SearchInput
+            placeholder="Search track..."
+            type="text"
+            value={searchInput}
+            onChange={this.handleChange}
+            name="searchInput"
+          />
+          <SearchIcn />
+        </form>
         <AudioSearch onClick={this.toggleRecording}>
           <P color="white" font="xs" my={2}>
             {recording ? "Tap to stop" : "Tap to Shazam"}
