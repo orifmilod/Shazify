@@ -30,7 +30,7 @@ const SearchInput = styled(Input)`
 const SearchContainer = styled(Grid)`
   grid-auto-flow: column;
   grid-template-columns: 4fr 1fr;
-  box-shadow: 4px 7px 10px 1px rgba(0, 0, 0, 0.75);
+  box-shadow: 9px 2px 10px 1px rgba(0, 0, 0, 0.75);
   z-index: 2;
 `;
 

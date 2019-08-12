@@ -9,12 +9,17 @@ const ArrowIcon = styled(KeyboardArrowRight)`
   width: 25px;
   position: absolute;
   right: 10px;
+  transition: 0.3s ease-in-out;
+`;
+const Item = styled(ListItem)`
   :hover {
-    transform: scale(1.5);
+    ${ArrowIcon} {
+      transform: translateX(8px);
+    }
   }
 `;
 const Playlist = props => {
-  const { playlists } = props;
+  const { playlists, getPlaylist } = props;
   return (
     <>
       <ul>
@@ -23,19 +28,19 @@ const Playlist = props => {
         </P>
         {playlists &&
           playlists.map(pl => (
-            <ListItem
+            <Item
               color="white"
               mx={3}
               space={2}
               align="left"
               key={pl.id}
-              onClick={() => console.log(pl.id)}
+              onClick={() => getPlaylist(pl.id)}
               divide="lightyellow"
-              font="lg"
+              font="14px"
             >
               {pl.name}
               <ArrowIcon />
-            </ListItem>
+            </Item>
           ))}
       </ul>
     </>

@@ -20,46 +20,33 @@ const PlayButton = styled(PlayCircle)`
 `;
 
 const TrackContainer = styled(Grid)`
+  overflow: hidden;
   grid-auto-flow: column;
-  height: 110px;
+  height: 70px;
   grid-template-columns: 1fr 8fr 1fr 80px;
-  background: linear-gradient(to right, #f2c94c, #f2994a);
-  border-radius: 50px;
-  box-shadow: 5px 5px 7px 0px rgba(0, 0, 0, 0.75);
-
-  transition: 0.2s ease-in-out;
-  transform: translate(0px, 0px);
-  :hover {
-    transform: translate(-5px, -5px);
-  }
+  border-top: 0.5px lightgray solid;
 `;
-const ClipBg = styled.span`
-  position: absolute;
-  background: linear-gradient(to right, #ff5e62, #ff9966);
-  width: 100%;
-  height: 100%;
-  border-radius: 50px;
-  clip-path: polygon(0 0, 15% 0, 30% 100%, 0 100%);
-`;
-const TrackInage = styled(Image)`
-  margin: auto 0 auto 10px;
+const TrackImage = styled(Image)`
+  width: 43px;
+  height: 43px;
+  margin: auto 0;
   z-index: 2;
+  border-radius: 5px;
 `;
 const Track = ({ track, playTrack }) => {
   const { name, artists, album, id, duration_ms } = track;
   return (
     <TrackContainer onClick={() => playTrack(id)}>
-      <ClipBg />
-      <TrackInage size="md" src={album.images[0].url} />
+      <TrackImage size="md" src={album.images[0].url} />
       <Grid direction="row" justify="center" alignItems="center">
-        <P my={2} color="white" font="md">
+        <P my={2} color="black" font="md">
           {name}
-          <P my={2} font="sm" color="white">
+          <P my={2} font="sm" color="gray">
             {artists.map(artists => `${artists.name} `)}
           </P>
         </P>
       </Grid>
-      <P my={2} font="md" color="white">
+      <P my={2} font="md" color="black">
         {ConvertMs(duration_ms)}
       </P>
       <PlayButton onClick={() => playTrack(id)} />

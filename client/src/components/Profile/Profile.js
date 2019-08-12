@@ -8,7 +8,11 @@ const Profile = props => {
   const { display_name, images } = props.userData;
   return (
     <Grid alignItems="row" templateRow="160px 20px" space={3}>
-      <Image size="xxl" src={images ? images[0].url : icon} alt="user-pic" />
+      <Image
+        size="xxl"
+        src={images && images.length ? images[0].url : icon}
+        alt="user-pic"
+      />
       <ListItem color="white">{display_name}</ListItem>
     </Grid>
   );

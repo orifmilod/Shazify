@@ -50,9 +50,7 @@ const Home = () => (
     <Grid height="450px">
       <Header>Welcome to iSpotify</Header>
       <Title>Search, Choose, Listen.</Title>
-      <LoginButton href="https://ispotify.herokuapp.com/login">
-        LOGIN
-      </LoginButton>
+      <LoginButton href="http://localhost:8888/login">LOGIN</LoginButton>
     </Grid>
     <Information>
       You can only login using Spotify account.

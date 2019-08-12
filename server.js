@@ -8,7 +8,7 @@ const request = require('request');
 const multer = require('multer');
 const querystring = require('querystring');
 const cookieParser = require('cookie-parser');
-const redirect_uri = 'https://ispotify.herokuapp.com/';   // Your redirect uri
+const redirect_uri = 'http://localhost:3000';   // Your redirect uri
 const app = express();
 const stateKey = 'spotify_auth_state';
 
@@ -51,7 +51,7 @@ app.get('/login', (req, res) => {
   let redirectURL = 'https://accounts.spotify.com/authorize?' +
   querystring.stringify({
     response_type: 'token',
-    client_id: process.env.CLIENT_ID,
+    client_id: '68247016a306419aab0e68ea6f6ab997',
     scope: scope,
     redirect_uri: redirect_uri,
     state: state
@@ -92,8 +92,8 @@ const defaultOptions = {
     signature_version: '1',
     data_type:'audio',
     secure: true,
-    access_key: process.env.SHAZAM_ACCESS_KEY,
-    access_secret: process.env.SHAZAM_ACCESS_SECRET
+    access_key: '6ab92a05812a341339b37b849c4df24d',//process.env.SHAZAM_ACCESS_KEY
+    access_secret: 'ila8dpuo7zhoGIrnZ5X7e64WH3YMMdUS8hs4wvbm'//process.env.SHAZAM_ACCESS_SECRET
 };
   
 function buildStringToSign(method, uri, accessKey, dataType, signatureVersion, timestamp) {

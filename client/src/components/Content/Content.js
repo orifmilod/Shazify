@@ -1,8 +1,14 @@
 import React from "react";
 import Track from "../Track";
 import Grid from "../../styled/Grid";
+import List from "../../styled/List";
 import Gallery from "react-photo-gallery";
+import styled from "styled-components";
 
+const TrackList = styled(List)`
+  display: grid;
+  grid-gap: 10px;
+`;
 const Content = props => {
   const { searchList, playTrack, featuredPlaylist } = props;
   const photos = featuredPlaylist.map(pl => {
@@ -14,17 +20,19 @@ const Content = props => {
     };
   });
   return (
-    <Grid bg="light" space={20} overflow="auto" px="lg" py="md">
+    <Grid bg="light" overflow="auto" px="lg" py="md">
       {searchList.length > 0 ? (
-        searchList.map(track => (
-          <Track key={track.id} track={track} playTrack={playTrack} />
-        ))
+        <TrackList>
+          {searchList.map(track => (
+            <Track key={track.id} track={track} playTrack={playTrack} />
+          ))}
+        </TrackList>
       ) : (
-        <>
+        <React.Fragment>
           {featuredPlaylist && (
             <Gallery photos={photos} onClick={e => console.log(e.target)} />
           )}
-        </>
+        </React.Fragment>
       )}
     </Grid>
   );

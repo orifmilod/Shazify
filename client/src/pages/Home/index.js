@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import queryString from "query-string";
 
 import styled from "styled-components";
@@ -16,7 +18,6 @@ const Container = styled(Grid)`
     grid-auto-flow: row;
   }
 `;
-
 class Home extends Component {
   state = {
     currentTrackID: "",
@@ -24,6 +25,16 @@ class Home extends Component {
     featuredPlaylist: [],
     userData: {}
   };
+  notifySuccess = messege => {
+    toast.success(messege);
+  };
+  notifyError = messege => {
+    toast.error(messege);
+  };
+  notifyWarning = messege => {
+    toast.warn(messege);
+  };
+
   //#region Methods
   getUserData = async access_token => {
     try {
@@ -33,6 +44,7 @@ class Home extends Component {
       const userData = await respone.json();
       this.setState({ userData });
     } catch (err) {
+      this.notifyError("Sorry, couldn't get user's data :(");
       console.error(err);
     }
   };
@@ -55,7 +67,7 @@ class Home extends Component {
 
   handleSearch = (event, searchFilter) => {
     if (event.preventDefault !== undefined) event.preventDefault();
-    const searchLimit = 20;
+    const searchLimit = 40;
     const access_token = this.getAccessToken();
     const URIEconded = encodeURI(searchFilter);
     if (searchFilter) {
@@ -73,7 +85,7 @@ class Home extends Component {
         .then(result => this.setState({ searchList: result.tracks.items }))
         .catch(err => console.error(err));
     } else {
-      console.log("No Input");
+      this.notifyWarning("Enter something to search. :)");
     }
   };
 
@@ -81,13 +93,10 @@ class Home extends Component {
     let formatData = new FormData();
     formatData.append("audio", file.blob);
     try {
-      const response = await fetch(
-        "https://ispotify.herokuapp.com/audioSearch",
-        {
-          method: "POST",
-          body: formatData
-        }
-      );
+      const response = await fetch("http://localhost:3000/audioSearch", {
+        method: "POST",
+        body: formatData
+      });
       const data = await response.json();
 
       let singersName = "";
@@ -96,6 +105,7 @@ class Home extends Component {
       music.artists.forEach(artist => (singersName += `${artist.name} `));
       this.handleSearch(this, `${singersName} ${songName}`);
     } catch (err) {
+      this.notifyError("Sorry couldn't find the track :(");
       console.error(err);
     }
   };
@@ -117,7 +127,28 @@ class Home extends Component {
       const featuredPlaylist = await response.json();
       this.setState({ featuredPlaylist: featuredPlaylist.playlists.items });
     } catch (err) {
+      this.notifyError("Some error occured when fetching Feature Playlists.");
       console.error(err);
+    }
+  };
+  getPlaylist = async playlistID => {
+    try {
+      const access_token = this.getAccessToken();
+      const response = await fetch(
+        `https://api.spotify.com/v1/playlists/${playlistID}`,
+        {
+          headers: {
+            Authorization: `Bearer ${access_token}`,
+            Accept: "application/json",
+            "Content-Type": "application/json"
+          }
+        }
+      );
+      const data = await response.json();
+      console.log(data);
+    } catch (error) {
+      this.notifyError("Some error occured.");
+      console.error(error);
     }
   };
   getAccessToken = () => {
@@ -135,6 +166,7 @@ class Home extends Component {
   //#endregion
 
   render() {
+    toast.configure();
     const {
       userData,
       currentTrackID,
@@ -144,7 +176,12 @@ class Home extends Component {
     } = this.state;
     return (
       <Container>
-        <Sidebar userData={userData} playlists={playlists} />
+        <Sidebar
+          getPlaylist={this.getPlaylist}
+          userData={userData}
+          playlists={playlists}
+        />
+
         <Grid
           direction="row"
           templateRow="90px 6fr 100px"

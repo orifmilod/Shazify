@@ -4,11 +4,11 @@ import Playlist from "../Playlist";
 import Grid from "../../styled/Grid";
 
 const Sidebar = props => {
-  const { userData, playlists } = props;
+  const { userData, playlists, getPlaylist } = props;
   return (
     <Grid direction="row" bg="greenGradient" templateRow="225px 1fr">
       <Profile userData={userData} />
-      <Playlist playlists={playlists} />
+      <Playlist playlists={playlists} getPlaylist={getPlaylist} />
     </Grid>
   );
 };
