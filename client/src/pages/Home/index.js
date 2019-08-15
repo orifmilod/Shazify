@@ -1,16 +1,17 @@
 import React, { Component } from "react";
+
+//Toaster
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import queryString from "query-string";
 
+//Styled components
 import styled from "styled-components";
 import Sidebar from "../../components/SideBar";
 import Player from "../../components/Player";
-
 import Grid from "../../styled/Grid";
+
 import Search from "../../components/Search";
 import Content from "../../components/Content";
-
 const Container = styled(Grid)`
   grid-auto-flow: column;
   grid-auto-columns: 1fr 5fr;
@@ -22,9 +23,9 @@ class Home extends Component {
   state = {
     currentTrackID: "",
     searchList: [],
-    featuredPlaylist: [],
     userData: {}
   };
+  //#region Toaster Methods
   notifySuccess = messege => {
     toast.success(messege);
   };
@@ -34,6 +35,7 @@ class Home extends Component {
   notifyWarning = messege => {
     toast.warn(messege);
   };
+  //#endregion
 
   //#region Methods
   getUserData = async access_token => {
@@ -57,6 +59,7 @@ class Home extends Component {
       const playlists = await response.json();
       this.setState({ playlists: playlists.items });
     } catch (err) {
+      this.notifyError("Sorry, Couldn't fetch your playlist");
       console.error(err);
     }
   };
@@ -67,26 +70,12 @@ class Home extends Component {
 
   handleSearch = (event, searchFilter) => {
     if (event.preventDefault !== undefined) event.preventDefault();
-    const searchLimit = 40;
-    const access_token = this.getAccessToken();
-    const URIEconded = encodeURI(searchFilter);
-    if (searchFilter) {
-      fetch(
-        `https://api.spotify.com/v1/search?q=${URIEconded}&type=track&market=PL&limit=${searchLimit}`,
-        {
-          headers: {
-            Authorization: `Bearer ${access_token}`,
-            Accept: "application/json",
-            "Content-Type": "application/json"
-          }
-        }
-      )
-        .then(data => data.json())
-        .then(result => this.setState({ searchList: result.tracks.items }))
-        .catch(err => console.error(err));
-    } else {
-      this.notifyWarning("Enter something to search. :)");
+    if (searchFilter === "") {
+      this.notifyWarning("Please search something.");
+      return;
     }
+    const URIEconded = encodeURI(searchFilter);
+    this.props.history.push(`/home/search/${URIEconded}`);
   };
 
   audioSearch = async file => {
@@ -98,39 +87,18 @@ class Home extends Component {
         body: formatData
       });
       const data = await response.json();
-
       let singersName = "";
       const music = data.metadata.music[0];
       const songName = music.title;
       music.artists.forEach(artist => (singersName += `${artist.name} `));
+
+      //Search as a text
       this.handleSearch(this, `${singersName} ${songName}`);
     } catch (err) {
       this.notifyError("Sorry couldn't find the track :(");
-      console.error(err);
     }
   };
 
-  getFeaturedPlaylists = async access_token => {
-    try {
-      const limit = 50;
-      const country = this.state.userData.country;
-      const response = await fetch(
-        `https://api.spotify.com/v1/browse/featured-playlists?country=${country}&limit=${limit}`,
-        {
-          headers: {
-            Authorization: `Bearer ${access_token}`,
-            Accept: "application/json",
-            "Content-Type": "application/json"
-          }
-        }
-      );
-      const featuredPlaylist = await response.json();
-      this.setState({ featuredPlaylist: featuredPlaylist.playlists.items });
-    } catch (err) {
-      this.notifyError("Some error occured when fetching Feature Playlists.");
-      console.error(err);
-    }
-  };
   getPlaylist = async playlistID => {
     try {
       const access_token = this.getAccessToken();
@@ -148,32 +116,23 @@ class Home extends Component {
       console.log(data);
     } catch (error) {
       this.notifyError("Some error occured.");
-      console.error(error);
     }
   };
   getAccessToken = () => {
-    const hash = queryString.parse(window.location.hash);
-    return hash.access_token;
+    return localStorage.getItem("accessToken");
   };
   async componentDidMount() {
     let access_token = this.getAccessToken();
     if (access_token) {
       await this.getUserData(access_token);
       this.getUserPlaylist(access_token);
-      this.getFeaturedPlaylists(access_token);
     }
   }
-  //#endregion
 
+  //#endregion
   render() {
     toast.configure();
-    const {
-      userData,
-      currentTrackID,
-      searchList,
-      playlists,
-      featuredPlaylist
-    } = this.state;
+    const { userData, currentTrackID, playlists } = this.state;
     return (
       <Container>
         <Sidebar
@@ -184,20 +143,16 @@ class Home extends Component {
 
         <Grid
           direction="row"
-          templateRow="90px 6fr 100px"
           bg="light"
           height="100vh"
+          templateRow="80px 2fr 100px"
         >
           <Search
             handleSearch={this.handleSearch}
             audioSearch={this.audioSearch}
           />
+          <Content />
 
-          <Content
-            searchList={searchList}
-            playTrack={this.playTrack}
-            featuredPlaylist={featuredPlaylist}
-          />
           <Player trackID={currentTrackID} />
         </Grid>
       </Container>

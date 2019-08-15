@@ -1,7 +1,8 @@
 import React from "react";
 
-import Grid from "../../styled/Grid";
+import ListItem from "../../styled/ListItem";
 import Image from "../../styled/Image";
+import Grid from "../../styled/Grid";
 import P from "../../styled/P";
 
 import { PlayCircle } from "styled-icons/boxicons-regular/PlayCircle";
@@ -19,7 +20,8 @@ const PlayButton = styled(PlayCircle)`
   }
 `;
 
-const TrackContainer = styled(Grid)`
+const Item = styled(ListItem)`
+  display: grid;
   overflow: hidden;
   grid-auto-flow: column;
   height: 70px;
@@ -27,16 +29,16 @@ const TrackContainer = styled(Grid)`
   border-top: 0.5px lightgray solid;
 `;
 const TrackImage = styled(Image)`
-  width: 43px;
-  height: 43px;
-  margin: auto 0;
+  width: 50px;
+  height: 50px;
+  margin: auto 15px;
   z-index: 2;
   border-radius: 5px;
 `;
 const Track = ({ track, playTrack }) => {
   const { name, artists, album, id, duration_ms } = track;
   return (
-    <TrackContainer onClick={() => playTrack(id)}>
+    <Item onClick={() => playTrack(id)}>
       <TrackImage size="md" src={album.images[0].url} />
       <Grid direction="row" justify="center" alignItems="center">
         <P my={2} color="black" font="md">
@@ -46,11 +48,11 @@ const Track = ({ track, playTrack }) => {
           </P>
         </P>
       </Grid>
-      <P my={2} font="md" color="black">
+      <P font="md" color="black">
         {ConvertMs(duration_ms)}
       </P>
       <PlayButton onClick={() => playTrack(id)} />
-    </TrackContainer>
+    </Item>
   );
 };
 

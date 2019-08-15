@@ -1,5 +1,4 @@
 const fs = require('fs');
-const url = require('url');
 const path = require('path');
 const cors = require('cors');
 const crypto = require('crypto');
@@ -12,6 +11,9 @@ const redirect_uri = 'http://localhost:3000';   // Your redirect uri
 const app = express();
 const stateKey = 'spotify_auth_state';
 
+//Routes 
+const authRoute = require('./Routes/Auth');
+app.use('/api/user', authRoute);
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
       cb(null, './uploads')
@@ -43,19 +45,19 @@ app.use(cors())
    .use(cookieParser());
 
 app.get('/login', (req, res) => {
-  let state = generateRandomString(16);
+  const state = generateRandomString(16);
   res.cookie(stateKey, state);
 
   // your application requests authorization
-  let scope = 'user-read-private user-read-email user-read-playback-state playlist-read-private';
-  let redirectURL = 'https://accounts.spotify.com/authorize?' +
-  querystring.stringify({
-    response_type: 'token',
-    client_id: '68247016a306419aab0e68ea6f6ab997',
-    scope: scope,
-    redirect_uri: redirect_uri,
-    state: state
-  });
+  const scope = 'user-read-private user-read-email user-read-playback-state playlist-read-private';
+  const redirectURL = 'https://accounts.spotify.com/authorize?' +
+    querystring.stringify({
+        response_type: 'token',
+        client_id: process.env.CLIENT_ID,
+        scope: scope,
+        redirect_uri: redirect_uri,
+        state: state
+    });
   res.redirect(redirectURL);
 });
 
@@ -92,8 +94,8 @@ const defaultOptions = {
     signature_version: '1',
     data_type:'audio',
     secure: true,
-    access_key: '6ab92a05812a341339b37b849c4df24d',//process.env.SHAZAM_ACCESS_KEY
-    access_secret: 'ila8dpuo7zhoGIrnZ5X7e64WH3YMMdUS8hs4wvbm'//process.env.SHAZAM_ACCESS_SECRET
+    access_key:process.env.SHAZAM_ACCESS_KEY ,
+    access_secret: process.env.SHAZAM_ACCESS_SECRET//
 };
   
 function buildStringToSign(method, uri, accessKey, dataType, signatureVersion, timestamp) {

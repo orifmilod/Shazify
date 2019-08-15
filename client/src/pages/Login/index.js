@@ -18,7 +18,7 @@ const Title = styled.p`
 const LoginButton = styled.a`
   color: #444444;
   margin: auto;
-  border-radius: 25px;
+  border-radius: 100px;
   padding: 15px 50px;
   background: #a8ff78; /* fallback for old browsers */
   background: -webkit-linear-gradient(
@@ -45,18 +45,22 @@ const Information = styled.p`
   right: 10px;
 `;
 
-const Home = () => (
-  <Grid className="gradDynamic" direction="row" height="100vh">
-    <Grid height="450px">
-      <Header>Welcome to iSpotify</Header>
-      <Title>Search, Choose, Listen.</Title>
-      <LoginButton href="http://localhost:8888/login">LOGIN</LoginButton>
+const Home = props => {
+  const { history } = props;
+  if (localStorage.getItem("accessToken") !== null) history.push("/home");
+  return (
+    <Grid className="gradDynamic" direction="row" height="100vh">
+      <Grid height="450px">
+        <Header>Welcome to iSpotify</Header>
+        <Title>Search, Choose, Listen.</Title>
+        <LoginButton href="http://localhost:8888/login">LOGIN</LoginButton>
+      </Grid>
+      <Information>
+        You can only login using Spotify account.
+        <i className="fab fa-spotify" />
+      </Information>
     </Grid>
-    <Information>
-      You can only login using Spotify account.
-      <i className="fab fa-spotify" />
-    </Information>
-  </Grid>
-);
+  );
+};
 
 export default Home;

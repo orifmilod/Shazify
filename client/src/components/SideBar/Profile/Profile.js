@@ -1,8 +1,8 @@
 import React from "react";
-import icon from "../../img/person-icon.png";
-import Image from "../../styled/Image";
-import ListItem from "../../styled/ListItem";
-import Grid from "../../styled/Grid";
+import icon from "../../../img/person-icon.png";
+import Image from "../../../styled/Image";
+import ListItem from "../../../styled/ListItem";
+import Grid from "../../../styled/Grid";
 
 const Profile = props => {
   const { display_name, images } = props.userData;

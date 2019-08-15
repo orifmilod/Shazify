@@ -6,7 +6,9 @@ const color = {
   greenGradient: "#FFB61E",
   light: "#fafafa",
   gray: "gray",
-  white: "white"
+  lightGray: "#d3d3d3",
+  white: "white",
+  blue: "rgb(84, 136, 150)"
 };
 const size = {
   xs: "25px",
@@ -23,7 +25,8 @@ const space = {
   sm: "8px",
   md: "12px",
   lg: "16px",
-  xl: "20px"
+  xl: "20px",
+  xxl: "24px"
 };
 const font = {
   xs: "12px",
