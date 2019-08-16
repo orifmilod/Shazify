@@ -1,11 +1,14 @@
 import React, { Component } from "react";
-import Track from "../Track";
-import List from "../../styled/List";
-import styled from "styled-components";
-import { toast } from "react-toastify";
 import { withRouter } from "react-router-dom";
+import GetAccessToken from "../../utils/GetAccessToken";
+import Track from "../Track";
+import { toast } from "react-toastify";
+
 import Grid from "../../styled/Grid";
 import P from "../../styled/P";
+import List from "../../styled/List";
+import styled from "styled-components";
+import { SadTear } from "styled-icons/fa-regular";
 
 const TrackList = styled(List)`
   display: grid;
@@ -18,8 +21,8 @@ class SearchedTrackList extends Component {
   };
   searchTrack = async searchedTrack => {
     const searchLimit = 40;
-    const access_token = localStorage.getItem("accessToken");
     try {
+      const access_token = GetAccessToken();
       const response = await fetch(
         `https://api.spotify.com/v1/search?q=${searchedTrack}&type=track&market=PL&limit=${searchLimit}`,
         {
@@ -56,7 +59,10 @@ class SearchedTrackList extends Component {
           </TrackList>
         ) : (
           <Grid>
-            <P>Please search something.</P>
+            <P>
+              Sorry, couldn't find any tracks.
+              <SadTear size={30} />
+            </P>
           </Grid>
         )}
       </>

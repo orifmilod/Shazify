@@ -42,7 +42,7 @@ const Playlist = props => {
               color="lightGray"
               align="left"
               key={playlist.id}
-              onClick={() => history.push(`/playlist/${playlist.id}`)}
+              onClick={() => history.push(`/home/playlist/${playlist.id}`)}
               font="14px"
             >
               {playlist.name}

@@ -5,12 +5,12 @@ import Image from "../../styled/Image";
 import Grid from "../../styled/Grid";
 import P from "../../styled/P";
 
-import { PlayCircle } from "styled-icons/boxicons-regular/PlayCircle";
+import { Play } from "styled-icons/boxicons-regular";
 import styled from "styled-components";
 
 import ConvertMs from "../../utils/ConvertMs";
 
-const PlayButton = styled(PlayCircle)`
+const PlayButton = styled(Play)`
   color: #1c5769;
   margin: auto;
   height: 50px;

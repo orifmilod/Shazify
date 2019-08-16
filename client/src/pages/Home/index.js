@@ -99,25 +99,6 @@ class Home extends Component {
     }
   };
 
-  getPlaylist = async playlistID => {
-    try {
-      const access_token = this.getAccessToken();
-      const response = await fetch(
-        `https://api.spotify.com/v1/playlists/${playlistID}`,
-        {
-          headers: {
-            Authorization: `Bearer ${access_token}`,
-            Accept: "application/json",
-            "Content-Type": "application/json"
-          }
-        }
-      );
-      const data = await response.json();
-      console.log(data);
-    } catch (error) {
-      this.notifyError("Some error occured.");
-    }
-  };
   getAccessToken = () => {
     return localStorage.getItem("accessToken");
   };
@@ -145,7 +126,7 @@ class Home extends Component {
           direction="row"
           bg="light"
           height="100vh"
-          templateRow="80px 2fr 100px"
+          templateRow="50px 2fr 100px"
         >
           <Search
             handleSearch={this.handleSearch}
