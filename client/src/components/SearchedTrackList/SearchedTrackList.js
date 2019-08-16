@@ -9,6 +9,7 @@ import P from "../../styled/P";
 import List from "../../styled/List";
 import styled from "styled-components";
 import { SadTear } from "styled-icons/fa-regular";
+import TrackTable from "../TrackTable";
 
 const TrackList = styled(List)`
   display: grid;
@@ -53,11 +54,7 @@ class SearchedTrackList extends Component {
     return (
       <>
         {searchList.length > 0 ? (
-          <TrackList>
-            {searchList.map(track => (
-              <Track key={track.id} track={track} playTrack={playTrack} />
-            ))}
-          </TrackList>
+          <TrackTable playTrack={playTrack} tracks={searchList} />
         ) : (
           <Grid>
             <P>

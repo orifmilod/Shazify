@@ -7,7 +7,7 @@ const request = require('request');
 const multer = require('multer');
 const querystring = require('querystring');
 const cookieParser = require('cookie-parser');
-const redirect_uri = 'http://localhost:3000';   // Your redirect uri
+const redirect_uri = 'https://ispotify.herokuapp.com/';   // Your redirect uri
 const app = express();
 const stateKey = 'spotify_auth_state';
 
@@ -94,8 +94,8 @@ const defaultOptions = {
     signature_version: '1',
     data_type:'audio',
     secure: true,
-    access_key:process.env.SHAZAM_ACCESS_KEY ,
-    access_secret: process.env.SHAZAM_ACCESS_SECRET//
+    access_key:process.env.SHAZAM_ACCESS_KEY,
+    access_secret: process.env.SHAZAM_ACCESS_SECRET
 };
   
 function buildStringToSign(method, uri, accessKey, dataType, signatureVersion, timestamp) {
@@ -141,5 +141,4 @@ function identify(data, options, cb) {
 }
   
 const PORT = process.env.PORT || 8888;
-//serve out any static files in our public HTML folder
 app.listen(PORT, () => `Server is running on port ${PORT}`);

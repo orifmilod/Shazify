@@ -1,47 +1,17 @@
 import React, { Component } from "react";
 import { toast } from "react-toastify";
 import GetAccessToken from "../../utils/GetAccessToken";
-import ConvertMs from "../../utils/ConvertMs";
 
-import { Play } from "styled-icons/evil";
+import TrackTable from "../TrackTable";
 import styled from "styled-components";
-import { Table, Row, Data, Header } from "../../styled/Table";
 import Grid from "../../styled/Grid";
 import P from "../../styled/P";
 
-const HeaderRow = styled(Row)`
-  font-size: 14px;
-  border-bottom: 0.5px lightgray solid;
-  > th {
-    padding: 10px 0;
-    color: gray;
-  }
-`;
 const HeaderImage = styled.img`
   box-shadow: 1px 1px 30px -1px rgba(0, 0, 0, 0.75);
   margin: auto;
   width: 150px;
   height: 150px;
-`;
-const BodyRow = styled(Row)`
-  > td {
-    padding: 10px 0;
-    font-size: 14px;
-  }
-  :hover {
-    background: #ececec;
-    > td > svg {
-      color: black;
-    }
-  }
-  border-bottom: 0.5px lightgray solid;
-`;
-const PlayButton = styled(Play)`
-  color: rgba(0, 0, 0, 0);
-  height: 36px;
-  width: 36px;
-  margin: 0 5px;
-  transition: 0.2s ease-in-out;
 `;
 const TableNav = styled(Grid)`
   grid-auto-columns: 250px 1fr;
@@ -82,8 +52,11 @@ class Playlist extends Component {
   }
 
   render() {
-    let { playlistData } = this.state;
-    let { playTrack } = this.props;
+    const { playlistData } = this.state;
+    const { playTrack } = this.props;
+    const tracks = playlistData
+      ? playlistData.tracks.items.map(obj => obj.track)
+      : undefined;
     return (
       <React.Fragment>
         {playlistData !== undefined ? (
@@ -96,32 +69,7 @@ class Playlist extends Component {
                 <small>followers: {playlistData.followers.total} </small>
               </Grid>
             </TableNav>
-            <Table mx="xxl" my="lg" overflow="auto">
-              <HeaderRow>
-                <Header>{/* For Play Button */}</Header>
-                <Header>Title</Header>
-                <Header>Artist</Header>
-                <Header>Album</Header>
-                <Header>Time</Header>
-              </HeaderRow>
-
-              {playlistData.tracks.items.map(item => {
-                const { track } = item;
-                return (
-                  <BodyRow key={track.id} onClick={() => playTrack(track.id)}>
-                    <Data>
-                      <PlayButton />
-                    </Data>
-                    <Data>{track.name}</Data>
-                    <Data>
-                      {track.artists.map(artist => `${artist.name} `)}
-                    </Data>
-                    <Data>{track.album.name}</Data>
-                    <Data>{ConvertMs(track.duration_ms)}</Data>
-                  </BodyRow>
-                );
-              })}
-            </Table>
+            <TrackTable playTrack={playTrack} tracks={tracks} />
           </>
         ) : (
           <div>loading</div>
