@@ -35,7 +35,8 @@ const TrackImage = styled(Image)`
   z-index: 2;
   border-radius: 5px;
 `;
-const Track = ({ track, playTrack }) => {
+const Track = props => {
+  const { track, playTrack } = props;
   const { name, artists, album, id, duration_ms } = track;
   return (
     <Item onClick={() => playTrack(id)}>

@@ -1,7 +1,6 @@
 import styled from "styled-components";
 
 export const Table = styled.table`
-  width: 100%;
   text-align: left;
   overflow: ${props => props.overflow};
   /* Padding */

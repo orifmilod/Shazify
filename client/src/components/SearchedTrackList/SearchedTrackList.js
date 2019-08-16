@@ -48,7 +48,8 @@ class SearchedTrackList extends Component {
     this.searchTrack(searchedTrack);
   }
   render() {
-    const { searchList, playTrack } = this.state;
+    const { searchList } = this.state;
+    const { playTrack } = this.props;
     return (
       <>
         {searchList.length > 0 ? (

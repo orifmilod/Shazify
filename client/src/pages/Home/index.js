@@ -132,7 +132,7 @@ class Home extends Component {
             handleSearch={this.handleSearch}
             audioSearch={this.audioSearch}
           />
-          <Content />
+          <Content playTrack={this.playTrack} />
 
           <Player trackID={currentTrackID} />
         </Grid>

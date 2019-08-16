@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import GetAccessToken from "../../utils/GetAccessToken";
 import Grid from "../../styled/Grid";
-import P from "../../styled/P";
 import Input from "../../styled/Input";
 import styled from "styled-components";
 import { ReactMic } from "react-mic";
@@ -20,6 +19,7 @@ const SearchIcn = styled(SearchIcon)`
   top: 17px;
 `;
 const SearchInput = styled(Input)`
+  font-size: 14px;
   border-radius: 50px;
   height: 80%;
   margin: 7px;
@@ -84,7 +84,6 @@ class Search extends Component {
 
   onStop = recordedBlob => {
     this.setState({ file: recordedBlob });
-    console.log("Making req");
     this.props.audioSearch(recordedBlob);
   };
   //#endregion
