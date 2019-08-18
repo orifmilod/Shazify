@@ -49,7 +49,7 @@ class FeaturedPlaylist extends Component {
         {featuredPlaylist.length > 0 ? (
           <Gallery
             photos={photos}
-            onClick={e => history.push(`/playlist/${e.target.id}`)}
+            onClick={e => history.push(`/home/playlist/${e.target.id}`)}
           />
         ) : (
           <div>
