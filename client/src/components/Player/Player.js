@@ -7,9 +7,9 @@ const IFrame = styled.iframe`
 `;
 
 const Player = props => {
+  //Player type can be track or album
   const { trackID } = props;
   const encodedUriID = encodeURI(trackID);
-
   return (
     <IFrame
       src={`https://open.spotify.com/embed/track/${encodedUriID}`}

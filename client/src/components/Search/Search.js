@@ -1,13 +1,14 @@
 import React, { Component } from "react";
-import GetAccessToken from "../../utils/GetAccessToken";
 import Grid from "../../styled/Grid";
 import Input from "../../styled/Input";
 import styled from "styled-components";
 import { ReactMic } from "react-mic";
-
 import { Search as SearchIcon } from "styled-icons/boxicons-regular";
-import { toast } from "react-toastify";
-
+import shazamIcon from "../../img/shazam.png";
+import "../../shockwave.css";
+const Shazam = styled.img`
+    heig
+`;
 const SearchIcn = styled(SearchIcon)`
   color: black;
   right: 150px;
@@ -54,30 +55,11 @@ class Search extends Component {
     recording: false,
     file: {}
   };
-  //#region Methods
   handleChange = event => {
     this.setState({ [event.target.name]: event.target.value });
   };
-
-  getPlayer = async event => {
-    event.preventDefault();
-    try {
-      const access_token = GetAccessToken();
-      const response = await fetch("https://api.spotify.com/v1/me/player", {
-        headers: {
-          Authorization: `Bearer ${access_token}`,
-          Accept: "application/json",
-          "Content-Type": "application/json"
-        }
-      });
-      const data = response.json();
-      console.log(data);
-    } catch (error) {
-      toast.error("Get Player Error");
-    }
-  };
-
-  toggleRecording = () => {
+  toggleRecording = e => {
+    e.currentTarget.classList.toggle("is-active");
     const { recording } = this.state;
     this.setState({ recording: !recording });
   };
@@ -86,7 +68,6 @@ class Search extends Component {
     this.setState({ file: recordedBlob });
     this.props.audioSearch(recordedBlob);
   };
-  //#endregion
   render() {
     const { searchInput, recording } = this.state;
     const { handleSearch } = this.props;
@@ -103,15 +84,20 @@ class Search extends Component {
           />
           <SearchIcn />
         </form>
-        <AudioSearch onClick={this.toggleRecording}>
-          <ReactMic
-            className="recorder"
-            backgroundColor="rgb(255,182,30, 0.3)"
-            strokeColor="#003171"
-            record={recording}
-            onStop={this.onStop}
-          />
-        </AudioSearch>
+        <Grid class="btn-container" direction="column">
+          <button class="btn btn--shockwave" onClick={this.toggleRecording}>
+            <img src={shazamIcon} height="50px" width="50px" alt="shazamIcon" />
+          </button>
+          <AudioSearch>
+            <ReactMic
+              className="recorder"
+              backgroundColor="rgb(255,182,30, 0.4)"
+              strokeColor="#003171"
+              record={recording}
+              onStop={this.onStop}
+            />
+          </AudioSearch>
+        </Grid>
       </SearchContainer>
     );
   }
