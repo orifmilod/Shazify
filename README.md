@@ -3,9 +3,9 @@
 <p>
 iSpotify A full stack music player app which uses Spotify API endpoints, which can search tracks available on Spotify and play them, and you can shazam audio of a track and its will find and search on Spotify. play your playlist from Spotify and popular playlists in your area.
 </p>
-<img src='https://user-images.githubusercontent.com/25881325/62538632-913cfb80-b853-11e9-89ca-cdef15216eda.png'/>
-<img src='https://user-images.githubusercontent.com/25881325/62538681-af0a6080-b853-11e9-9f41-c3503462e448.png'/>
-<p>Here is a short clip of the app, click <a rel="noreferrer" target="_blank" href='https://youtu.be/dQ_GTLdNGg4'>here</a></p> 
+<img src='https://user-images.githubusercontent.com/25881325/63230593-0f63af80-c20f-11e9-8ea4-5123ded5332f.png'/>
+<img src='https://user-images.githubusercontent.com/25881325/63228091-c7349500-c1ee-11e9-842e-ae911c34e2e8.png'/>
+<p>Here is a short clip of the app, click <a rel="noreferrer" target="_blank" href='https://youtu.be/L3bMfqALPP4'>here</a></p> 
 <h3> Technologies used </h3>
 <ul>
   <li>React.JS </li>
