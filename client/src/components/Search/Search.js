@@ -1,14 +1,13 @@
 import React, { Component } from "react";
 import Grid from "../../styled/Grid";
 import Input from "../../styled/Input";
+import P from "../../styled/P";
 import styled from "styled-components";
 import { ReactMic } from "react-mic";
 import { Search as SearchIcon } from "styled-icons/boxicons-regular";
 import shazamIcon from "../../img/shazam.png";
 import "../../shockwave.css";
-const Shazam = styled.img`
-    heig
-`;
+
 const SearchIcn = styled(SearchIcon)`
   color: black;
   right: 150px;
@@ -18,6 +17,16 @@ const SearchIcn = styled(SearchIcon)`
   z-index: 3;
   left: 20px;
   top: 17px;
+`;
+const TextSlide = styled(P)`
+  background: #47a8e6;
+  border-radius: 15px;
+  width: 100px;
+  height: 30px;
+  padding: 5px 0;
+  color: white;
+  font-size: 12px;
+  transition: 1s ease-in-out;
 `;
 const SearchInput = styled(Input)`
   font-size: 14px;
@@ -88,6 +97,7 @@ class Search extends Component {
           <button class="btn btn--shockwave" onClick={this.toggleRecording}>
             <img src={shazamIcon} height="50px" width="50px" alt="shazamIcon" />
           </button>
+          <TextSlide>{recording ? "Tap to search" : "Tap to shazam"}</TextSlide>
           <AudioSearch>
             <ReactMic
               className="recorder"

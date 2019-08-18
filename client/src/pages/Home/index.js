@@ -97,7 +97,6 @@ class Home extends Component {
       //Search as a text
       this.handleSearch(this, `${singersName} ${songName}`);
     } catch (err) {
-      console.log(err);
       this.notifyError("Sorry couldn't find the track. :(");
     }
   };
