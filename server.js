@@ -7,7 +7,7 @@ const request = require('request');
 const multer = require('multer');
 const querystring = require('querystring');
 const cookieParser = require('cookie-parser');
-const redirect_uri = 'https://ispotify.herokuapp.com/';   // Your redirect uri
+const redirect_uri = 'https://shazify.herokuapp.com/';   // Your redirect uri
 const app = express();
 const stateKey = 'spotify_auth_state';
 

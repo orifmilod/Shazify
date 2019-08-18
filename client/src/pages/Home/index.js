@@ -83,7 +83,7 @@ class Home extends Component {
     formatData.append("audio", file.blob);
     try {
       const response = await fetch(
-        "https://ispotify.herokuapp.com/audioSearch",
+        "https://shazify.herokuapp.com/audioSearch",
         {
           method: "POST",
           body: formatData

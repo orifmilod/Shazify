@@ -52,10 +52,10 @@ const Home = props => {
   return (
     <Grid className="gradDynamic" direction="row" height="100vh">
       <Grid height="450px">
-        <Header>Welcome to iSpotify</Header>
+        <Header>Welcome to Shazify</Header>
         <Title>Search, Choose, Listen.</Title>
         <LoginButton
-          href="https://ispotify.herokuapp.com/login"
+          href="https://shazify.herokuapp.com/login"
           target="_blank"
           rel="noopener noreferrer"
         >
