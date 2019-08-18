@@ -7,7 +7,7 @@ const request = require('request');
 const multer = require('multer');
 const querystring = require('querystring');
 const cookieParser = require('cookie-parser');
-const redirect_uri = 'https://ispotify.herokuapp.com/';   // Your redirect uri
+const redirect_uri = 'http://ispotify.herokuapp.com/';   // Your redirect uri
 const app = express();
 const stateKey = 'spotify_auth_state';
 
@@ -53,7 +53,7 @@ app.get('/login', (req, res) => {
   const redirectURL = 'https://accounts.spotify.com/authorize?' +
     querystring.stringify({
         response_type: 'token',
-        client_id: process.env.CLIENT_ID,
+        client_id:  process.env.CLIENT_ID,
         scope: scope,
         redirect_uri: redirect_uri,
         state: state
@@ -62,9 +62,8 @@ app.get('/login', (req, res) => {
 });
 
 app.post('/audioSearch', upload.single('audio'), (req, res) => {
-    console.log(req.file.path)
     const bitmap = fs.readFileSync(req.file.path);
-    identify(new Buffer(bitmap), defaultOptions, function (err, httpResponse, body) {
+    identify(Buffer.from(bitmap), defaultOptions, function (err, httpResponse, body) {
         if (err) res.send(err).status(500)
         res.send(body).status(200);
     });
@@ -75,7 +74,6 @@ app.post('/audioSearch', upload.single('audio'), (req, res) => {
 if(process.env.NODE_ENV === 'production')
 {
     app.use(express.static('client/build'));
-    
     app.get('*', (req, res) => {
         res.sendfile(path.resolve(__dirname, 'client', 'build', 'index.html'));
     });
@@ -83,8 +81,8 @@ if(process.env.NODE_ENV === 'production')
 else 
 {
     app.use(express.static(path.join(__dirname, '/client/public')));
-    app.get("*", function(req, res) {
-    res.sendFile(path.join(__dirname, "./client/public/index.html"));
+    app.get("*", (req, res) =>  {
+        res.sendFile(path.join(__dirname, "./client/public/index.html"));
     });
 }
 
@@ -94,7 +92,7 @@ const defaultOptions = {
     signature_version: '1',
     data_type:'audio',
     secure: true,
-    access_key:process.env.SHAZAM_ACCESS_KEY,
+    access_key: process.env.SHAZAM_ACCESS_KEY,
     access_secret: process.env.SHAZAM_ACCESS_SECRET
 };
   

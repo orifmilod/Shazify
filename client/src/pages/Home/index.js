@@ -83,7 +83,7 @@ class Home extends Component {
     formatData.append("audio", file.blob);
     try {
       const response = await fetch(
-        "https://ispotify.herokuapp.com/audioSearch",
+        "http://ispotify.herokuapp.com/audioSearch",
         {
           method: "POST",
           body: formatData
@@ -94,11 +94,11 @@ class Home extends Component {
       const music = data.metadata.music[0];
       const songName = music.title;
       music.artists.forEach(artist => (singersName += `${artist.name} `));
-
       //Search as a text
       this.handleSearch(this, `${singersName} ${songName}`);
     } catch (err) {
-      this.notifyError("Sorry couldn't find the track :(");
+      console.log(err);
+      this.notifyError("Sorry couldn't find the track. :(");
     }
   };
 

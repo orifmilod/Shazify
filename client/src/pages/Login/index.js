@@ -53,7 +53,7 @@ const Home = props => {
       <Grid height="450px">
         <Header>Welcome to iSpotify</Header>
         <Title>Search, Choose, Listen.</Title>
-        <LoginButton href="https://ispotify.herokuapp.com/login">
+        <LoginButton href="http://ispotify.herokuapp.com/login">
           LOGIN
         </LoginButton>
       </Grid>

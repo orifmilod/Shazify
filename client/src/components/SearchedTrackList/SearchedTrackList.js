@@ -1,20 +1,12 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 import GetAccessToken from "../../utils/GetAccessToken";
-import Track from "../Track";
 import { toast } from "react-toastify";
 
 import Grid from "../../styled/Grid";
 import P from "../../styled/P";
-import List from "../../styled/List";
-import styled from "styled-components";
 import { SadTear } from "styled-icons/fa-regular";
 import TrackTable from "../TrackTable";
-
-const TrackList = styled(List)`
-  display: grid;
-  grid-gap: 10px;
-`;
 
 class SearchedTrackList extends Component {
   state = {
