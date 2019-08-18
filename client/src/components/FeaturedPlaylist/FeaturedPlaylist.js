@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import Gallery from "react-photo-gallery";
 import { toast } from "react-toastify";
 import { withRouter } from "react-router-dom";
-
+import { SadTear } from "styled-icons/fa-regular";
 class FeaturedPlaylist extends Component {
   state = {
     featuredPlaylist: []
@@ -49,10 +49,12 @@ class FeaturedPlaylist extends Component {
         {featuredPlaylist.length > 0 ? (
           <Gallery
             photos={photos}
-            onClick={e => history.push(`playlist/${e.target.id}`)}
+            onClick={e => history.push(`/playlist/${e.target.id}`)}
           />
         ) : (
-          <div>Sorry could find the featured playlist</div>
+          <div>
+            Sorry could find the featured playlist. <SadTear size="24" />
+          </div>
         )}
       </React.Fragment>
     );
