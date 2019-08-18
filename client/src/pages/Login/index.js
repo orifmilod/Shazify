@@ -55,7 +55,7 @@ const Home = props => {
         <Header>Welcome to iSpotify</Header>
         <Title>Search, Choose, Listen.</Title>
         <LoginButton
-          href="http://ispotify.herokuapp.com/login"
+          href="https://ispotify.herokuapp.com/login"
           target="_blank"
           rel="noopener noreferrer"
         >
