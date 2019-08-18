@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import Grid from "../../styled/Grid";
+import GithubCorner from "react-github-corner";
 
 const Header = styled.h1`
   padding-top: 200px;
@@ -53,9 +54,20 @@ const Home = props => {
       <Grid height="450px">
         <Header>Welcome to iSpotify</Header>
         <Title>Search, Choose, Listen.</Title>
-        <LoginButton href="http://ispotify.herokuapp.com/login">
+        <LoginButton
+          href="http://ispotify.herokuapp.com/login"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
           LOGIN
         </LoginButton>
+        <GithubCorner
+          href="https://github.com/milad440550/iSpotify"
+          target="_blank"
+          rel="noopener noreferrer"
+          bannerColor="#000000"
+          octoColor="#ffffff"
+        />
       </Grid>
       <Information>
         You can only login using Spotify account.
