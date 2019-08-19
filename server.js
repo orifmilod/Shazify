@@ -11,9 +11,6 @@ const redirect_uri = 'https://shazify.herokuapp.com/';   // Your redirect uri
 const app = express();
 const stateKey = 'spotify_auth_state';
 
-//Routes 
-const authRoute = require('./Routes/Auth');
-app.use('/api/user', authRoute);
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
       cb(null, './uploads')
