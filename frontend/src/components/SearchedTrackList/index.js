@@ -48,13 +48,13 @@ class SearchedTrackList extends Component {
         {searchList.length > 0 ? (
           <TrackTable playTrack={playTrack} tracks={searchList} />
         ) : (
-          <Grid>
-            <P>
-              Sorry, couldn't find any tracks.
+            <Grid>
+              <P>
+                Sorry, couldn't find any tracks.
               <SadTear size={30} />
-            </P>
-          </Grid>
-        )}
+              </P>
+            </Grid>
+          )}
       </>
     );
   }

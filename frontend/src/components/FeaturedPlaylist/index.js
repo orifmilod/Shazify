@@ -52,10 +52,10 @@ class FeaturedPlaylist extends Component {
             onClick={e => history.push(`/home/playlist/${e.target.id}`)}
           />
         ) : (
-          <div>
-            Sorry could find the featured playlist. <SadTear size="24" />
-          </div>
-        )}
+            <div>
+              Sorry could find the featured playlist. <SadTear size="24" />
+            </div>
+          )}
       </React.Fragment>
     );
   }

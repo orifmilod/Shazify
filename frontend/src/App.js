@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./App.css";
 import {
   BrowserRouter as Router,
@@ -13,27 +13,25 @@ import theme from "./Theme";
 import queryString from "query-string";
 import ProtectedRoute from "./routes/ProtectedRoute";
 
-class App extends React.Component {
-  componentWillMount() {
+export default function App() {
+  useEffect(() => {
     const hash = queryString.parse(window.location.hash);
     if (hash.access_token) {
       localStorage.setItem("accessToken", hash.access_token);
     }
-  }
-  render() {
-    return (
-      <Router>
-        <ThemeProvider theme={theme}>
-          <div className="App">
-            <Switch>
-              <Route exact path="/" component={Login} />
-              <ProtectedRoute path="/home" render={Home} />
-              <Redirect to="/" />
-            </Switch>
-          </div>
-        </ThemeProvider>
-      </Router>
-    );
-  }
+  }, [])
+  return (
+    <Router>
+      <ThemeProvider theme={theme}>
+        <div className="App">
+          <Switch>
+            <Route exact path="/" component={Login} />
+            <ProtectedRoute path="/home" render={Home} />
+            <Redirect to="/" />
+          </Switch>
+        </div>
+      </ThemeProvider>
+    </Router>
+  );
 }
-export default App;
+

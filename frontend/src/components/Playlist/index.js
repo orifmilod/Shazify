@@ -72,8 +72,8 @@ class Playlist extends Component {
             <TrackTable playTrack={playTrack} tracks={tracks} />
           </>
         ) : (
-          <div>loading</div>
-        )}
+            <div>loading</div>
+          )}
       </React.Fragment>
     );
   }

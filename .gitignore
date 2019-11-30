@@ -2,8 +2,11 @@
 
 # dependencies
 /node_modules
-/client/node_modules/
-/client/build/
+package-lock.json
+
+/frontend/node_modules/
+/frontend/build/
+/frontend/package-lock.json
 
 package-lock.json
 # production

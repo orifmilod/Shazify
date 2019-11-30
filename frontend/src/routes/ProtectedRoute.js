@@ -1,7 +1,7 @@
 import React from "react";
 import { Route, Redirect } from "react-router-dom";
 
-const ProtectedRoute = ({ render: Component, ...rest }) => {
+export default function ProtectedRoute({ render: Component, ...rest }) {
   const accessToken = localStorage.getItem("accessToken");
   return (
     <Route
@@ -9,20 +9,13 @@ const ProtectedRoute = ({ render: Component, ...rest }) => {
       render={props => {
         if (accessToken !== null) {
           return <Component {...props} />;
-        } else {
+        }
+        else {
           return (
-            <Redirect
-              to={{
-                pathname: "/",
-                state: {
-                  from: props.location
-                }
-              }}
-            />
+            <Redirect to={{ pathname: "/", state: { from: props.location } }} />
           );
         }
       }}
     />
   );
 };
-export default ProtectedRoute;
