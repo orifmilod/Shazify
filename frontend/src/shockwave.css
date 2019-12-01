@@ -1,183 +1,183 @@
 .btn-container {
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -ms-flex-wrap: wrap;
-    flex-wrap: wrap;
-    -ms-flex-pack: distribute;
-    justify-content: space-around;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  -ms-flex-pack: distribute;
+  justify-content: space-around;
 }
 
 .btn {
-    width: 50px;
-    line-height: 50px;
-    background: rgba(0, 0, 0, 0);
-    border-radius: 50%;
-    text-align: center;
-    margin: 0;
-    font-size: 0.8rem;
-    border: none;
-    padding: 0;
-    position: relative;
-    outline: none;
+  width: 50px;
+  line-height: 50px;
+  background: rgba(0, 0, 0, 0);
+  border-radius: 50%;
+  text-align: center;
+  margin: 0;
+  font-size: 0.8rem;
+  border: none;
+  padding: 0;
+  position: relative;
+  outline: none;
 }
 
 .btn--shockwave.is-active {
-    -webkit-animation: shockwaveJump 1s ease-out infinite;
-    animation: shockwaveJump 1s ease-out infinite;
+  -webkit-animation: shockwaveJump 1s ease-out infinite;
+  animation: shockwaveJump 1s ease-out infinite;
 }
 
 .btn--shockwave.is-active:after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    border-radius: 50%;
-    -webkit-animation: shockwave 1s .65s ease-out infinite;
-    animation: shockwave 1s .65s ease-out infinite;
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  border-radius: 50%;
+  -webkit-animation: shockwave 1s .65s ease-out infinite;
+  animation: shockwave 1s .65s ease-out infinite;
 }
 
 .btn--shockwave.is-active:before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    border-radius: 50%;
-    -webkit-animation: shockwave 1s .5s ease-out infinite;
-    animation: shockwave 1s .5s ease-out infinite;
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  border-radius: 50%;
+  -webkit-animation: shockwave 1s .5s ease-out infinite;
+  animation: shockwave 1s .5s ease-out infinite;
 }
 
 @-webkit-keyframes shockwaveJump {
-    0% {
-        -webkit-transform: scale(1);
-        transform: scale(1);
-    }
+  0% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
 
-    40% {
-        -webkit-transform: scale(1.08);
-        transform: scale(1.08);
-    }
+  40% {
+    -webkit-transform: scale(1.08);
+    transform: scale(1.08);
+  }
 
-    50% {
-        -webkit-transform: scale(0.98);
-        transform: scale(0.98);
-    }
+  50% {
+    -webkit-transform: scale(0.98);
+    transform: scale(0.98);
+  }
 
-    55% {
-        -webkit-transform: scale(1.02);
-        transform: scale(1.02);
-    }
+  55% {
+    -webkit-transform: scale(1.02);
+    transform: scale(1.02);
+  }
 
-    60% {
-        -webkit-transform: scale(0.98);
-        transform: scale(0.98);
-    }
+  60% {
+    -webkit-transform: scale(0.98);
+    transform: scale(0.98);
+  }
 
-    100% {
-        -webkit-transform: scale(1);
-        transform: scale(1);
-    }
+  100% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
 }
 
 @keyframes shockwaveJump {
-    0% {
-        -webkit-transform: scale(1);
-        transform: scale(1);
-    }
+  0% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
 
-    40% {
-        -webkit-transform: scale(1.08);
-        transform: scale(1.08);
-    }
+  40% {
+    -webkit-transform: scale(1.08);
+    transform: scale(1.08);
+  }
 
-    50% {
-        -webkit-transform: scale(0.98);
-        transform: scale(0.98);
-    }
+  50% {
+    -webkit-transform: scale(0.98);
+    transform: scale(0.98);
+  }
 
-    55% {
-        -webkit-transform: scale(1.02);
-        transform: scale(1.02);
-    }
+  55% {
+    -webkit-transform: scale(1.02);
+    transform: scale(1.02);
+  }
 
-    60% {
-        -webkit-transform: scale(0.98);
-        transform: scale(0.98);
-    }
+  60% {
+    -webkit-transform: scale(0.98);
+    transform: scale(0.98);
+  }
 
-    100% {
-        -webkit-transform: scale(1);
-        transform: scale(1);
-    }
+  100% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
 }
 
 @-webkit-keyframes shockwave {
-    0% {
-        -webkit-transform: scale(1);
-        transform: scale(1);
-        box-shadow: 0 0 2px rgb(84, 136, 150), inset 0 0 1px rgb(84, 136, 150);
-    }
+  0% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+    box-shadow: 0 0 2px rgb(84, 136, 150), inset 0 0 1px rgb(84, 136, 150);
+  }
 
-    95% {
-        box-shadow: 0 0 50px transparent, inset 0 0 30px transparent;
-    }
+  95% {
+    box-shadow: 0 0 50px transparent, inset 0 0 30px transparent;
+  }
 
-    100% {
-        -webkit-transform: scale(10.25);
-        transform: scale(10.25);
-    }
+  100% {
+    -webkit-transform: scale(10.25);
+    transform: scale(10.25);
+  }
 }
 
 @keyframes shockwave {
-    0% {
-        -webkit-transform: scale(1);
-        transform: scale(1);
-        box-shadow: 0 0 2px rgb(0, 154, 196), inset 0 0 1px rgb(1, 175, 249);
-    }
+  0% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+    box-shadow: 0 0 2px rgb(0, 154, 196), inset 0 0 1px rgb(1, 175, 249);
+  }
 
-    95% {
-        box-shadow: 0 0 50px transparent, inset 0 0 30px transparent;
-    }
+  95% {
+    box-shadow: 0 0 50px transparent, inset 0 0 30px transparent;
+  }
 
-    100% {
-        -webkit-transform: scale(5.25);
-        transform: scale(5.25);
-    }
+  100% {
+    -webkit-transform: scale(5.25);
+    transform: scale(5.25);
+  }
 }
 
 .btn--jump.is-active {
-    -webkit-animation: .4s jump ease infinite alternate;
-    animation: .4s jump ease infinite alternate;
+  -webkit-animation: .4s jump ease infinite alternate;
+  animation: .4s jump ease infinite alternate;
 }
 
 @-webkit-keyframes jump {
-    0% {
-        -webkit-transform: scale(1);
-        transform: scale(1);
-        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
-    }
+  0% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
+  }
 
-    100% {
-        -webkit-transform: scale(1.05);
-        transform: scale(1.05);
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-    }
+  100% {
+    -webkit-transform: scale(1.05);
+    transform: scale(1.05);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  }
 }
 
 @keyframes jump {
-    0% {
-        -webkit-transform: scale(1);
-        transform: scale(1);
-        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
-    }
+  0% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
+  }
 
-    100% {
-        -webkit-transform: scale(1.05);
-        transform: scale(1.05);
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-    }
+  100% {
+    -webkit-transform: scale(1.05);
+    transform: scale(1.05);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  }
 }

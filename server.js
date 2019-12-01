@@ -7,7 +7,8 @@ const request = require('request');
 const multer = require('multer');
 const querystring = require('querystring');
 const cookieParser = require('cookie-parser');
-const redirect_uri = 'https://shazify.herokuapp.com/';   // Your redirect uri
+const redirect_uri = 'http://localhost:3000';   // Your redirect uri
+
 const app = express();
 const stateKey = 'spotify_auth_state';
 
@@ -21,10 +22,7 @@ const storage = multer.diskStorage({
 })
 let upload = multer({ storage });
 
-app.use(express.urlencoded({
-  extended: true
-}));
-
+app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 
@@ -38,8 +36,7 @@ let generateRandomString = (length) => {
   return text;
 };
 
-app.use(cors())
-  .use(cookieParser());
+app.use(cors()).use(cookieParser());
 
 app.get('/login', (req, res) => {
   const state = generateRandomString(16);
@@ -49,11 +46,11 @@ app.get('/login', (req, res) => {
   const scope = 'user-read-private user-read-email user-read-playback-state playlist-read-private';
   const redirectURL = 'https://accounts.spotify.com/authorize?' +
     querystring.stringify({
-      response_type: 'token',
-      client_id: '68247016a306419aab0e68ea6f6ab997', //process.env.CLIENT_ID
+      state: state,
       scope: scope,
+      response_type: 'token',
       redirect_uri: redirect_uri,
-      state: state
+      client_id: '68247016a306419aab0e68ea6f6ab997', //process.env.CLIENT_ID
     });
   res.redirect(redirectURL);
 });
@@ -69,24 +66,24 @@ app.post('/audioSearch', upload.single('audio'), (req, res) => {
 
 //Serve our static asset if in production
 if (process.env.NODE_ENV === 'production') {
-  app.use(express.static('client/build'));
+  app.use(express.static('frontend/build'));
   app.get('*', (req, res) => {
-    res.sendfile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+    res.sendfile(path.resolve(__dirname, 'frontend', 'build', 'index.html'));
   });
 }
 else {
-  app.use(express.static(path.join(__dirname, '/client/public')));
+  app.use(express.static(path.join(__dirname, '/frontend/public')));
   app.get("*", (req, res) => {
-    res.sendFile(path.join(__dirname, "./client/public/index.html"));
+    res.sendFile(path.join(__dirname, "./frontend/public/index.html"));
   });
 }
 
 const defaultOptions = {
-  host: 'identify-eu-west-1.acrcloud.com',
-  endpoint: '/v1/identify',
-  signature_version: '1',
-  data_type: 'audio',
   secure: true,
+  data_type: 'audio',
+  signature_version: '1',
+  endpoint: '/v1/identify',
+  host: 'identify-eu-west-1.acrcloud.com',
   access_key: '6ab92a05812a341339b37b849c4df24d',//process.env.SHAZAM_ACCESS_KEY
   access_secret: 'ila8dpuo7zhoGIrnZ5X7e64WH3YMMdUS8hs4wvbm' // process.env.SHAZAM_ACCESS_SECRET
 };
@@ -132,5 +129,5 @@ function identify(data, options, cb) {
   }, cb);
 }
 
-const PORT = process.env.PORT || 8888;
-app.listen(PORT, () => `Server is running on port ${PORT}`);
+const port = process.env.PORT || 8888;
+app.listen(port, () => console.log(`Server running on port ${port}`));

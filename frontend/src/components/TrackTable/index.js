@@ -1,10 +1,10 @@
 import React from "react";
-import Track from "../Track";
 
-import { Table, Header, Row } from "../../styled/Table";
+import Track from "../Track";
+import Table from "../../styled/Table";
 import styled from "styled-components";
 
-const HeaderRow = styled(Row)`
+const HeaderRow = styled(Table.Row)`
   font-size: 14px;
   border-bottom: 0.5px lightgray solid;
   > th {
@@ -12,20 +12,19 @@ const HeaderRow = styled(Row)`
     color: gray;
   }
 `;
+
 const TrackTable = props => {
   const { playTrack, tracks } = props;
   return (
     <Table mx="xxl" my="lg" overflow="auto">
       <HeaderRow>
-        <Header>{/* For Play Button */}</Header>
-        <Header>Title</Header>
-        <Header>Artist</Header>
-        <Header>Album</Header>
-        <Header>Time</Header>
+        <Table.Header>{/* For Play Button */}</Table.Header>
+        <Table.Header>Title</Table.Header>
+        <Table.Header>Artist</Table.Header>
+        <Table.Header>Album</Table.Header>
+        <Table.Header>Time</Table.Header>
       </HeaderRow>
-      {tracks.map(track => (
-        <Track track={track} playTrack={playTrack} />
-      ))}
+      {tracks.map(track => <Track track={track} playTrack={playTrack} />)}
     </Table>
   );
 };

@@ -19,7 +19,8 @@ export default function App() {
     if (hash.access_token) {
       localStorage.setItem("accessToken", hash.access_token);
     }
-  }, [])
+  }, []);
+
   return (
     <Router>
       <ThemeProvider theme={theme}>

@@ -1,13 +1,10 @@
 import React from "react";
-import { KeyboardArrowRight } from "styled-icons/material";
+import { withRouter } from "react-router-dom";
 import styled from "styled-components";
 
-import P from "../../../styled/P";
-import ListItem from "../../../styled/ListItem";
-import List from "../../../styled/List";
-import Grid from "../../../styled/Grid";
+import { List, Grid, P } from "../../../styled";
+import { KeyboardArrowRight } from "styled-icons/material";
 
-import { withRouter } from "react-router-dom";
 const ArrowIcon = styled(KeyboardArrowRight)`
   height: 25px;
   width: 25px;
@@ -15,7 +12,7 @@ const ArrowIcon = styled(KeyboardArrowRight)`
   right: 20px;
   transition: 0.3s ease-in-out;
 `;
-const Item = styled(ListItem)`
+const Item = styled(List.Item)`
   padding: 8px 30px;
   border-left: 3px orange solid;
   :hover {
@@ -28,6 +25,7 @@ const PlaylistList = styled(List)`
   text-align: left;
   grid-gap: 10px;
 `;
+
 const Playlist = props => {
   const { playlists, history } = props;
   return (

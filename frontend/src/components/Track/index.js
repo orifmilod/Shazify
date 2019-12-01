@@ -1,11 +1,11 @@
 import React from "react";
 
-import { Row, Data } from "../../styled/Table";
+import { Table } from "../../styled";
 import { Play } from "styled-icons/evil";
 import styled from "styled-components";
 import ConvertMs from "../../utils/ConvertMs";
 
-const BodyRow = styled(Row)`
+const BodyRow = styled(Table.Row)`
   > td {
     padding: 10px 0;
     font-size: 14px;
@@ -20,27 +20,24 @@ const BodyRow = styled(Row)`
 `;
 
 const PlayButton = styled(Play)`
-  color: rgba(0, 0, 0, 0);
+   color: rgba(0, 0, 0, 0);
   height: 36px;
   width: 36px;
   margin: 0 5px;
   transition: 0.2s ease-in-out;
 `;
-const Track = props => {
-  const { track, playTrack } = props;
+
+export default function Track({ track, playTrack }) {
   const { name, artists, album, id, duration_ms } = track;
 
   return (
     <BodyRow key={id} onClick={() => playTrack(id)}>
-      <Data>
-        <PlayButton />
-      </Data>
-      <Data>{name}</Data>
-      <Data>{artists.map(artist => `${artist.name} `)}</Data>
-      <Data>{album.name}</Data>
-      <Data>{ConvertMs(duration_ms)}</Data>
+      <Table.Data> <PlayButton /> </Table.Data>
+      <Table.Data>{name}</Table.Data>
+      <Table.Data>{artists.map(artist => `${artist.name} `)}</Table.Data>
+      <Table.Data>{album.name}</Table.Data>
+      <Table.Data>{ConvertMs(duration_ms)}</Table.Data>
     </BodyRow>
   );
 };
 
-export default Track;

@@ -5,7 +5,8 @@ const P = styled.p`
   text-align: ${props => props.align};
   color: ${props => (props.secondary ? "gray" : props.color)};
   font-size: ${props => (props.font ? props.theme.font[props.font] : "16px")};
-  font-size: ${props => (props.weight ? props.weight : "normal")};
+  font-weight: ${props => (props.weight ? props.weight : "normal")};
+
   /* Padding */
   padding-top: ${props => (props.py ? `${props.py}px` : "0")};
   padding-bottom: ${props => (props.py ? `${props.py}px` : "0")};
