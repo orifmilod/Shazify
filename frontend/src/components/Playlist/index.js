@@ -5,7 +5,7 @@ import styled from "styled-components";
 import { Grid, P } from "../../styled";
 import { TrackTable, Loading } from "../index.js";
 
-import GetAccessToken from "../../utils/GetAccessToken";
+import getAccessToken from "../../utils/getAccessToken";
 
 const HeaderImage = styled.img`
   margin: auto;
@@ -30,7 +30,7 @@ export default function Playlist(props) {
 
   async function getPlaylist(playlistID) {
     try {
-      const access_token = GetAccessToken();
+      const access_token = getAccessToken();
       const response = await fetch(
         `https://api.spotify.com/v1/playlists/${playlistID}`,
         {

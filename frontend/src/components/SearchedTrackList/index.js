@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
-import GetAccessToken from "../../utils/GetAccessToken";
+import getAccessToken from "../../utils/getAccessToken";
 import { toast } from "react-toastify";
 
 import Grid from "../../styled/Grid";
@@ -15,7 +15,7 @@ class SearchedTrackList extends Component {
   searchTrack = async searchedTrack => {
     const searchLimit = 40;
     try {
-      const access_token = GetAccessToken();
+      const access_token = getAccessToken();
       const response = await fetch(
         `https://api.spotify.com/v1/search?q=${searchedTrack}&type=track&market=PL&limit=${searchLimit}`,
         {

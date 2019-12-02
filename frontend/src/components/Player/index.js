@@ -6,9 +6,18 @@ const IFrame = styled.iframe`
   width: 100%;
 `;
 
-const Player = props => {
-  //Player type can be track or album
-  const { trackID } = props;
+const PlayerBox = styled.div`
+  height: 100%;
+  width: 100%;
+`;
+export default function Player({ trackID }) {
+  if (!trackID) {
+    return (
+      <PlayerBox>
+        Start listening now by playing a song :)
+      </PlayerBox>
+    )
+  }
   const encodedUriID = encodeURI(trackID);
   return (
     <IFrame
@@ -18,6 +27,4 @@ const Player = props => {
       allow="encrypted-media"
     />
   );
-};
-
-export default Player;
+}

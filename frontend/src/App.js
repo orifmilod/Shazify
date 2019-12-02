@@ -7,17 +7,24 @@ import {
   Redirect
 } from "react-router-dom";
 import { ThemeProvider } from "styled-components";
+import getAccessToken from './utils/getAccessToken';
+import getRefreshToken from './utils/getRefreshToken';
+import getCodeAndState from './utils/getCodeAndState';
 import Login from "./pages/Login";
 import Home from "./pages/Home";
 import theme from "./Theme";
-import queryString from "query-string";
 import ProtectedRoute from "./routes/ProtectedRoute";
 
 export default function App() {
   useEffect(() => {
-    const hash = queryString.parse(window.location.hash);
-    if (hash.access_token) {
-      localStorage.setItem("accessToken", hash.access_token);
+    const accessToken = getAccessToken();
+    if (accessToken) {
+
+    }
+    else {
+      const { code, state } = getCodeAndState();
+      //TODO: Continues here
+      const REDIRECT_URI = process.env.
     }
   }, []);
 
