@@ -31,7 +31,7 @@ const LoginButton = styled.a`
   border-radius: 100px;
   display: inline-block;
   background: linear-gradient(to top, #78ffd6, #a8ff78);
-
+  
   :hover {
     color: #444444;
     text-decoration: none;
@@ -50,16 +50,17 @@ const Information = styled.p`
   font-size:16px;
 `;
 
-const Container = styled(Grid)`
+const Container = styled(Grid)` 
+  padding-top: 300px;
   grid-auto-flow: row;
   height: 100vh;
 `;
 
 
-const LOGIN_URI =
-  process.env.NODE_ENV !== 'production'
-    ? 'http://localhost:8888/login'
-    : 'https://shazify.herokuapp.com/login';
+// const LOGIN_URI =
+//   process.env.NODE_ENV !== 'production'
+//     ? 'http://localhost:8888/login'
+//     : 'https://shazify.herokuapp.com/login';
 
 export default function Home({ history }) {
   if (localStorage.getItem("accessToken") !== null)
@@ -69,7 +70,7 @@ export default function Home({ history }) {
       <div>
         <Header>Welcome to Shazify</Header>
         <Title>Search, Choose, Listen.</Title>
-        <LoginButton href={LOGIN_URI}>
+        <LoginButton href='http://localhost:8888/login'>
           LOGIN
         </LoginButton>
         <GithubCorner

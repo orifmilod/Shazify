@@ -7,11 +7,7 @@ const request = require('request');
 const multer = require('multer');
 const querystring = require('querystring');
 const cookieParser = require('cookie-parser');
-const redirect_uri = process.env.NODE_ENV !== 'production'
-  ? 'http://localhost:3000'
-  : 'https://shazify.herokuapp.com';
-
-
+const redirect_uri = 'http://localhost:3000';   // Your redirect uri
 const app = express();
 const stateKey = 'spotify_auth_state';
 
@@ -25,7 +21,10 @@ const storage = multer.diskStorage({
 })
 let upload = multer({ storage });
 
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({
+  extended: true
+}));
+
 app.use(express.json());
 
 
@@ -39,7 +38,8 @@ let generateRandomString = (length) => {
   return text;
 };
 
-app.use(cors()).use(cookieParser());
+app.use(cors())
+  .use(cookieParser());
 
 app.get('/login', (req, res) => {
   const state = generateRandomString(16);
@@ -47,88 +47,16 @@ app.get('/login', (req, res) => {
 
   // your application requests authorization
   const scope = 'user-read-private user-read-email user-read-playback-state playlist-read-private';
-
-  const redirectURL = 'https://accounts.spotify.com/authorize?' + querystring.stringify({
-    state: state,
-    scope: scope,
-    response_type: 'code',
-    redirect_uri: redirect_uri,
-    client_id: '68247016a306419aab0e68ea6f6ab997', //process.env.CLIENT_ID
-  });
+  const redirectURL = 'https://accounts.spotify.com/authorize?' +
+    querystring.stringify({
+      response_type: 'token',
+      client_id: '68247016a306419aab0e68ea6f6ab997', //process.env.CLIENT_ID
+      scope: scope,
+      redirect_uri: redirect_uri,
+      state: state
+    });
   res.redirect(redirectURL);
 });
-
-
-app.get('/callback', function (req, res) {
-  // your application requests refresh and access tokens
-  // after checking the state parameter
-
-  const code = req.query.code || null;
-  const state = req.query.state || null;
-  const storedState = req.cookies ? req.cookies[stateKey] : null;
-
-  if (state === null || state !== storedState) {
-    res.redirect(`/#${querystring.stringify({ error: 'state_mismatch' })}`);
-  } else {
-    res.clearCookie(stateKey);
-    const authOptions = {
-      url: 'https://accounts.spotify.com/api/token',
-      form: {
-        code: code,
-        redirect_uri: REDIRECT_URI,
-        grant_type: 'authorization_code',
-      },
-      headers: {
-        Authorization: `Basic ${new Buffer(`${CLIENT_ID}:${CLIENT_SECRET}`).toString('base64')}`,
-      },
-      json: true,
-    };
-
-    request.post(authOptions, function (error, response, body) {
-      if (!error && response.statusCode === 200) {
-        const access_token = body.access_token;
-        const refresh_token = body.refresh_token;
-
-        // we can also pass the token to the browser to make requests from there
-        res.redirect(
-          `${FRONTEND_URI}/#${querystring.stringify({
-            access_token,
-            refresh_token,
-          })}`,
-        );
-      } else {
-        res.redirect(`/#${querystring.stringify({ error: 'invalid_token' })}`);
-      }
-    });
-  }
-});
-
-app.get('/refresh_token', function (req, res) {
-  // requesting access token from refresh token
-  const refresh_token = req.query.refresh_token;
-  const authOptions = {
-    url: 'https://accounts.spotify.com/api/token',
-    headers: {
-      Authorization: `Basic ${new Buffer(`${CLIENT_ID}:${CLIENT_SECRET}`).toString('base64')}`,
-    },
-    form: {
-      grant_type: 'refresh_token',
-      refresh_token,
-    },
-    json: true,
-  };
-
-  request.post(authOptions, function (error, response, body) {
-    if (!error && response.statusCode === 200) {
-      const access_token = body.access_token;
-      res.send({ access_token });
-    }
-  });
-});
-
-
-
-
 
 app.post('/audioSearch', upload.single('audio'), (req, res) => {
   const bitmap = fs.readFileSync(req.file.path);
@@ -141,24 +69,24 @@ app.post('/audioSearch', upload.single('audio'), (req, res) => {
 
 //Serve our static asset if in production
 if (process.env.NODE_ENV === 'production') {
-  app.use(express.static('frontend/build'));
+  app.use(express.static('client/build'));
   app.get('*', (req, res) => {
-    res.sendfile(path.resolve(__dirname, 'frontend', 'build', 'index.html'));
+    res.sendfile(path.resolve(__dirname, 'client', 'build', 'index.html'));
   });
 }
 else {
-  app.use(express.static(path.join(__dirname, '/frontend/public')));
+  app.use(express.static(path.join(__dirname, '/client/public')));
   app.get("*", (req, res) => {
-    res.sendFile(path.join(__dirname, "./frontend/public/index.html"));
+    res.sendFile(path.join(__dirname, "./client/public/index.html"));
   });
 }
 
 const defaultOptions = {
-  secure: true,
-  data_type: 'audio',
-  signature_version: '1',
-  endpoint: '/v1/identify',
   host: 'identify-eu-west-1.acrcloud.com',
+  endpoint: '/v1/identify',
+  signature_version: '1',
+  data_type: 'audio',
+  secure: true,
   access_key: '6ab92a05812a341339b37b849c4df24d',//process.env.SHAZAM_ACCESS_KEY
   access_secret: 'ila8dpuo7zhoGIrnZ5X7e64WH3YMMdUS8hs4wvbm' // process.env.SHAZAM_ACCESS_SECRET
 };
@@ -204,7 +132,5 @@ function identify(data, options, cb) {
   }, cb);
 }
 
-const port = process.env.PORT || 8888;
-app.listen(port, () => console.log(`Server running on port ${port}`));
-
-
+const PORT = process.env.PORT || 8888;
+app.listen(PORT, () => console.log(`Server is running on port ${PORT}`));
