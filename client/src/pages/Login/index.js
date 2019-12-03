@@ -43,9 +43,10 @@ const Information = styled.p`
   color: white;
   position: absolute;
   bottom: 0;
+  text-align: right;
   right: 10px;
+  font-size:16px;
 `;
-
 const Home = props => {
   const { history } = props;
   if (localStorage.getItem("accessToken") !== null) history.push("/home");
@@ -70,8 +71,8 @@ const Home = props => {
         />
       </Grid>
       <Information>
-        You can only login using Spotify account.
-        <i className="fab fa-spotify" />
+        made by <a rel="noopener noreferrer" target='_blank' href='https://iammilod.com' >orif milod</a> && <a rel="noopener noreferrer" target='_blank' href='https://bntnam.com' >nam bui</a> <br />
+        You can only login using Spotify account. <i className="fab fa-spotify" />
       </Information>
     </Grid>
   );
