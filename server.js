@@ -7,10 +7,10 @@ const request = require('request');
 const multer = require('multer');
 const querystring = require('querystring');
 const cookieParser = require('cookie-parser');
-const redirect_uri = process.env.NODE_ENV !== 'production'
-  ? 'http://localhost:3000'
-  : 'https://shazify.herokuapp.com';
-
+// const redirect_uri = process.env.NODE_ENV !== 'production'
+//   ? 'http://localhost:3000'
+//   : 'https://shazify.herokuapp.com';
+const redirect_uri = 'http://localhost:3000'
 
 const app = express();
 const stateKey = 'spotify_auth_state';
@@ -51,7 +51,7 @@ app.get('/login', (req, res) => {
   const redirectURL = 'https://accounts.spotify.com/authorize?' + querystring.stringify({
     state: state,
     scope: scope,
-    response_type: 'code',
+    response_type: 'token',
     redirect_uri: redirect_uri,
     client_id: '68247016a306419aab0e68ea6f6ab997', //process.env.CLIENT_ID
   });

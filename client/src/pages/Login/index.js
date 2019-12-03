@@ -31,7 +31,7 @@ const LoginButton = styled.a`
     to top,
     #78ffd6,
     #a8ff78
-  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  ); 
 
   :hover {
     color: #444444;
@@ -55,11 +55,7 @@ const Home = props => {
       <Grid height="450px">
         <Header>Welcome to Shazify</Header>
         <Title>Search, Choose, Listen.</Title>
-        <LoginButton
-          href="https://shazify.herokuapp.com/login"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
+        <LoginButton href="http://localhost:8888/login" rel="noopener noreferrer" >
           LOGIN
         </LoginButton>
         <GithubCorner
@@ -71,7 +67,8 @@ const Home = props => {
         />
       </Grid>
       <Information>
-        made by <a rel="noopener noreferrer" target='_blank' href='https://iammilod.com' >orif milod</a> && <a rel="noopener noreferrer" target='_blank' href='https://bntnam.com' >nam bui</a> <br />
+        made by <a
+          style={{ color: 'white' }} rel="noopener noreferrer" target='_blank' href='https://iammilod.com' >orif milod</a> && <a style={{ color: 'white' }} rel="noopener noreferrer" target='_blank' href='https://bntnam.com' >nam bui</a> <br />
         You can only login using Spotify account. <i className="fab fa-spotify" />
       </Information>
     </Grid>
