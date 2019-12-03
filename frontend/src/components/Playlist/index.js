@@ -49,7 +49,6 @@ export default function Playlist(props) {
     }
   };
 
-
   return (
     <>
       {!playlistData ?
