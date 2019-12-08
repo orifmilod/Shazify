@@ -5,8 +5,7 @@ import styled from "styled-components";
 import { Grid, P } from "../../styled";
 import { TrackTable, Loading } from "../index.js";
 
-import getAccessToken from "../../utils/getAccessToken";
-
+import { getPlaylist } from '../../api/spotify'
 const HeaderImage = styled.img`
   margin: auto;
   width: 150px;
@@ -19,36 +18,17 @@ const TableNav = styled(Grid)`
   grid-auto-flow: column;
 `;
 
-export default function Playlist(props) {
-  const { playTrack } = props;
+export default function Playlist({ playTrack, match }) {
   const [playlistData, setPlaylistData] = useState(undefined);
   const tracks = playlistData ? playlistData.tracks.items.map(obj => obj.track) : undefined;
 
   useEffect(() => {
-    getPlaylist(props.match.params.playlistID);
-  }, [props.match.params.playlistID]);
+    const playlist = getPlaylist(match.params.playlistID);
+    setPlaylistData(playlist)
+  }, [match.params.playlistID]);
 
-  async function getPlaylist(playlistID) {
-    try {
-      const access_token = getAccessToken();
-      const response = await fetch(
-        `https://api.spotify.com/v1/playlists/${playlistID}`,
-        {
-          headers: {
-            Authorization: `Bearer ${access_token}`,
-            Accept: "application/json",
-            "Content-Type": "application/json"
-          }
-        }
-      );
-      const data = await response.json();
-      setPlaylistData(data);
-    }
-    catch (error) {
-      toast.error("Something went wrong when getting playlist");
-    }
-  };
 
+  toast.error("Something went wrong when getting playlist");
 
   return (
     <>

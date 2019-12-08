@@ -1,19 +1,27 @@
 const fs = require('fs');
 const path = require('path');
 const cors = require('cors');
-const crypto = require('crypto');
-const express = require('express');             // Express web server framework
-const request = require('request');
 const multer = require('multer');
+const crypto = require('crypto');
+const express = require('express');
+const request = require('request');
 const querystring = require('querystring');
 const cookieParser = require('cookie-parser');
-const redirect_uri = process.env.NODE_ENV !== 'production'
+
+const FRONTEND_URL = process.env.NODE_ENV !== 'production'
   ? 'http://localhost:3000'
   : 'https://shazify.herokuapp.com';
 
+const REDIRECT_URI = process.env.NODE_ENV !== 'production'
+  ? 'http://localhost:8888/callback'
+  : 'https://shazify.herokuapp.com/callback';
+
+const SPOTIFY_CLIENT_ID = '68247016a306419aab0e68ea6f6ab997';
+const SPOTIFY_SECRET = '4cd3fd02fc8046feb5a1b44ad220526d';
 
 const app = express();
 const stateKey = 'spotify_auth_state';
+
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -41,19 +49,23 @@ let generateRandomString = (length) => {
 
 app.use(cors()).use(cookieParser());
 
+
+
+// SPOTIFY WEB API AUTHORIZATION CODE FLOW
+// https://developer.spotify.com/documentation/general/guides/authorization-guide/
+// https://github.com/spotify/web-api-auth-examples
 app.get('/login', (req, res) => {
   const state = generateRandomString(16);
   res.cookie(stateKey, state);
 
   // your application requests authorization
   const scope = 'user-read-private user-read-email user-read-playback-state playlist-read-private';
-
   const redirectURL = 'https://accounts.spotify.com/authorize?' + querystring.stringify({
     state: state,
     scope: scope,
     response_type: 'code',
-    redirect_uri: redirect_uri,
-    client_id: '68247016a306419aab0e68ea6f6ab997', //process.env.CLIENT_ID
+    redirect_uri: REDIRECT_URI,
+    client_id: SPOTIFY_CLIENT_ID, //process.env.
   });
   res.redirect(redirectURL);
 });
@@ -62,14 +74,13 @@ app.get('/login', (req, res) => {
 app.get('/callback', function (req, res) {
   // your application requests refresh and access tokens
   // after checking the state parameter
-
   const code = req.query.code || null;
   const state = req.query.state || null;
   const storedState = req.cookies ? req.cookies[stateKey] : null;
-
   if (state === null || state !== storedState) {
     res.redirect(`/#${querystring.stringify({ error: 'state_mismatch' })}`);
-  } else {
+  }
+  else {
     res.clearCookie(stateKey);
     const authOptions = {
       url: 'https://accounts.spotify.com/api/token',
@@ -79,25 +90,20 @@ app.get('/callback', function (req, res) {
         grant_type: 'authorization_code',
       },
       headers: {
-        Authorization: `Basic ${new Buffer(`${CLIENT_ID}:${CLIENT_SECRET}`).toString('base64')}`,
+        Authorization: `Basic ${new Buffer(`${SPOTIFY_CLIENT_ID}:${SPOTIFY_SECRET}`).toString('base64')}`,
       },
       json: true,
     };
-
-    request.post(authOptions, function (error, response, body) {
-      if (!error && response.statusCode === 200) {
+    request.post(authOptions, (error, response, body) => {
+      if (error) {
+        res.redirect(`/#${querystring.stringify({ error: 'invalid_token' })}`);
+        return;
+      }
+      if (response.statusCode === 200) {
         const access_token = body.access_token;
         const refresh_token = body.refresh_token;
-
         // we can also pass the token to the browser to make requests from there
-        res.redirect(
-          `${FRONTEND_URI}/#${querystring.stringify({
-            access_token,
-            refresh_token,
-          })}`,
-        );
-      } else {
-        res.redirect(`/#${querystring.stringify({ error: 'invalid_token' })}`);
+        res.redirect(`${FRONTEND_URL}/#${querystring.stringify({ access_token, refresh_token, })}`);
       }
     });
   }
@@ -109,7 +115,7 @@ app.get('/refresh_token', function (req, res) {
   const authOptions = {
     url: 'https://accounts.spotify.com/api/token',
     headers: {
-      Authorization: `Basic ${new Buffer(`${CLIENT_ID}:${CLIENT_SECRET}`).toString('base64')}`,
+      Authorization: `Basic ${new Buffer(`68247016a306419aab0e68ea6f6ab997:ila8dpuo7zhoGIrnZ5X7e64WH3YMMdUS8hs4wvbm`).toString('base64')} `,
     },
     form: {
       grant_type: 'refresh_token',
@@ -119,6 +125,7 @@ app.get('/refresh_token', function (req, res) {
   };
 
   request.post(authOptions, function (error, response, body) {
+    console.log(response.statusCode);
     if (!error && response.statusCode === 200) {
       const access_token = body.access_token;
       res.send({ access_token });
@@ -205,6 +212,6 @@ function identify(data, options, cb) {
 }
 
 const port = process.env.PORT || 8888;
-app.listen(port, () => console.log(`Server running on port ${port}`));
+app.listen(port, () => console.log(`Server running on port ${port} `));
 
 

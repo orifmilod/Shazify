@@ -4,11 +4,10 @@ import Input from "../../styled/Input";
 import P from "../../styled/P";
 import styled from "styled-components";
 import { ReactMic } from "react-mic";
-import { Search as SearchIcon } from "styled-icons/boxicons-regular";
 import shazamIcon from "../../img/shazam.png";
 import "../../shockwave.css";
 
-const SearchIcn = styled(SearchIcon)`
+const SearchIcon = styled.i`
   color: black;
   right: 150px;
   height: 20px;
@@ -91,7 +90,7 @@ class Search extends Component {
             onChange={this.handleChange}
             name="searchInput"
           />
-          <SearchIcn />
+          <SearchIcon className='fas fa-search' />
         </form>
         <Grid class="btn-container" direction="column">
           <button class="btn btn--shockwave" onClick={this.toggleRecording}>
