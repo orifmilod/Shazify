@@ -23,12 +23,19 @@ export default function Playlist({ playTrack, match }) {
   const tracks = playlistData ? playlistData.tracks.items.map(obj => obj.track) : undefined;
 
   useEffect(() => {
-    const playlist = getPlaylist(match.params.playlistID);
-    setPlaylistData(playlist)
-  }, [match.params.playlistID]);
+    fetchPlaylist()
+  }, [fetchPlaylist]);
 
-
-  toast.error("Something went wrong when getting playlist");
+  async function fetchPlaylist() {
+    try {
+      const playlist = await getPlaylist(match.params.playlistID);
+      setPlaylistData(playlist)
+    }
+    catch (error) {
+      toast.error("Something went wrong when getting playlist");
+      console.error(error);
+    }
+  }
 
   return (
     <>

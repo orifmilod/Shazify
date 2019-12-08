@@ -11,6 +11,7 @@ const PlayerBox = styled.div`
   width: 100%;
 `;
 export default function Player({ trackID }) {
+  console.log(trackID)
   if (!trackID) {
     return (
       <PlayerBox>
