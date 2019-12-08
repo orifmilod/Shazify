@@ -3,9 +3,8 @@ import { withRouter } from "react-router-dom";
 import styled from "styled-components";
 
 import { List, Grid, P } from "../../../styled";
-import { KeyboardArrowRight } from "styled-icons/material";
 
-const ArrowIcon = styled(KeyboardArrowRight)`
+const ArrowIcon = styled.i`
   height: 25px;
   width: 25px;
   position: absolute;
@@ -44,7 +43,7 @@ const Playlist = props => {
               font="14px"
             >
               {playlist.name}
-              <ArrowIcon />
+              <ArrowIcon className='fas fa-arrow-right' />
             </Item>
           ))}
       </PlaylistList>

@@ -1,8 +1,8 @@
-import React from "react";
-import { Route, Redirect } from "react-router-dom";
+import React from 'react';
+import { Route, Redirect } from 'react-router-dom';
 
 export default function ProtectedRoute({ render: Component, ...rest }) {
-  const accessToken = localStorage.getItem("accessToken");
+  const accessToken = localStorage.getItem('spotify_access_token');
   return (
     <Route
       {...rest}
@@ -12,7 +12,7 @@ export default function ProtectedRoute({ render: Component, ...rest }) {
         }
         else {
           return (
-            <Redirect to={{ pathname: "/", state: { from: props.location } }} />
+            <Redirect to={{ pathname: '/', state: { from: props.location } }} />
           );
         }
       }}

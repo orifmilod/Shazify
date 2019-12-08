@@ -2,10 +2,8 @@ import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 import getAccessToken from "../../utils/getAccessToken";
 import { toast } from "react-toastify";
-
 import Grid from "../../styled/Grid";
 import P from "../../styled/P";
-import { SadTear } from "styled-icons/fa-regular";
 import TrackTable from "../TrackTable";
 
 class SearchedTrackList extends Component {
@@ -51,7 +49,7 @@ class SearchedTrackList extends Component {
             <Grid>
               <P>
                 Sorry, couldn't find any tracks.
-              <SadTear size={30} />
+                <i class="far fa-sad-tear fa-2x" />
               </P>
             </Grid>
           )}

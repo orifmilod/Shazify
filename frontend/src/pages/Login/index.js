@@ -1,13 +1,15 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import GithubCorner from "react-github-corner";
+import { withRouter } from 'react-router-dom';
 import { Grid } from '../../styled';
+import getAccessToken from "../../utils/getAccessToken";
 
 const Header = styled.h1`
   margin: 0;
   color: white;
   font-size: 60px;
-  
+
   @media only screen and (max-width: 600px) {
     font-size: 45px;
   }
@@ -56,15 +58,19 @@ const Container = styled(Grid)`
   height: 100vh;
 `;
 
+function Home({ history }) {
+  useEffect(() => {
+    const accessToken = getAccessToken();
+    if (accessToken)
+      history.push('/home');
+  }, [history]);
 
-// const LOGIN_URI =
-//   process.env.NODE_ENV !== 'production'
-//     ? 'http://localhost:8888/login'
-//     : 'https://shazify.herokuapp.com/login';
 
-export default function Home({ history }) {
-  if (localStorage.getItem("accessToken") !== null)
-    history.push("/home");
+  const LOGIN_URI = process.env.NODE_ENV !== 'production'
+    ? 'http://localhost:8888/login'
+    : 'https://shazify.herokuapp.com/login';
+
+
   return (
     <Container className='gradDynamic'>
       <div>
@@ -82,9 +88,19 @@ export default function Home({ history }) {
         />
       </div>
       <Information>
-        made by <a rel="noopener noreferrer" target='_blank' href='https://iammilod.com' >orif milod</a> && <a rel="noopener noreferrer" target='_blank' href='https://bntnam.com' >nam bui</a> <br />
+        made by {' '}
+        <a
+          target='_blank'
+          rel="noopener noreferrer"
+          href='https://iammilod.com'
+        >
+          orif milod
+        </a>
+        <br />
         You can only login using Spotify account. <i className="fab fa-spotify" />
       </Information>
     </Container>
   );
 }
+
+export default withRouter(Home);

@@ -1,7 +1,6 @@
 import React from "react";
 
 import { Table } from "../../styled";
-import { Play } from "styled-icons/evil";
 import styled from "styled-components";
 import ConvertMs from "../../utils/ConvertMs";
 
@@ -19,8 +18,8 @@ const BodyRow = styled(Table.Row)`
   border-bottom: 0.5px lightgray solid;
 `;
 
-const PlayButton = styled(Play)`
-   color: rgba(0, 0, 0, 0);
+const PlayButton = styled.i`
+  color: rgba(0, 0, 0, 0);
   height: 36px;
   width: 36px;
   margin: 0 5px;
@@ -32,7 +31,7 @@ export default function Track({ track, playTrack }) {
 
   return (
     <BodyRow key={id} onClick={() => playTrack(id)}>
-      <Table.Data> <PlayButton /> </Table.Data>
+      <Table.Data> <PlayButton className='far fa-play-circle' /> </Table.Data>
       <Table.Data>{name}</Table.Data>
       <Table.Data>{artists.map(artist => `${artist.name} `)}</Table.Data>
       <Table.Data>{album.name}</Table.Data>

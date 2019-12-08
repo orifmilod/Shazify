@@ -1,64 +1,49 @@
-import React, { Component } from "react";
+import React, { useState, useEffect } from "react";
 import Gallery from "react-photo-gallery";
 import { toast } from "react-toastify";
 import { withRouter } from "react-router-dom";
-import { SadTear } from "styled-icons/fa-regular";
-class FeaturedPlaylist extends Component {
-  state = {
-    featuredPlaylist: []
-  };
-  getFeaturedPlaylists = async access_token => {
-    try {
-      const limit = 50;
-      const country = "PL"; //TODO: get this from User
-      const response = await fetch(
-        `https://api.spotify.com/v1/browse/featured-playlists?country=${country}&limit=${limit}`,
-        {
-          headers: {
-            Authorization: `Bearer ${access_token}`,
-            Accept: "application/json",
-            "Content-Type": "application/json"
-          }
-        }
-      );
-      const featuredPlaylist = await response.json();
-      this.setState({ featuredPlaylist: featuredPlaylist.playlists.items });
-    } catch (err) {
-      toast.error("Some error occured when fetching Featured Playlists.");
-      console.error(err);
-    }
-  };
+import { getFeaturedPlaylists } from '../../api/spotify';
 
-  componentDidMount() {
-    const access_token = localStorage.getItem("accessToken");
-    this.getFeaturedPlaylists(access_token);
+function FeaturedPlaylist({ history }) {
+  const [featuredPlaylist, setFeaturedPlaylist] = useState([])
+  useEffect(() => {
+    fetchFeaturedPlaylist();
+  }, []);
+
+  async function fetchFeaturedPlaylist() {
+    try {
+      const data = await getFeaturedPlaylists();
+      setFeaturedPlaylist(data.playlists.items);
+    }
+    catch (error) {
+      toast.error("Some error occured when fetching featured playlists.");
+      console.error('Some error occured when fetching Featured Playlists.', error);
+    }
   }
-  render() {
-    const { history } = this.props;
-    const { featuredPlaylist } = this.state;
-    const photos = featuredPlaylist.map(playlist => {
-      return {
-        id: playlist.id,
-        src: playlist.images[0].url,
-        width: 1,
-        height: 1
-      };
-    });
-    return (
-      <React.Fragment>
-        {featuredPlaylist.length > 0 ? (
+
+  const photos = featuredPlaylist.map(playlist => {
+    return {
+      id: playlist.id,
+      src: playlist.images[0].url,
+      width: 1,
+      height: 1
+    };
+  });
+
+  return (
+    <>
+      {
+        featuredPlaylist.length > 0
+          ?
           <Gallery
             photos={photos}
             onClick={e => history.push(`/home/playlist/${e.target.id}`)}
           />
-        ) : (
-            <div>
-              Sorry could find the featured playlist. <SadTear size="24" />
-            </div>
-          )}
-      </React.Fragment>
-    );
-  }
+          :
+          <div> Sorry could find the featured playlist. <i className="far fa-sad-tear"></i>  </div>
+      }
+    </>
+  );
 }
 
 export default withRouter(FeaturedPlaylist);
