@@ -4,14 +4,15 @@ import styled from "styled-components";
 
 import { Grid, P } from "../../styled";
 import { TrackTable, Loading } from "../index.js";
+import { getPlaylistData } from '../../api/spotify'
 
-import { getPlaylist } from '../../api/spotify'
 const HeaderImage = styled.img`
   margin: auto;
   width: 150px;
   height: 150px;
   box-shadow: 1px 1px 30px -1px rgba(0, 0, 0, 0.75);
 `;
+
 const TableNav = styled(Grid)`
   padding: 10px 25px;
   grid-auto-columns: 250px 1fr;
@@ -21,15 +22,16 @@ const TableNav = styled(Grid)`
 export default function Playlist({ playTrack, match }) {
   const [playlistData, setPlaylistData] = useState(undefined);
   const tracks = playlistData ? playlistData.tracks.items.map(obj => obj.track) : undefined;
+  const playlistID = match.params.playlistID;
 
   useEffect(() => {
-    fetchPlaylist()
+    fetchPlaylist();
   }, [fetchPlaylist]);
 
   async function fetchPlaylist() {
     try {
-      const playlist = await getPlaylist(match.params.playlistID);
-      setPlaylistData(playlist)
+      const playlist = await getPlaylistData(playlistID);
+      setPlaylistData(playlist);
     }
     catch (error) {
       toast.error("Something went wrong when getting playlist");

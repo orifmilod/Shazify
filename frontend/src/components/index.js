@@ -2,7 +2,7 @@ import Track from './Track';
 import Search from './Search';
 import Player from './Player';
 import Loading from './Loading';
-import SideBar from './SideBar';
+import Sidebar from './Sidebar';
 import Content from './Content';
 import Playlist from './Playlist';
 import TrackTable from './TrackTable';
@@ -14,7 +14,7 @@ export {
   Search,
   Player,
   Loading,
-  SideBar,
+  Sidebar,
   Content,
   Playlist,
   TrackTable,

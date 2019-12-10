@@ -9,14 +9,15 @@ const IFrame = styled.iframe`
 const PlayerBox = styled.div`
   height: 100%;
   width: 100%;
+  color: white;
+  padding: 40px;
+  background: linear-gradient(to left, #FF4B2B, #FF416C); 
 `;
+
 export default function Player({ trackID }) {
-  console.log(trackID)
   if (!trackID) {
     return (
-      <PlayerBox>
-        Start listening now by playing a song :)
-      </PlayerBox>
+      <PlayerBox> Start listening now by playing a song :) </PlayerBox>
     )
   }
   const encodedUriID = encodeURI(trackID);

@@ -28,12 +28,12 @@ export default function getAccessToken() {
     if (result.access_token && result.refresh_token) {
       const { access_token, refresh_token } = result;
       const currentTime = new Date().getTime() + parseInt(twentyFourHourInMS);
-      console.log(currentTime);
       setTokenTimestamp(currentTime);
       setLocalAccessToken(access_token);
       setLocalRefreshToken(refresh_token);
       return access_token;
     }
+    //TODO: GET REFRESH TOKEN
     return null;
   }
   return null;

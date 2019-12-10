@@ -11,7 +11,11 @@ const ArrowIcon = styled.i`
   right: 20px;
   transition: 0.3s ease-in-out;
 `;
+
 const Item = styled(List.Item)`
+  font-size: 14px;
+  text-align: left;
+  color: lightgray;
   padding: 8px 30px;
   border-left: 3px orange solid;
   :hover {
@@ -20,35 +24,33 @@ const Item = styled(List.Item)`
     }
   }
 `;
-const PlaylistList = styled(List)`
+
+const PlaylistContainer = styled(List)`
   text-align: left;
   grid-gap: 10px;
 `;
 
-const Playlist = props => {
-  const { playlists, history } = props;
+const Header = styled(P)`
+  color: white;
+  padding: 30px 10px;
+  font-weight: bolder;
+  text-align: left;
+`
+
+function Playlist({ playlists, history }) {
   return (
     <Grid direction="row" py="xxl">
-      <PlaylistList>
-        <P font="lg" px={30} py={10} color="white" align="left" weight="bolder">
-          Playlists
-        </P>
-        {playlists &&
-          playlists.map(playlist => (
-            <Item
-              color="lightGray"
-              align="left"
-              key={playlist.id}
-              onClick={() => history.push(`/home/playlist/${playlist.id}`)}
-              font="14px"
-            >
-              {playlist.name}
-              <ArrowIcon className='fas fa-arrow-right' />
+      <PlaylistContainer>
+        <Header> Playlists </Header>
+        {
+          playlists &&
+          playlists.map(playlist =>
+            <Item key={playlist.id} onClick={() => history.push(`/home/playlist/${playlist.id}`)}>
+              {playlist.name} <ArrowIcon className='fas fa-arrow-right' />
             </Item>
-          ))}
-      </PlaylistList>
+          )}
+      </PlaylistContainer>
     </Grid>
   );
-};
-
+}
 export default withRouter(Playlist);

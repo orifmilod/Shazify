@@ -76,7 +76,7 @@ function Home({ history }) {
       <div>
         <Header>Welcome to Shazify</Header>
         <Title>Search, Choose, Listen.</Title>
-        <LoginButton href='http://localhost:8888/login'>
+        <LoginButton href={LOGIN_URI}>
           LOGIN
         </LoginButton>
         <GithubCorner
