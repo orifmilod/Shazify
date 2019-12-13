@@ -49,19 +49,16 @@ class Recorder extends Component {
     return (
       <div className="bg-dark">
         <ReactMic
-          record={this.state.record}
           className="sound-wave"
           onStop={this.onStop}
           onData={this.onData}
           strokeColor="#000000"
           backgroundColor="#FF4081"
+          record={this.state.record}
         />
-        <button onClick={this.startRecording} type="button">
-          Start
-        </button>
-        <button onClick={this.stopRecording} type="button">
-          Stop
-        </button>
+        <button onClick={this.startRecording} type="button"> Start </button>
+        <button onClick={this.stopRecording} type="button"> Stop </button>
+
         <button onClick={this.sendReq}>Here</button>
 
         <audio controls src={this.state.file.blobURL}></audio>

@@ -13,18 +13,13 @@ class Content extends Component {
     const { playTrack } = this.props;
     return (
       <Grid overflow="auto">
-        <Route
-          path="/home"
-          exact
-          render={props => <FeaturedPlaylist {...props} />}
-        />
+        <Route path="/home" exact render={props => <FeaturedPlaylist {...props} />} />
         <Route
           path="/home/search/:searchedTrack"
           render={props => (
             <SearchedTrackList {...props} playTrack={playTrack} />
           )}
         />
-
         <Route
           path="/home/playlist/:playlistID"
           render={props => <Playlist {...props} playTrack={playTrack} />}

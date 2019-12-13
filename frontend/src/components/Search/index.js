@@ -1,10 +1,12 @@
-import React, { Component } from "react";
-import Grid from "../../styled/Grid";
-import Input from "../../styled/Input";
-import P from "../../styled/P";
-import styled from "styled-components";
+import React, { useState } from "react";
 import { ReactMic } from "react-mic";
+import { toast } from 'react-toastify';
+import styled from "styled-components";
+import { withRouter } from 'react-router-dom';
+
+import { Grid, Input, P } from "../../styled";
 import shazamIcon from "../../img/shazam.png";
+
 import "../../shockwave.css";
 
 const SearchIcon = styled.i`
@@ -17,6 +19,7 @@ const SearchIcon = styled.i`
   left: 20px;
   top: 17px;
 `;
+
 const TextSlide = styled(P)`
   background: #47a8e6;
   border-radius: 15px;
@@ -27,6 +30,7 @@ const TextSlide = styled(P)`
   font-size: 12px;
   transition: 1s ease-in-out;
 `;
+
 const SearchInput = styled(Input)`
   font-size: 14px;
   border-radius: 50px;
@@ -57,58 +61,74 @@ const AudioSearch = styled.button`
     outline-width: 0;
   }
 `;
-class Search extends Component {
-  state = {
-    searchInput: "",
-    recording: false,
-    file: {}
-  };
-  handleChange = event => {
-    this.setState({ [event.target.name]: event.target.value });
-  };
-  toggleRecording = e => {
-    e.currentTarget.classList.toggle("is-active");
-    const { recording } = this.state;
-    this.setState({ recording: !recording });
-  };
 
-  onStop = recordedBlob => {
-    this.setState({ file: recordedBlob });
-    this.props.audioSearch(recordedBlob);
-  };
-  render() {
-    const { searchInput, recording } = this.state;
-    const { handleSearch } = this.props;
+function Search({ history }) {
 
-    return (
-      <SearchContainer>
-        <form onSubmit={e => handleSearch(e, searchInput)}>
-          <SearchInput
-            placeholder="Search track..."
-            type="text"
-            value={searchInput}
-            onChange={this.handleChange}
-            name="searchInput"
-          />
-          <SearchIcon className='fas fa-search' />
-        </form>
-        <Grid class="btn-container" direction="column">
-          <button class="btn btn--shockwave" onClick={this.toggleRecording}>
-            <img src={shazamIcon} height="50px" width="50px" alt="shazamIcon" />
-          </button>
-          <TextSlide>{recording ? "Tap to search" : "Tap to shazam"}</TextSlide>
-          <AudioSearch>
-            <ReactMic
-              className="recorder"
-              backgroundColor="rgb(255,182,30, 0.4)"
-              strokeColor="#003171"
-              record={recording}
-              onStop={this.onStop}
-            />
-          </AudioSearch>
-        </Grid>
-      </SearchContainer>
-    );
+  const [file, setFile] = useState(undefined);
+  const [searchInput, setSearchInput] = useState('');
+  const [isRecording, setIsRecording] = useState(false);
+
+  function handleSearch(e, searchFilter) {
+    if (e.preventDefault !== undefined) e.preventDefault();
+    if (!searchFilter.trim()) {
+      toast.error('Search something!');
+      return;
+    }
+    const URIEconded = encodeURI(searchFilter);
+    history.push(`/home/search/${URIEconded}`);
   }
+
+  // state = {
+  //   searchInput: "",
+  //   recording: false,
+  //   file: {}
+  // };
+
+  // handleChange = event => {
+  //   this.setState({ [event.target.name]: event.target.value });
+  // };
+
+  // toggleRecording = e => {
+  //   e.currentTarget.classList.toggle("is-active");
+  //   const { recording } = this.state;
+  //   this.setState({ recording: !recording });
+  // };
+
+  function onStop(recordedBlob) {
+    setFile(recordedBlob);
+    // this.props.audioSearch(recordedBlob);
+  };
+
+  return (
+    <SearchContainer>
+      <form onSubmit={e => handleSearch(e, searchInput)}>
+        <SearchInput
+          type="text"
+          name="searchInput"
+          value={searchInput}
+          placeholder="Search track..."
+          onChange={(e) => setSearchInput(e.currentTarget.value)}
+        />
+        <SearchIcon className='fas fa-search' />
+      </form>
+
+      <Grid class="btn-container" direction="column">
+        <button class="btn btn--shockwave" onClick={() => setIsRecording(false)}>
+          <img src={shazamIcon} height="50px" width="50px" alt="shazamIcon" />
+        </button>
+        <TextSlide>{isRecording ? "Tap to search" : "Tap to shazam"}</TextSlide>
+        <AudioSearch>
+          <ReactMic
+            onStop={onStop}
+            record={isRecording}
+            className="recorder"
+            strokeColor="#003171"
+            backgroundColor="rgb(255,182,30, 0.4)"
+          />
+        </AudioSearch>
+      </Grid>
+    </SearchContainer>
+  );
 }
-export default Search;
+
+export default withRouter(Search);

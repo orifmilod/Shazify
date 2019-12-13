@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 
 //Styled components
 import styled from "styled-components";
@@ -13,47 +13,16 @@ const Container = styled(Grid)`
   }
 `;
 
-class Home extends Component {
-  state = {
-    currentTrackID: "",
-    searchList: [],
-    userData: {}
-  };
-
-  handleSearch = (event, searchFilter) => {
-    if (event.preventDefault !== undefined) event.preventDefault();
-    if (searchFilter === "") {
-      this.notifyWarning("Please search something.");
-      return;
-    }
-    const URIEconded = encodeURI(searchFilter);
-    this.props.history.push(`/home/search/${URIEconded}`);
-  };
-
-  //#endregion
-  render() {
-    const { currentTrackID } = this.state;
-    return (
-      <Container>
-        <Sidebar />
-
-        <Grid
-          direction="row"
-          bg="light"
-          height="100vh"
-          templateRow="50px 2fr 100px"
-        >
-          <Search
-            handleSearch={this.handleSearch}
-            audioSearch={this.audioSearch}
-          />
-          <Content playTrack={this.playTrack} />
-
-          <Player trackID={currentTrackID} />
-        </Grid>
-      </Container>
-    );
-  }
+export default function Home() {
+  return (
+    <Container>
+      <Sidebar />
+      {/* ROW OR COLUMN? */}
+      <Grid direction="row" bg="light" height="100vh" templateRow="50px 2fr 100px" >
+        <Search />
+        <Content />
+        <Player />
+      </Grid>
+    </Container>
+  );
 }
-
-export default Home;

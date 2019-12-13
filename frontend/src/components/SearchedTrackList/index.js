@@ -4,7 +4,7 @@ import getAccessToken from "../../utils/getAccessToken";
 import { toast } from "react-toastify";
 import Grid from "../../styled/Grid";
 import P from "../../styled/P";
-import TrackTable from "../TrackTable";
+import TrackTable from "../Playlist/TrackTable";
 
 class SearchedTrackList extends Component {
   state = {

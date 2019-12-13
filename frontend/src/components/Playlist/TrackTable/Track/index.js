@@ -1,8 +1,12 @@
 import React from "react";
+import { useDispatch } from 'react-redux';
 
-import { Table } from "../../styled";
+import { Table } from "../../../../styled";
+import { UPDATE_CURRENT_TRACK_ID } from "../../../../constant/actionTypes";
 import styled from "styled-components";
-import ConvertMs from "../../utils/ConvertMs";
+
+
+import ConvertMs from "../../../../utils/ConvertMs";
 
 const BodyRow = styled(Table.Row)`
   > td {
@@ -11,7 +15,7 @@ const BodyRow = styled(Table.Row)`
   }
   :hover {
     background: #ececec;
-    > td > svg {
+    > td > i {
       color: black;
     }
   }
@@ -20,18 +24,22 @@ const BodyRow = styled(Table.Row)`
 
 const PlayButton = styled.i`
   color: rgba(0, 0, 0, 0);
-  height: 36px;
-  width: 36px;
+  padding: 10px;
+  height: 50px;
+  width: 50px;
   margin: 0 5px;
   transition: 0.2s ease-in-out;
 `;
 
-export default function Track({ track, playTrack }) {
+export default function Track({ track }) {
   const { name, artists, album, id, duration_ms } = track;
+  const dispatch = useDispatch();
 
   return (
-    <BodyRow key={id} onClick={() => playTrack(id)}>
-      <Table.Data> <PlayButton className='far fa-play-circle' /> </Table.Data>
+    <BodyRow key={id} onClick={() => dispatch({ type: UPDATE_CURRENT_TRACK_ID, payload: id })}>
+      <Table.Data>
+        <PlayButton className='far fa-play-circle fa-2x' />
+      </Table.Data>
       <Table.Data>{name}</Table.Data>
       <Table.Data>{artists.map(artist => `${artist.name} `)}</Table.Data>
       <Table.Data>{album.name}</Table.Data>

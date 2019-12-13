@@ -1,8 +1,8 @@
 import React from "react";
-
-import Track from "../Track";
-import Table from "../../styled/Table";
 import styled from "styled-components";
+
+import Track from "./Track";
+import { Table } from "../../../styled";
 
 const HeaderRow = styled(Table.Row)`
   font-size: 14px;
@@ -13,8 +13,7 @@ const HeaderRow = styled(Table.Row)`
   }
 `;
 
-const TrackTable = props => {
-  const { playTrack, tracks } = props;
+export default function TrackTable({ playTrack, tracks }) {
   return (
     <Table mx="xxl" my="lg" overflow="auto">
       <HeaderRow>
@@ -24,9 +23,7 @@ const TrackTable = props => {
         <Table.Header>Album</Table.Header>
         <Table.Header>Time</Table.Header>
       </HeaderRow>
-      {tracks.map(track => <Track track={track} playTrack={playTrack} />)}
+      {tracks.map(track => track && <Track track={track} playTrack={playTrack} />)}
     </Table>
   );
 };
-
-export default TrackTable;

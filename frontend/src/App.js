@@ -10,22 +10,26 @@ import { toast } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
 import { ThemeProvider } from 'styled-components';
 import './App.css';
+import store from './store';
+import { Provider } from 'react-redux';
 
 export default function App() {
   toast.configure();
 
   return (
     <Router>
-      <ThemeProvider theme={theme}>
-        <div className='App'>
-          <Switch>
-            <Route exact path='/' component={Login} />
-            <ProtectedRoute path='/home' render={Home} />
+      <Provider store={store}>
+        <ThemeProvider theme={theme}>
+          <div className='App'>
+            <Switch>
+              <Route exact path='/' component={Login} />
+              <ProtectedRoute path='/home' render={Home} />
 
-            <Redirect to='/' />
-          </Switch>
-        </div>
-      </ThemeProvider>
+              <Redirect to='/' />
+            </Switch>
+          </div>
+        </ThemeProvider>
+      </Provider>
     </Router>
   );
 }
