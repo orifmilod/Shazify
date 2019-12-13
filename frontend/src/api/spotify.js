@@ -27,10 +27,8 @@ export async function getUserPlaylist() {
   }
 };
 
-export async function getFeaturedPlaylists() {
+export async function getFeaturedPlaylists(limit, country) {
   try {
-    const limit = 50;
-    const country = "PL"; //TODO: get this from User
     const response = await fetch(`https://api.spotify.com/v1/browse/featured-playlists?country=${country}&limit=${limit}`, { headers });
     return await response.json();
   }

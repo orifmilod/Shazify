@@ -3,16 +3,19 @@ import Gallery from "react-photo-gallery";
 import { toast } from "react-toastify";
 import { withRouter } from "react-router-dom";
 import { getFeaturedPlaylists } from '../../api/spotify';
+import { useSelector } from 'react-redux';
 
 function FeaturedPlaylist({ history }) {
   const [featuredPlaylist, setFeaturedPlaylist] = useState([])
+  const userCountry = useSelector(state => state.userData.country);
   useEffect(() => {
     fetchFeaturedPlaylist();
-  }, []);
+  }, [fetchFeaturedPlaylist]);
 
   async function fetchFeaturedPlaylist() {
     try {
-      const data = await getFeaturedPlaylists();
+      const trackLimit = 50;
+      const data = await getFeaturedPlaylists(trackLimit, userCountry);
       setFeaturedPlaylist(data.playlists.items);
     }
     catch (error) {

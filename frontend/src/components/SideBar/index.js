@@ -4,8 +4,9 @@ import styled from 'styled-components';
 import { Grid } from "../../styled";
 import Playlist from "./Playlist";
 import Profile from "./Profile";
+import { useSelector } from 'react-redux';
 
-import { getUserPlaylist, getUserData } from '../../api/spotify';
+import { getUserPlaylist } from '../../api/spotify';
 import handleError from '../../utils/handleError';
 
 const Container = styled(Grid)`
@@ -15,11 +16,10 @@ const Container = styled(Grid)`
 
 export default function Sidebar() {
   const [playlist, setPlaylist] = useState([]);
-  const [userData, setUserData] = useState({});
+  const userData = useSelector(state => state.userData);
 
   useEffect(() => {
     getPlaylist();
-    fetchUserData();
   }, []);
 
   async function getPlaylist() {
@@ -31,17 +31,6 @@ export default function Sidebar() {
       handleError('Something went wrong when fetching your playlist!', error);
     }
   };
-
-  async function fetchUserData() {
-    try {
-      const data = await getUserData();
-      setUserData(data);
-    }
-    catch (error) {
-      handleError('Something went wrong when fetching your personal data', error)
-    }
-  }
-
   return (
     <Container bg="blue">
       {userData && <Profile userData={userData} />}
