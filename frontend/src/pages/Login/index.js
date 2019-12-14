@@ -70,6 +70,7 @@ function Home({ history }) {
     color: black;
     cursor: pointer;
   `;
+
   const LOGIN_URI = process.env.NODE_ENV !== 'production'
     ? 'http://localhost:8888/login'
     : 'https://shazify.herokuapp.com/login';
