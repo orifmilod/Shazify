@@ -24,10 +24,10 @@ const stateKey = 'spotify_auth_state';
 
 
 const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
+  destination: (req, file, cb) => {
     cb(null, './uploads')
   },
-  filename: function (req, file, cb) {
+  filename: (req, file, cb) => {
     cb(null, Date.now() + '.webm')
   }
 })
@@ -54,6 +54,7 @@ app.use(cors()).use(cookieParser());
 // SPOTIFY WEB API AUTHORIZATION CODE FLOW
 // https://developer.spotify.com/documentation/general/guides/authorization-guide/
 // https://github.com/spotify/web-api-auth-examples
+
 app.get('/login', (req, res) => {
   const state = generateRandomString(16);
   res.cookie(stateKey, state);
@@ -71,7 +72,7 @@ app.get('/login', (req, res) => {
 });
 
 
-app.get('/callback', function (req, res) {
+app.get('/callback', (req, res) => {
   // your application requests refresh and access tokens
   // after checking the state parameter
   const code = req.query.code || null;
@@ -109,13 +110,13 @@ app.get('/callback', function (req, res) {
   }
 });
 
-app.get('/refresh_token', function (req, res) {
+app.get('/refresh_token', (req, res) => {
   // requesting access token from refresh token
   const refresh_token = req.query.refresh_token;
   const authOptions = {
     url: 'https://accounts.spotify.com/api/token',
     headers: {
-      Authorization: `Basic ${new Buffer(`68247016a306419aab0e68ea6f6ab997:ila8dpuo7zhoGIrnZ5X7e64WH3YMMdUS8hs4wvbm`).toString('base64')} `,
+      Authorization: `Basic ${new Buffer(`${SPOTIFY_CLIENT_ID}:${SPOTIFY_SECRET}`).toString('base64')}`,
     },
     form: {
       grant_type: 'refresh_token',
@@ -124,8 +125,7 @@ app.get('/refresh_token', function (req, res) {
     json: true,
   };
 
-  request.post(authOptions, function (error, response, body) {
-    console.log(response.statusCode);
+  request.post(authOptions, (error, response, body) => {
     if (!error && response.statusCode === 200) {
       const access_token = body.access_token;
       res.send({ access_token });
@@ -139,7 +139,7 @@ app.get('/refresh_token', function (req, res) {
 
 app.post('/audioSearch', upload.single('audio'), (req, res) => {
   const bitmap = fs.readFileSync(req.file.path);
-  identify(Buffer.from(bitmap), defaultOptions, function (err, httpResponse, body) {
+  identify(Buffer.from(bitmap), defaultOptions, (err, httpResponse, body) => {
     if (err) res.send(err).status(500)
     res.send(body).status(200);
   });

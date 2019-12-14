@@ -6,6 +6,7 @@ import { Grid, P } from "../../styled";
 import { Loading } from "../index.js";
 import TrackTable from './TrackTable';
 import { getPlaylistData } from '../../api/spotify'
+import handleError from '../../utils/handleError';
 
 const HeaderImage = styled.img`
   margin: auto;
@@ -26,7 +27,8 @@ export default function Playlist({ playTrack, match }) {
   const playlistID = match.params.playlistID;
 
   useEffect(() => {
-    getPlaylist();
+    if (playlistID)
+      getPlaylist();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [playlistID]);
 
@@ -37,24 +39,26 @@ export default function Playlist({ playTrack, match }) {
       setPlaylistData(playlist);
     }
     catch (error) {
-      toast.error("Something went wrong when getting playlist");
-      console.error(error);
+      handleError("Something went wrong when getting playlist", error)
     }
     setIsLoading(false);
   }
-
-  if (isLoading || !playlistData)
+  if (isLoading || !playlistData || !playlistData.hasOwnProperty('tracks'))
     return <Loading />
 
   const tracks = playlistData.tracks.items.map(obj => obj.track);
+  function formatNumber(num) {
+    return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
+  }
+  const { name, description, followers } = playlistData;
   return (
     <>
       <TableNav>
         {playlistData.hasOwnProperty("images") && <HeaderImage src={playlistData.images[0].url} />}
         <Grid>
-          <P font="xxl">{playlistData.name}</P>
-          <P color="grey"> {playlistData.description}</P>
-          <small>Followers: {playlistData.followers.total} </small>
+          <P font="xxl">{name}</P>
+          <P color="grey"> {description}</P>
+          <small>Followers: {formatNumber(followers.total)} </small>
         </Grid>
       </TableNav>
       <TrackTable playTrack={playTrack} tracks={tracks} />

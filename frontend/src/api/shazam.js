@@ -7,9 +7,9 @@ export async function audioSearch(file) {
     const data = await response.json();
     let singersName = "";
     const music = data.metadata.music[0];
-    const songName = music.title;
+    const trackName = music.title;
     music.artists.forEach(artist => (singersName += `${artist.name} `));
-    return { artists: singersName, songName }
+    return { artists: singersName, trackName }
   }
   catch (error) {
     throw new Error(error);

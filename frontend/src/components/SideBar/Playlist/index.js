@@ -16,7 +16,7 @@ const Item = styled(List.Item)`
   font-size: 14px;
   text-align: left;
   color: lightgray;
-  padding: 8px 30px;
+  padding: 10px 20px;
   border-left: 3px orange solid;
   :hover {
     ${ArrowIcon} {
@@ -32,7 +32,7 @@ const PlaylistContainer = styled(List)`
 
 const Header = styled(P)`
   color: white;
-  padding: 30px 10px;
+  padding: 10px 20px;
   font-weight: bolder;
   text-align: left;
 `

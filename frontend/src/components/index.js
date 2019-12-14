@@ -1,4 +1,4 @@
-import Search from './Search';
+import Navbar from './Navbar';
 import Player from './Player';
 import Loading from './Loading';
 import Sidebar from './Sidebar';
@@ -8,7 +8,7 @@ import FeaturedPlaylist from './FeaturedPlaylist';
 import SearchedTrackList from './SearchedTrackList';
 
 export {
-  Search,
+  Navbar,
   Player,
   Loading,
   Sidebar,

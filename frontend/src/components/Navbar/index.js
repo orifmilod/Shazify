@@ -6,7 +6,7 @@ import { withRouter } from 'react-router-dom';
 
 import { Grid, Input, P } from "../../styled";
 import shazamIcon from "../../img/shazam.png";
-
+import { audioSearch } from '../../api/shazam';
 import "../../shockwave.css";
 
 const SearchIcon = styled.i`
@@ -23,9 +23,10 @@ const SearchIcon = styled.i`
 const TextSlide = styled(P)`
   background: #47a8e6;
   border-radius: 15px;
-  width: 100px;
+  width: max-content;
   height: 30px;
-  padding: 5px 0;
+  padding: 5px 10px;
+  margin-left: 5px;
   color: white;
   font-size: 12px;
   transition: 1s ease-in-out;
@@ -63,42 +64,37 @@ const AudioSearch = styled.button`
 `;
 
 function Search({ history }) {
-
-  const [file, setFile] = useState(undefined);
   const [searchInput, setSearchInput] = useState('');
   const [isRecording, setIsRecording] = useState(false);
 
-  function handleSearch(e, searchFilter) {
-    if (e.preventDefault !== undefined) e.preventDefault();
+  function handleSearch(event, searchFilter) {
+    if (event)
+      event.preventDefault();
+
     if (!searchFilter.trim()) {
-      toast.error('Search something!');
+      toast.error('Enter keywords to search!');
       return;
     }
     const URIEconded = encodeURI(searchFilter);
     history.push(`/home/search/${URIEconded}`);
   }
 
-  // state = {
-  //   searchInput: "",
-  //   recording: false,
-  //   file: {}
-  // };
-
-  // handleChange = event => {
-  //   this.setState({ [event.target.name]: event.target.value });
-  // };
-
-  // toggleRecording = e => {
-  //   e.currentTarget.classList.toggle("is-active");
-  //   const { recording } = this.state;
-  //   this.setState({ recording: !recording });
-  // };
-
-  function onStop(recordedBlob) {
-    setFile(recordedBlob);
-    // this.props.audioSearch(recordedBlob);
+  async function onStop(recordedBlob) {
+    try {
+      const result = await audioSearch(recordedBlob);
+      const { artists, trackName } = result;
+      const search = artists + ' ' + trackName
+      setSearchInput(search);
+      handleSearch(null, search);
+    }
+    catch (error) {
+      toast.error("Sorry, we couldn't find the music, please try again!")
+    }
   };
-
+  function toggleRecording(e) {
+    e.currentTarget.classList.toggle("is-active");
+    setIsRecording(!isRecording)
+  };
   return (
     <SearchContainer>
       <form onSubmit={e => handleSearch(e, searchInput)}>
@@ -113,10 +109,12 @@ function Search({ history }) {
       </form>
 
       <Grid class="btn-container" direction="column">
-        <button class="btn btn--shockwave" onClick={() => setIsRecording(false)}>
+        <button class="btn btn--shockwave" onClick={toggleRecording}>
           <img src={shazamIcon} height="50px" width="50px" alt="shazamIcon" />
         </button>
-        <TextSlide>{isRecording ? "Tap to search" : "Tap to shazam"}</TextSlide>
+        <TextSlide>
+          {!isRecording ? "Tap to listen" : "Tap again to start the search"}
+        </TextSlide>
         <AudioSearch>
           <ReactMic
             onStop={onStop}

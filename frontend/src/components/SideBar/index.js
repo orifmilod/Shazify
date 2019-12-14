@@ -8,11 +8,27 @@ import { useSelector } from 'react-redux';
 
 import { getUserPlaylist } from '../../api/spotify';
 import handleError from '../../utils/handleError';
+import { clearTokens } from '../../utils/getAccessToken';
 
 const Container = styled(Grid)`
   background: rgb(84, 136, 150);
-  grid-auto-rows: 180px 1fr;
+  overflow: scroll;
+  grid-auto-rows: 180px 70px 1fr;
 `
+
+const SignOutButton = styled.button`
+  bottom: 20px;
+  border-radius: 20px;
+  width: 200px;
+  margin: auto;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  background: linear-gradient(to left, #FF4B2B, #FF416C); 
+  :focus {
+    outline: 0;
+  }
+`;
 
 export default function Sidebar() {
   const [playlist, setPlaylist] = useState([]);
@@ -31,9 +47,16 @@ export default function Sidebar() {
       handleError('Something went wrong when fetching your playlist!', error);
     }
   };
+
+  function signOut() {
+    clearTokens();
+    window.location.reload();
+  }
+
   return (
     <Container bg="blue">
       {userData && <Profile userData={userData} />}
+      <SignOutButton onClick={signOut}>Sign out</SignOutButton>
       {playlist && <Playlist playlists={playlist} />}
     </Container>
   );
