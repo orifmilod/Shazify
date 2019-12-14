@@ -3,7 +3,7 @@ import styled from "styled-components";
 import GithubCorner from "react-github-corner";
 import { withRouter } from 'react-router-dom';
 import { Grid } from '../../styled';
-import getAccessToken from "../../utils/getAccessToken";
+import getAccessToken from "../../utils/asdgetAccessToken";
 
 
 const Header = styled.h1`

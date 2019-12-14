@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
-import getAccessToken from "../../utils/getAccessToken";
+import getAccessToken from "../../utils/asdgetAccessToken";
 import { toast } from "react-toastify";
 import Grid from "../../styled/Grid";
 import P from "../../styled/P";

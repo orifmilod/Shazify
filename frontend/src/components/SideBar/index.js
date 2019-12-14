@@ -8,7 +8,7 @@ import { useSelector } from 'react-redux';
 
 import { getUserPlaylist } from '../../api/spotify';
 import handleError from '../../utils/handleError';
-import { clearTokens } from '../../utils/getAccessToken';
+import { clearTokens } from '../../utils/asdgetAccessToken';
 
 const Container = styled(Grid)`
   background: rgb(84, 136, 150);
