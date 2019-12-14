@@ -5,6 +5,7 @@ import { withRouter } from 'react-router-dom';
 import { Grid } from '../../styled';
 import getAccessToken from "../../utils/getAccessToken";
 
+
 const Header = styled.h1`
   margin: 0;
   color: white;
