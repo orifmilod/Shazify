@@ -16,9 +16,7 @@ class Content extends Component {
         <Route path="/home" exact render={props => <FeaturedPlaylist {...props} />} />
         <Route
           path="/home/search/:searchedTrack"
-          render={props => (
-            <SearchedTrackList {...props} playTrack={playTrack} />
-          )}
+          render={props => (<SearchedTrackList {...props} playTrack={playTrack} />)}
         />
         <Route
           path="/home/playlist/:playlistID"

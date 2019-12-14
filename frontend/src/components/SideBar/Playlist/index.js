@@ -8,7 +8,7 @@ const ArrowIcon = styled.i`
   height: 25px;
   width: 25px;
   position: absolute;
-  right: 20px;
+  right: 10px;
   transition: 0.3s ease-in-out;
 `;
 

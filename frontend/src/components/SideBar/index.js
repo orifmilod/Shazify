@@ -12,7 +12,8 @@ import { clearTokens } from '../../utils/getAccessToken';
 
 const Container = styled(Grid)`
   background: rgb(84, 136, 150);
-  overflow: scroll;
+  overflow-y: scroll;
+  overflow-x: hidden;
   grid-auto-rows: 180px 70px 1fr;
 `
 

@@ -16,8 +16,6 @@ const REDIRECT_URI = process.env.NODE_ENV !== 'production'
   ? 'http://localhost:8888/callback'
   : 'https://shazify.herokuapp.com/callback';
 
-const SPOTIFY_CLIENT_ID = '68247016a306419aab0e68ea6f6ab997';
-const SPOTIFY_SECRET = '4cd3fd02fc8046feb5a1b44ad220526d';
 
 const app = express();
 const stateKey = 'spotify_auth_state';
@@ -36,8 +34,7 @@ let upload = multer({ storage });
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-
-let generateRandomString = (length) => {
+function generateRandomString(length) {
   let text = '';
   let possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
 
@@ -49,9 +46,7 @@ let generateRandomString = (length) => {
 
 app.use(cors()).use(cookieParser());
 
-
-
-// SPOTIFY WEB API AUTHORIZATION CODE FLOW
+// Spotify Web API authorization code flow 
 // https://developer.spotify.com/documentation/general/guides/authorization-guide/
 // https://github.com/spotify/web-api-auth-examples
 
@@ -66,11 +61,10 @@ app.get('/login', (req, res) => {
     scope: scope,
     response_type: 'code',
     redirect_uri: REDIRECT_URI,
-    client_id: SPOTIFY_CLIENT_ID, //process.env.
+    client_id: process.env.CLIENT_ID,
   });
   res.redirect(redirectURL);
 });
-
 
 app.get('/callback', (req, res) => {
   // your application requests refresh and access tokens
@@ -91,7 +85,7 @@ app.get('/callback', (req, res) => {
         grant_type: 'authorization_code',
       },
       headers: {
-        Authorization: `Basic ${new Buffer(`${SPOTIFY_CLIENT_ID}:${SPOTIFY_SECRET}`).toString('base64')}`,
+        Authorization: `Basic ${new Buffer(`${process.env.CLIENT_ID}:${process.env.SPOTIFY_SECRET}`).toString('base64')}`,
       },
       json: true,
     };
@@ -116,7 +110,7 @@ app.get('/refresh_token', (req, res) => {
   const authOptions = {
     url: 'https://accounts.spotify.com/api/token',
     headers: {
-      Authorization: `Basic ${new Buffer(`${SPOTIFY_CLIENT_ID}:${SPOTIFY_SECRET}`).toString('base64')}`,
+      Authorization: `Basic ${new Buffer(`${process.env.CLIENT_ID}:${process.env.SPOTIFY_SECRET}`).toString('base64')}`,
     },
     form: {
       grant_type: 'refresh_token',
@@ -132,10 +126,6 @@ app.get('/refresh_token', (req, res) => {
     }
   });
 });
-
-
-
-
 
 app.post('/audioSearch', upload.single('audio'), (req, res) => {
   const bitmap = fs.readFileSync(req.file.path);
@@ -166,8 +156,8 @@ const defaultOptions = {
   signature_version: '1',
   endpoint: '/v1/identify',
   host: 'identify-eu-west-1.acrcloud.com',
-  access_key: '6ab92a05812a341339b37b849c4df24d',//process.env.SHAZAM_ACCESS_KEY
-  access_secret: 'ila8dpuo7zhoGIrnZ5X7e64WH3YMMdUS8hs4wvbm' // process.env.SHAZAM_ACCESS_SECRET
+  access_key: process.env.SHAZAM_ACCESS_KEY,
+  access_secret: process.env.SHAZAM_ACCESS_SECRET,
 };
 
 function buildStringToSign(method, uri, accessKey, dataType, signatureVersion, timestamp) {
@@ -181,7 +171,7 @@ function sign(signString, accessSecret) {
 }
 
 /*Identifies a sample of bytes*/
-function identify(data, options, cb) {
+function identify(data, options, callback) {
   let current_data = new Date();
   let timestamp = current_data.getTime() / 1000;
 
@@ -197,21 +187,19 @@ function identify(data, options, cb) {
 
   let formData = {
     sample: data,
-    access_key: options.access_key,
-    data_type: options.data_type,
-    signature_version: options.signature_version,
+    timestamp: timestamp,
     signature: signature,
     sample_bytes: data.length,
-    timestamp: timestamp,
+    data_type: options.data_type,
+    access_key: options.access_key,
+    signature_version: options.signature_version,
   }
   request.post({
-    url: "http://" + options.host + options.endpoint,
     method: 'POST',
-    formData: formData
-  }, cb);
+    formData: formData,
+    url: "http://" + options.host + options.endpoint,
+  }, callback);
 }
 
 const port = process.env.PORT || 8888;
 app.listen(port, () => console.log(`Server running on port ${port} `));
-
-

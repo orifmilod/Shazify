@@ -65,7 +65,11 @@ function Home({ history }) {
       history.push('/home');
   }, [history]);
 
-
+  const UserName = styled.a`
+    text-decoration: underline;
+    color: black;
+    cursor: pointer;
+  `;
   const LOGIN_URI = process.env.NODE_ENV !== 'production'
     ? 'http://localhost:8888/login'
     : 'https://shazify.herokuapp.com/login';
@@ -89,13 +93,9 @@ function Home({ history }) {
       </div>
       <Information>
         made by {' '}
-        <a
-          target='_blank'
-          rel="noopener noreferrer"
-          href='https://iammilod.com'
-        >
+        <UserName target='_blank' rel="noopener noreferrer" href='https://iammilod.com' >
           orif milod
-        </a>
+        </UserName>
         <br />
         You can only login using Spotify account. <i className="fab fa-spotify" />
       </Information>

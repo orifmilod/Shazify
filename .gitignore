@@ -8,10 +8,6 @@ package-lock.json
 /frontend/build/
 /frontend/package-lock.json
 
-/client/node_modules/
-/client/build/
-/client/package-lock.json
-
 package-lock.json
 # production
 /build

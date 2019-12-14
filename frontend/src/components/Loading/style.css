@@ -7,6 +7,8 @@
   border-left: 0px;
   border-right: 0px;
   border-radius: 50%;
+  display: table;
+  margin: auto;
 }
 
 
