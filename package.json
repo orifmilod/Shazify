@@ -11,7 +11,7 @@
     "start": "node server.js",
     "server": "nodemon server.js",
     "frontend": "cd frontend && npm start",
-    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=true npm install --prefix frontend && npm run build --prefix frontend"
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix frontend && npm run build --prefix frontend"
   },
   "author": "",
   "license": "ISC",
