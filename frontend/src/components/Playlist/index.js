@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { toast } from "react-toastify";
 import styled from "styled-components";
 
 import { Grid, P } from "../../styled";
