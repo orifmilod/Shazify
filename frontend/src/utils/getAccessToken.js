@@ -40,18 +40,20 @@ export default function getAccessToken() {
 
   //If ther is access token and refresh time has not been expired
   if (localAccessToken && timestamp - currentTime > 0) {
+    console.log('Access token')
     return localAccessToken;
   }
 
   if (localAccessToken && timestamp - currentTime < 0) {
+    console.log('Refreshing token')
     refreshAccessToken();
     return;
   }
-
   //If nothing has been stored in the local storage - first time visiting the page
   if (!localAccessToken || !timestamp) {
-    //Check the url for access token and refersh token
+    //Check the url for state and refersh token
     const result = getWindowURLParsed();
+    console.log(result);
     if (result.access_token && result.refresh_token) {
       const { access_token, refresh_token } = result;
       setLocalAccessToken(access_token);

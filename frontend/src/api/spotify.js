@@ -1,4 +1,4 @@
-import getAccessToken from '../utils/asdgetAccessToken';
+import getAccessToken from '../utils/getAccessToken';
 const accessToken = getAccessToken();
 
 const headers = {

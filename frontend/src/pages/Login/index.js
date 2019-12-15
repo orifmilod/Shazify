@@ -3,7 +3,7 @@ import styled from "styled-components";
 import GithubCorner from "react-github-corner";
 import { withRouter } from 'react-router-dom';
 import { Grid } from '../../styled';
-import getAccessToken from "../../utils/asdgetAccessToken";
+import getAccessToken from "../../utils/getAccessToken";
 
 
 const Header = styled.h1`
@@ -62,6 +62,7 @@ const Container = styled(Grid)`
 function Home({ history }) {
   useEffect(() => {
     const accessToken = getAccessToken();
+    console.log(accessToken);
     if (accessToken)
       history.push('/home');
   }, [history]);

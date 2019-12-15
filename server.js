@@ -60,7 +60,7 @@ app.get('/login', (req, res) => {
     state: state,
     scope: scope,
     response_type: 'code',
-    redirect_uri: FRONTEND_URL,
+    redirect_uri: REDIRECT_URI,
     client_id: process.env.CLIENT_ID,
   });
   res.redirect(redirectURL);
