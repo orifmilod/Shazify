@@ -8,6 +8,7 @@ Shazify A full stack music player app which uses Spotify API endpoints, which ca
   <h3>Technologies used </h3>
 <ul>
     <li>React.JS </li>
+    <li>Redux </li>
     <li>Node.js</li>
     <li>Styled-components</li>
     <li>HTML5/CSS3</li>
@@ -16,10 +17,11 @@ Shazify A full stack music player app which uses Spotify API endpoints, which ca
 <h3>Feature </h3>
 <ul>
   <li>Sign In with your spotify account.</li>
-  <li>Search music with audio(like shazam).</li>
+  <li>Search music with audio(like shazam) using ArcCloud public API endpoints.</li>
   <li>Play your spotify playlist and search music which make request to Spotify API end-points.</li>
   <li>Play popular albums in your area.</li>
   <li>More features are coming soon...</li>
 </ul>
-<img src='https://user-images.githubusercontent.com/25881325/63230593-0f63af80-c20f-11e9-8ea4-5123ded5332f.png'/>
-<img src='https://user-images.githubusercontent.com/25881325/63228091-c7349500-c1ee-11e9-842e-ae911c34e2e8.png'/>
+<img src='https://user-images.githubusercontent.com/25881325/70864291-14ccce80-1f51-11ea-9648-7619e8386528.png'/>
+<img src='https://user-images.githubusercontent.com/25881325/70864296-172f2880-1f51-11ea-84a0-d544e23ba8c4.png'/>
+<img src='https://user-images.githubusercontent.com/25881325/70864303-18f8ec00-1f51-11ea-9b4d-c8972c7a454c.png'/>
