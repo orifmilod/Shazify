@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 
 import Track from "./Track";
 import { Table } from "../../../styled";
+import Loading from '../../Loading';
 
 const HeaderRow = styled(Table.Row)`
   font-size: 14px;
@@ -13,9 +14,36 @@ const HeaderRow = styled(Table.Row)`
   }
 `;
 
-export default function TrackTable({ playTrack, tracks }) {
+
+
+export default function TrackTable({ tracks }) {
+  // const [reachBottom, setReachedBottom] = useState(false);
+  // function onScroll() {
+  //   console.log('Scrolling')
+  //   if (hasReachedBottom())
+  //     setReachedBottom(true);
+  // };
+  // useEffect(() => {
+  //   const elem = document.getElementById('track-table');
+  //   elem.addEventListener('scroll', onScroll, false);
+  //   return () => {
+  //     elem.addEventListener("scroll", onScroll, false);
+  //   };
+  // }, []);
+
+  // function hasReachedBottom() {
+  //   console.log('Checking');
+  //   return (
+  //     document.body.offsetHeight + document.body.scrollTop ===
+  //     document.body.scrollHeight
+  //   );
+  // }
+
+  // const TrackContainer = styled.div`
+  // overflow: auto;
+  // `
   return (
-    <Table mx="xxl" my="lg" overflow="auto">
+    <Table id='track-table' mx="xxl" my="lg" overflow="auto">
       <HeaderRow>
         <Table.Header>{/* For Play Button */}</Table.Header>
         <Table.Header>Title</Table.Header>
@@ -23,7 +51,10 @@ export default function TrackTable({ playTrack, tracks }) {
         <Table.Header>Album</Table.Header>
         <Table.Header>Time</Table.Header>
       </HeaderRow>
-      {tracks.map(track => track && <Track track={track} playTrack={playTrack} />)}
+      {/* <TrackContainer> */}
+      {tracks.map(track => track && <Track track={track} />)}
+      {/* </TrackContainer> */}
+      {/* {reachBottom && <Loading />} */}
     </Table>
   );
 };

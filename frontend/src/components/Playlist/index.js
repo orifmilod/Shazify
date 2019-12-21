@@ -6,6 +6,7 @@ import { Loading } from "../index.js";
 import TrackTable from './TrackTable';
 import { getPlaylistData } from '../../api/spotify'
 import handleError from '../../utils/handleError';
+import formatNumber from '../../utils/formatNumber';
 
 const HeaderImage = styled.img`
   margin: auto;
@@ -46,9 +47,7 @@ export default function Playlist({ playTrack, match }) {
     return <Loading />
 
   const tracks = playlistData.tracks.items.map(obj => obj.track);
-  function formatNumber(num) {
-    return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
-  }
+
   const { name, description, followers } = playlistData;
   return (
     <>
