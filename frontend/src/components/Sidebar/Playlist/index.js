@@ -1,8 +1,8 @@
-import React from "react";
-import { withRouter } from "react-router-dom";
-import styled from "styled-components";
+import React from 'react'
+import { withRouter } from 'react-router-dom'
+import styled from 'styled-components'
 
-import { List, Grid, P } from "../../../styled";
+import { List, Grid, P } from '../../../styled'
 
 const ArrowIcon = styled.i`
   height: 25px;
@@ -10,7 +10,7 @@ const ArrowIcon = styled.i`
   position: absolute;
   right: 10px;
   transition: 0.3s ease-in-out;
-`;
+`
 
 const Item = styled(List.Item)`
   font-size: 14px;
@@ -23,12 +23,12 @@ const Item = styled(List.Item)`
       transform: translateX(8px);
     }
   }
-`;
+`
 
 const PlaylistContainer = styled(List)`
   text-align: left;
   grid-gap: 10px;
-`;
+`
 
 const Header = styled(P)`
   color: white;
@@ -42,15 +42,17 @@ function Playlist({ playlists, history }) {
     <Grid direction="row" py="xxl">
       <PlaylistContainer>
         <Header> Playlists </Header>
-        {
-          playlists &&
-          playlists.map(playlist =>
-            <Item key={playlist.id} onClick={() => history.push(`/home/playlist/${playlist.id}`)}>
-              {playlist.name} <ArrowIcon className='fas fa-arrow-right' />
+        {playlists &&
+          playlists.map((playlist) => (
+            <Item
+              key={playlist.id}
+              onClick={() => history.push(`/home/playlist/${playlist.id}`)}
+            >
+              {playlist.name} <ArrowIcon className="fas fa-arrow-right" />
             </Item>
-          )}
+          ))}
       </PlaylistContainer>
     </Grid>
-  );
+  )
 }
-export default withRouter(Playlist);
+export default withRouter(Playlist)

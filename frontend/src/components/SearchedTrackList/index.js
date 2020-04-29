@@ -1,61 +1,38 @@
-import React, { Component } from "react";
-import { withRouter } from "react-router-dom";
-import getAccessToken from "../../utils/getAccessToken";
-import { toast } from "react-toastify";
-import Grid from "../../styled/Grid";
-import P from "../../styled/P";
-import TrackTable from "../Playlist/TrackTable";
+import React, { useState, useEffect } from 'react'
+import { withRouter } from 'react-router-dom'
+import { toast } from 'react-toastify'
 
-class SearchedTrackList extends Component {
-  state = {
-    searchList: []
-  };
-  searchTrack = async searchedTrack => {
-    const searchLimit = 40;
+import P from '../../styled/P'
+import TrackTable from '../Playlist/TrackTable'
+
+import { searchTrack } from '../../api/spotify'
+
+function TrackList({ match, playTrack }) {
+  const [searchList, setSearchList] = useState([])
+  const searchedTrack = match.params.searchedTrack
+
+  useEffect(() => {
+    if (searchedTrack) findTrack(searchedTrack)
+  }, [searchedTrack])
+
+  async function findTrack(searchedTrack) {
     try {
-      const access_token = getAccessToken();
-      const response = await fetch(
-        `https://api.spotify.com/v1/search?q=${searchedTrack}&type=track&market=PL&limit=${searchLimit}`,
-        {
-          headers: {
-            Authorization: `Bearer ${access_token}`,
-            Accept: "application/json",
-            "Content-Type": "application/json"
-          }
-        }
-      );
-      const data = await response.json();
-      this.setState({ searchList: data.tracks.items });
+      const data = await searchTrack(searchedTrack)
+      setSearchList(data.tracks.items)
     } catch (error) {
-      toast.error("Sorry couldn't find any tracks. :(");
+      console.log(error)
+      toast.error("Sorry couldn't find any tracks. :(")
     }
-  };
-  componentWillReceiveProps(nextProps) {
-    const searchedTrack = nextProps.match.params.searchedTrack;
-    this.searchTrack(searchedTrack);
   }
-  componentDidMount() {
-    const searchedTrack = this.props.match.params.searchedTrack;
-    this.searchTrack(searchedTrack);
-  }
-  render() {
-    const { searchList } = this.state;
-    const { playTrack } = this.props;
-    return (
-      <>
-        {searchList.length > 0 ? (
-          <TrackTable playTrack={playTrack} tracks={searchList} />
-        ) : (
-            <Grid>
-              <P>
-                Sorry, couldn't find any tracks.
-                <i class="far fa-sad-tear fa-2x" />
-              </P>
-            </Grid>
-          )}
-      </>
-    );
-  }
+  return (
+    <>
+      {searchList.length > 0 ? (
+        <TrackTable playTrack={playTrack} tracks={searchList} />
+      ) : (
+        <P>Sorry, couldn't find any tracks.</P>
+      )}
+    </>
+  )
 }
 
-export default withRouter(SearchedTrackList);
+export default withRouter(TrackList)

@@ -1,14 +1,14 @@
-import React, { useState, useEffect } from "react";
-import styled from 'styled-components';
+import React, { useState, useEffect } from 'react'
+import styled from 'styled-components'
 
-import { Grid } from "../../styled";
-import Playlist from "./Playlist";
-import Profile from "./Profile";
-import { useSelector } from 'react-redux';
+import { Grid } from '../../styled'
+import Playlist from './Playlist'
+import Profile from './Profile'
+import { useSelector } from 'react-redux'
 
-import { getUserPlaylist } from '../../api/spotify';
-import handleError from '../../utils/handleError';
-import { clearTokens } from '../../utils/getAccessToken';
+import { getUserPlaylist } from '../../api/spotify'
+import handleError from '../../utils/handleError'
+import { clearTokens } from '../../utils/getAccessToken'
 
 const Container = styled(Grid)`
   background: rgb(84, 136, 150);
@@ -25,33 +25,32 @@ const SignOutButton = styled.button`
   color: white;
   border: none;
   padding: 5px 10px;
-  background: linear-gradient(to left, #FF4B2B, #FF416C); 
+  background: linear-gradient(to left, #ff4b2b, #ff416c);
   :focus {
     outline: 0;
   }
-`;
+`
 
 export default function Sidebar() {
-  const [playlist, setPlaylist] = useState([]);
-  const userData = useSelector(state => state.userData);
+  const [playlist, setPlaylist] = useState([])
+  const userData = useSelector((state) => state.userData)
 
   useEffect(() => {
-    getPlaylist();
-  }, []);
+    getPlaylist()
+  }, [])
 
   async function getPlaylist() {
     try {
-      const userPlaylist = await getUserPlaylist();
-      setPlaylist(userPlaylist.items);
+      const userPlaylist = await getUserPlaylist()
+      setPlaylist(userPlaylist.items)
+    } catch (error) {
+      handleError('Something went wrong when fetching your playlist!', error)
     }
-    catch (error) {
-      handleError('Something went wrong when fetching your playlist!', error);
-    }
-  };
+  }
 
   function signOut() {
-    clearTokens();
-    window.location.reload();
+    clearTokens()
+    window.location.reload()
   }
 
   return (
@@ -60,5 +59,5 @@ export default function Sidebar() {
       <SignOutButton onClick={signOut}>Sign out</SignOutButton>
       {playlist && <Playlist playlists={playlist} />}
     </Container>
-  );
-};
+  )
+}

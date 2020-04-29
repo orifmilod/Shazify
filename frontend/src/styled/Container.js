@@ -1,11 +1,11 @@
-import styled from "styled-components";
+import styled from 'styled-components'
 
 const Container = styled.div`
   height: 100%;
   width: 100%;
-  margin: ${props => (props.space ? `${props.space * 4}px` : "0px")} !important;
-  background: ${props => props.theme.color[props.bg]};
+  margin: ${({ space }) => (space ? `${space * 4}px` : '0px')} !important;
+  background: ${({ theme, bg }) => theme.color[bg]};
   text-align: center;
   justify-self: center;
-`;
-export default Container;
+`
+export default Container

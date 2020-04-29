@@ -1,10 +1,9 @@
-import React, { useEffect } from "react";
-import styled from "styled-components";
-import GithubCorner from "react-github-corner";
-import { withRouter } from 'react-router-dom';
-import { Grid } from '../../styled';
-import getAccessToken from "../../utils/getAccessToken";
-
+import React, { useEffect } from 'react'
+import styled from 'styled-components'
+import GithubCorner from 'react-github-corner'
+import { withRouter } from 'react-router-dom'
+import { Grid } from '../../styled'
+import getAccessToken from '../../utils/getAccessToken'
 
 const Header = styled.h1`
   margin: 0;
@@ -14,7 +13,7 @@ const Header = styled.h1`
   @media only screen and (max-width: 600px) {
     font-size: 45px;
   }
-`;
+`
 
 const Title = styled.p`
   font-size: 25px;
@@ -23,7 +22,7 @@ const Title = styled.p`
   @media only screen and (max-width: 600px) {
     font-size: 18px;
   }
-`;
+`
 
 const LoginButton = styled.a`
   color: gray;
@@ -34,15 +33,16 @@ const LoginButton = styled.a`
   border-radius: 100px;
   display: inline-block;
   background: linear-gradient(to top, #78ffd6, #a8ff78);
-  
+
   :hover {
     color: #444444;
     text-decoration: none;
   }
-  :focus,:active {
-    outline:0;
+  :focus,
+  :active {
+    outline: 0;
   }
-`;
+`
 
 const Information = styled.p`
   color: white;
@@ -50,42 +50,39 @@ const Information = styled.p`
   bottom: 0;
   text-align: right;
   right: 10px;
-  font-size:16px;
-`;
+  font-size: 16px;
+`
 
-const Container = styled(Grid)` 
+const Container = styled(Grid)`
   padding-top: 300px;
   grid-auto-flow: row;
   height: 100vh;
-`;
+`
 
 function Home({ history }) {
   useEffect(() => {
-    const accessToken = getAccessToken();
-    console.log(accessToken);
-    if (accessToken)
-      history.push('/home');
-  }, [history]);
+    const accessToken = getAccessToken()
+    console.log(accessToken)
+    if (accessToken) history.push('/home')
+  }, [history])
 
   const UserName = styled.a`
     text-decoration: underline;
     color: black;
     cursor: pointer;
-  `;
+  `
 
-  const LOGIN_URI = process.env.NODE_ENV !== 'production'
-    ? 'http://localhost:8888/login'
-    : 'https://shazify.herokuapp.com/login';
-
+  const LOGIN_URI =
+    process.env.NODE_ENV !== 'production'
+      ? 'http://localhost:8888/login'
+      : 'https://shazify.herokuapp.com/login'
 
   return (
-    <Container className='gradDynamic'>
+    <Container className="gradDynamic">
       <div>
         <Header>Welcome to Shazify</Header>
         <Title>Search, Choose, Listen.</Title>
-        <LoginButton href={LOGIN_URI}>
-          LOGIN
-        </LoginButton>
+        <LoginButton href={LOGIN_URI}>LOGIN</LoginButton>
         <GithubCorner
           href="https://github.com/orifmilod/iSpotify"
           target="_blank"
@@ -95,15 +92,20 @@ function Home({ history }) {
         />
       </div>
       <Information>
-        made by {' '}
-        <UserName target='_blank' rel="noopener noreferrer" href='https://iammilod.com' >
+        made by
+        <UserName
+          target="_blank"
+          rel="noopener noreferrer"
+          href="https://iammilod.com"
+        >
           orif milod
         </UserName>
         <br />
-        You can only login using Spotify account. <i className="fab fa-spotify" />
+        You can only login using Spotify account.
+        <i className="fab fa-spotify" />
       </Information>
     </Container>
-  );
+  )
 }
 
-export default withRouter(Home);
+export default withRouter(Home)
